@@ -6,16 +6,22 @@ const express = require('express');
 const cors = require("cors");
 
 const { NotFoundError } = require("./expressError");
+
+const {authenticateJWT} = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
+const foodsRoutes = require("./routes/foods");
+const lunchRoutes = require("./routes/lunches");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.use(authenticateJWT);
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
+app.use("/foods", foodsRoutes);
+app.use("/lunches", lunchRoutes);
 
 app.use(express.json());
 

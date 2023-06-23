@@ -8,29 +8,33 @@ const {sqlForPartialUpdate} = require("../helpers/sql");
 
 class Food {
     /** Create a food (from data), update db, return new food data.
-   *    Data should be {id, title, category, nutrition, lunch_id}
-   *    Returns {id, category, nutrition, lunchId}
+   *    Data should be {title, category, serving_size, calories, fat, protein, carbohydrates, sugar, lunch_id}
+   *    Returns {category, servingSize, calories, fat, protein, carbohydrates, sugar, lunchId}
    *    Throws BadRequestError if food is already in database.
    * */
-  static async create({title, category, nutrition, lunchId}) {
-    const duplicateCheck = await db.query(
-            `SELECT title
-             FROM foods
-             WHERE title = $1`,
-        [title]);
+  static async create({title, category, servingSize, calories, fat, protein, carbohydrates, sugar}) {
+    // const duplicateCheck = await db.query(
+    //         `SELECT title
+    //          FROM foods
+    //          WHERE title = $1`,
+    //     [title]);
 
-    if (duplicateCheck.rows=[0]) throw new BadRequestError(`Duplicate food: ${title}`);
+    // if (duplicateCheck.rows=[0]) throw new BadRequestError(`Duplicate food: ${title}`);
     
     const result = await db.query(
                 `INSERT INTO foods
-                (title, category, nutrition, lunch_id)
-                VALUES ($1, $2, $3, $4)
-                RETURNING title, category, nutrition, lunch_id AS "lunchId"`,
+                (title, category, serving_size, calories, fat, protein, carbohydrates, sugar)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                RETURNING title, category, serving_size AS "servingSize", calories, fat, protein, carbohydrates, sugar`,
             [
                 title, 
                 category, 
-                nutrition, 
-                lunchId,
+                servingSize,
+                calories,
+                fat,
+                protein,
+                carbohydrates,
+                sugar, 
             ],
         )
     const food = result.rows[0];
@@ -41,14 +45,18 @@ class Food {
    *  searchFilters(all optional):
    *  - title (will find case-insensitive, partial matches)
    *  - category
-   *  Returns [{id, title, category, nutrition, lunchId}, ...]
+   *  Returns [{id, title, category, servingSize, calories, fat, protein, carbohydrates, sugar, lunchId}, ...]
    */
   static async findAll(searchFilters = {}) {
     let query = `SELECT id,
                         title,
                         category,
-                        nutritions
-                        lunch_id AS "lunchId
+                        serving_size AS "servingSize",
+                        calories,
+                        fat,
+                        protein,
+                        carbohydrates,
+                        sugar
                  FROM foods`;
     let whereExpressions = [];
     let queryValues = [];
@@ -58,26 +66,22 @@ class Food {
     // For each possible search term, add to whereExpressions and queryValues so
     // we can generate the right SQL
 
-    if (!title) {
-        throw new BadRequestError("Title field cannot be empty");
-    } else {
+    if (title !== undefined) {
         queryValues.push(`%${title}%`);
         whereExpressions.push(`title ILIKE $${queryValues.length}`);
     }
 
-    if (!category) {
-        throw new BadRequestError("Category field cannot be empty");
-    } else {
-        queryValues.push(`%${category}%`);
-        whereExpressions.push(`category ILIKE $${queryValues.length}`);
+    if (category !== undefined) {
+      queryValues.push(`%${category}%`);
+      whereExpressions.push(`category ILIKE $${queryValues.length}`);
     }
-
+    
     if (whereExpressions.length > 0) {
         query += " WHERE " + whereExpressions.join(" AND ");
     }
 
-    // Finalize query and return results
-    query += "ORDER BY title";
+    // // Finalize query and return results
+    query += " ORDER BY title";
     const foodsRes = await db.query(query, queryValues);
     return foodsRes.rows;
   }
@@ -91,13 +95,12 @@ class Food {
                 `SELECT id,
                         title,
                         category,
-                        serving_size AS "servingSize".
+                        serving_size AS "servingSize",
                         calories,
                         fat,
                         protein,
                         carbohydrates,
-                        sugar,
-                        lunch_id AS "lunchId"
+                        sugar
                  FROM foods
                  WHERE id = $1`,
             [id]);
@@ -112,7 +115,7 @@ class Food {
   /** Update food data with 'data
    *  This is a "partial update" --- it's fine if data doesn't contain all the fields;
    *  this only changes provided fields
-   *  Data can include: {title, category, serving_size, calories, fat carbohydrates, sugare, lunchId}
+   *  Data can include: {id, title, category, serving_size, calories, fat carbohydrates, sugare, lunchId}
    *  Returns {id, title, category, serving_size, calories, fat carbohydrates, sugare, lunchId}
    *  Throws NotFoundError if food is not found
    */
@@ -120,13 +123,12 @@ class Food {
     const {setCols, values} = sqlForPartialUpdate(
         data,
         {
-            servingSize: "serving_size",
-            lunchId: "lunch_id",
+          servingSize: "serving_size",
         });
-    const handleVarIdx = "$" + (values.length + 1);
+    const idVarIdx = "$" + (values.length + 1);
     const querySql = `UPDATE foods
                       SET ${setCols}
-                      WHERE id = ${handleVarIdx}
+                      WHERE id = ${idVarIdx}
                       RETURNING id,
                                 title,
                                 category,
@@ -135,8 +137,7 @@ class Food {
                                 fat,
                                 protein,
                                 carbohydrates,
-                                sugar,
-                                lunch_id AS "lunchId"`;
+                                sugar`
     const result = await db.query(querySql, [...values, id]);
     const food = result.rows[0];
 

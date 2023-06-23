@@ -15,7 +15,7 @@ const {BCRYPT_WORK_FACTOR} = require("../config.js");
 
 class User {
     /** Authenticate user with username and password
-     *  Returns {username, first_name, last_name, email}
+     *  Returns {username, first_name, last_name, email, diet, allergies, preferences, aversions}
      *  Throws Unauthorizederror if user is not found or password is invalid
      */
     static async authenticate(username, password) {
@@ -25,7 +25,11 @@ class User {
                     password,
                     first_name AS "firstName",
                     last_name AS "lastName",
-                    email
+                    email,
+                    diet,
+                    allergies,
+                    preferences,
+                    aversions
                 FROM users
                 WHERE username = $1`,
             [username],
@@ -49,7 +53,7 @@ class User {
     *   Returns {id, username, password, firstName, lastName, email}
     *   Throws BadRequestError on duplicates
     */
-    static async register({username, password, firstName, lastName, email}) {
+    static async register({username, password, firstName, lastName, email, diet, allergies, preferences, aversions}) {
         // const duplicateCheck = await db.query(
         //         `SELECT username
         //          FROM users
@@ -69,15 +73,23 @@ class User {
                  password,
                  first_name, 
                  last_name,
-                 email)
-                VALUES ($1, $2, $3, $4, $5)
-                RETURNING username, first_name AS "firstName, last_name AS lastName, email"`,
+                 email,
+                 diet,
+                 allergies,
+                 preferences,
+                 aversions)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                RETURNING username, first_name AS "firstName, last_name AS lastName, email, diet, allergies, preferences, aversions"`,
             [
                 username, 
                 hashedPassword,
                 firstName, 
                 lastName,
                 email,
+                diet,
+                allergies,
+                preferences,
+                aversions
             ],
         );
 
@@ -86,7 +98,7 @@ class User {
     }
 
     /** Find all users
-     *  Returns [{id, username, first_name, last_name, email},...]
+     *  Returns [{id, username, first_name, last_name, email, diet, allergies, preferences, aversions},...]
      */
     static async findAll() {
         const result = await db.query(
@@ -94,24 +106,31 @@ class User {
                         username, 
                         first_name AS firstName,
                         last_name AS lastName,
-                        email
+                        email,
+                        diet,
+                        allergies,
+                        preferences, 
+                        aversions
                  FROM users
                  ORDER BY username`,
         );
         return result.rows;
     }
 
-    /** Given a username, return data about that user
-     *  Returns {username, first_name, last_name, email, eaters}
-     *      where eaters is {id, diet, allergies, preferences, aversions, lunches, user_id}
-     */
+    /** Given am id , return data about that user
+     *  Returns {id, username, first_name, last_name, email, diet, allergies, preferences, aversions}
+    */
     static async get(id) {
         const userRes = await db.query(
                 `SELECT id,
                         username,
                         first_name AS "firstName",
                         last_name AS "lastName",
-                        email
+                        email,
+                        diet,
+                        allergies,
+                        preferences,
+                        aversions
                  FROM users
                  WHERE id = $1`,
             [id],
@@ -153,7 +172,11 @@ class User {
                                     username,
                                     first_name AS "firstName",
                                     last_name AS "lastName",
-                                    email`;
+                                    email,
+                                    diet,
+                                    allergies,
+                                    preferences,
+                                    aversions`;
         const result = await db.query(querySql, [...values, id]);
         const user = result.rows[0];
 

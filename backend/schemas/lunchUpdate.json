@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.lunches.com/foodSearch.schema.json",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      },
+      "protein": {
+        "type": "string"
+      },
+      "carb": {
+        "type": "string"
+      },
+      "fruit": {
+        "type": "string"
+      },
+      "vegetable": {
+        "type": "string"
+      },
+      "fat": {
+          "type": "string"
+      },
+      "sweet": {
+        "type": "string"
+      },
+      "beverage": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": []
+}
