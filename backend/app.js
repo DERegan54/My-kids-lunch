@@ -12,6 +12,7 @@ const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
 const foodsRoutes = require("./routes/foods");
 const lunchRoutes = require("./routes/lunches");
+const reviewRoutes = require("./routes/reviews");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/foods", foodsRoutes);
 app.use("/lunches", lunchRoutes);
+app.use("/reviews", reviewRoutes);
 
 app.use(express.json());
 

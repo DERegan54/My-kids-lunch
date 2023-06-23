@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://our.lunches.com/reviewNew.schema.json",
+  "type": "object",
+  "properties": {
+    "reviewText": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "number"
+    },
+    "lunchId": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "reviewText",
+    "userId",
+    "lunchId"
+  ]
+}

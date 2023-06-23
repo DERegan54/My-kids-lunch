@@ -10,7 +10,7 @@ const lunchSearchSchema = require("../schemas/lunchSearch.json");
 
 const router = express.Router({mergeParams: true});
 
-/** METHODS FOR LUNCHES */
+/** ROUTES FOR LUNCHES */
 
 /** POST / {lunch} => {lunch} 
  *  Adds a lunch to database

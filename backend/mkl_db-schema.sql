@@ -43,14 +43,15 @@ CREATE TABLE favorites (
     id SERIAL PRIMARY KEY,  
     user_id INTEGER 
         REFERENCES users ON DELETE CASCADE,
-    lunches_id INTEGER 
+    lunch_id INTEGER 
         REFERENCES lunches ON DELETE CASCADE
 );
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,  
+    review_text TEXT NOT NULL,
     user_id INTEGER 
         REFERENCES users,
-    lunches_id INTEGER 
+    lunch_id INTEGER 
         REFERENCES lunches
 );

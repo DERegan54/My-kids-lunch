@@ -7,8 +7,9 @@ const {sqlForPartialUpdate} = require("../helpers/sql");
 /** METHODS FOR LUNCHES */
 
 class Lunch {
+
     /** Creates a lunch (from data), update db, return new lunch data
-     *  Data should be {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}
+     *  Data should include {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}
      *  Throws BadRequestError if lunch already in database
      */
     static async create ({title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}) {
@@ -43,7 +44,7 @@ class Lunch {
         return lunch;
     }
 
-    /** Find all lunches (optinoal filter on searchFilters) 
+    /** Finds all lunches (optinoal filter on searchFilters) 
      *  searchFilters (all optional): title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId (will find case-insensitive, partial matches)
      *  Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}, ...]
     */
@@ -120,28 +121,27 @@ class Lunch {
    * Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}, ...]
    * Throws NotFoundError if lunch not found.
    **/
-
-  static async get(id) {
-    const lunchRes = await db.query(
-          `SELECT id,
-                  title,
-                  protein,
-                  carb, 
-                  fruit,
-                  vegetable, 
-                  fat, 
-                  sweet,
-                  beverage
-           FROM lunches
-           WHERE id = $1`,
+   static async get(id) {
+        const lunchRes = await db.query(
+            `SELECT id,
+                    title,
+                    protein,
+                    carb, 
+                    fruit,
+                    vegetable, 
+                    fat, 
+                    sweet,
+                    beverage
+            FROM lunches
+            WHERE id = $1`,
         [id]);
 
-    const lunch = lunchRes.rows[0];
+        const lunch = lunchRes.rows[0];
 
-    if (!lunch) throw new NotFoundError(`No lunch found: ${id}`);
+        if (!lunch) throw new NotFoundError(`No lunch found: ${id}`);
 
-    return lunch;
-  }
+        return lunch;
+    }
 
     /** Update lunch data with `data`.
    *

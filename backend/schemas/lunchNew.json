@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://our.lunches.com/foodNew.schema.json",
+    "$id": "http://our.lunches.com/lunchNew.schema.json",
     "type": "object",
     "properties": {
       "title": {
