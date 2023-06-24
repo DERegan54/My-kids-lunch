@@ -3,16 +3,16 @@
     "$id": "http://our.lunches.com/reviewSearch.schema.json",
     "type": "object",
     "properties": {
-        "reviewText": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "number"
-        },
-        "lunchId": {
-            "type": "number"
-        }
+      "reviewText": {
+        "type": "string"
+      },
+      "userId": {
+        "type": "number"
+      },
+      "lunchId": {
+        "type": "number"
+      }
     },
-    "additionalProperties": false,
-    "required": []
-  }
+  "additionalProperties": false,
+  "required": []
+}

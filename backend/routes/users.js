@@ -4,16 +4,12 @@ const jsonschema = require("jsonschema");
 
 const express = require('express');
 const User = require("../models/user");
-const {createToken} = require("../helpers/tokens");
-const userNewSchema = require("../schemas/userNew.json");
-const userUpdateSchema = require("../schemas/userUpdate.json")
-const { BadRequestError } = require("../expressError");
 
 const router = new express.Router();
 
 /** ROUTES FOR USERS */
 
-/** GET / => { users: [id, username, firstName, lastName, email, eaters}, ... ] 
+/** GET / => { users: [id, username, firstName, lastName, email, diet, allergies, preferences, aversions, favorites}, ... ] 
  *  Returns list of all users */
 router.get("/", async function(req, res, next) {
     try {
@@ -49,6 +45,19 @@ router.delete("/:id", async function (req, res, next) {
     try {
         await User.remove(req.params.id);
         return res.json({deleted: req.params.id});
+    } catch (err) {
+        return next(err);
+    }
+});
+
+/** POST /[username]/lunches/[id] {state} => {favorite}
+ *  returns {"favorited": id}
+ */
+router.post("/:username/lunches/:id", async function (req, res, next) {
+    try {
+        const lunchId = +req.params.id;
+        await User.addFavorite(req.params.username, lunchId);
+        return res.json({favorited: lunchId});
     } catch (err) {
         return next(err);
     }

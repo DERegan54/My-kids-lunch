@@ -14,9 +14,9 @@ class Review {
     static async create ({reviewText, userId, lunchId}) {
        const result = await db.query(
                 `INSERT INTO reviews
-                (review_text, user_id, lunch_id)
-                VALUES ($1, $2, $3)
-                RETURNING id, review_text AS "reviewText", user_id AS "userId", lunch_id AS "lunchId"`,
+                 (review_text, user_id, lunch_id)
+                 VALUES ($1, $2, $3)
+                 RETURNING id, review_text AS "reviewText", user_id AS "userId", lunch_id AS "lunchId"`,
             [
                 reviewText,
                 userId,

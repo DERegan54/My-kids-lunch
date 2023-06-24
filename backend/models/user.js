@@ -53,7 +53,7 @@ class User {
     *   Returns {id, username, password, firstName, lastName, email}
     *   Throws BadRequestError on duplicates
     */
-    static async register({username, password, firstName, lastName, email, diet, allergies, preferences, aversions}) {
+    static async register({username, password, firstName, lastName, email, diet, allergies, preferences, aversions, favorites}) {
         // const duplicateCheck = await db.query(
         //         `SELECT username
         //          FROM users
@@ -77,8 +77,9 @@ class User {
                  diet,
                  allergies,
                  preferences,
-                 aversions)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                 aversions, 
+                 favorites)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                 RETURNING username, first_name AS "firstName, last_name AS lastName, email, diet, allergies, preferences, aversions"`,
             [
                 username, 
@@ -89,7 +90,8 @@ class User {
                 diet,
                 allergies,
                 preferences,
-                aversions
+                aversions, 
+                favorites
             ],
         );
 
@@ -98,7 +100,7 @@ class User {
     }
 
     /** Find all users
-     *  Returns [{id, username, first_name, last_name, email, diet, allergies, preferences, aversions},...]
+     *  Returns [{id, username, first_name, last_name, email, diet, allergies, preferences, aversions, favorites},...]
      */
     static async findAll() {
         const result = await db.query(
@@ -110,7 +112,8 @@ class User {
                         diet,
                         allergies,
                         preferences, 
-                        aversions
+                        aversions,
+                        favorites
                  FROM users
                  ORDER BY username`,
         );
@@ -118,7 +121,7 @@ class User {
     }
 
     /** Given am id , return data about that user
-     *  Returns {id, username, first_name, last_name, email, diet, allergies, preferences, aversions}
+     *  Returns {id, username, first_name, last_name, email, diet, allergies, preferences, aversions, favorites}
     */
     static async get(id) {
         const userRes = await db.query(
@@ -139,6 +142,14 @@ class User {
         const user = userRes.rows[0];
 
         if (!user) throw new NotFoundError(`No user: ${id}`);
+
+        const userFavoritesRes = await db.query(
+                `SELECT f.lunch_id
+                 FROM favorites AS f
+                 WHERE f.lunchId = $1`,
+            [lunchId]);
+        
+        user.favorites = userFavoritesRes.rows.map(f => f.lunch_id);
 
         return user;
     }
@@ -184,6 +195,29 @@ class User {
 
         delete user.password;
         return user;
+    }
+
+    static async addFavorite(username, lunchId) {
+        const preCheck = await db.query(
+                `SELECT id
+                 FROM lunches
+                 WHERE id = $1`, [lunchId]);
+        const lunch = preCheck.rows[0];
+
+        if (!lunch) throw new NotFoundError(`No lunch found: ${lunchId}`);
+
+        const preCheck2 = await db.query(
+                `SELECT username
+                 FROM users
+                 WHERE username = $1`,
+            [username]);
+        const user = preCheck2.rows[0];
+        if (!user) throw new NotFoundError(`No user found: ${username}`);
+
+        await db.query(
+                `INSERT INTO favorites (lunch_Id, username)
+                 VALUES ($1, $2)`,
+            [lunchId, username]);        
     }
 
     /** Delete a given user from database; returns undefined */
