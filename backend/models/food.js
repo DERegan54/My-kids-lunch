@@ -20,7 +20,7 @@ class Food {
     //     [title]);
 
     // if (duplicateCheck.rows=[0]) throw new BadRequestError(`Duplicate food: ${title}`);
-    const req = 
+   
     const result = await db.query(
                 `INSERT INTO foods
                 (title, category, serving_size, calories, fat, protein, carbohydrates, sugar)
