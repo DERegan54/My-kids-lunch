@@ -107,7 +107,6 @@ const ProfileForm = () => {
                         onChange={handleChange}>
                     </input>
                     <br></br>
-                    
                     <label htmlFor="diet">Diet Type: </label>
                     <input 
                         className='ProfileForm-dietInput'

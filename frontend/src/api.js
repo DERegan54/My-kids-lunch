@@ -94,21 +94,9 @@ class MklApi {
         return res.food;
     }
 
-    // Gets logged-in user, if it exists
-    static async getUser(id) {
-        let res = await this.request(`users/${id}`);
-        return res.user;
-    }
-
     // Registers for site
     static async registerUser(data) {
         let res = await this.request(`auth/register`, data, "post");
-        return res.token;
-    }
-
-    // Gets token for login from username and password
-    static async loginUser(data) {
-        let res = await this.request(`auth/token`, data, "post");
         return res.token;
     }
 
@@ -116,6 +104,18 @@ class MklApi {
     static async getAllUsers(id) {
         let res = await this.request(`users/`, {id});
         return res.users;
+    }
+
+    // Gets logged-in user, if it exists
+    static async getUser(username) {
+        let res = await this.request(`users/${username}`);
+        return res.user;
+    }
+
+    // Gets token for login from username and password
+    static async loginUser(data) {
+        let res = await this.request(`auth/token`, data, "post");
+        return res.token;
     }
 
     // Updates a user profile 

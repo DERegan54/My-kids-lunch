@@ -96,6 +96,50 @@ const RegistrationForm = ({signup}) => {
                         onChange={handleChange}>
                     </input>
                     <br></br>
+                    <label htmlFor="diet">Diet Type: </label>
+                    <input 
+                        className='ProfileForm-dietInput'
+                        type="text"
+                        name="diet"
+                        id="diet"
+                        placeholder="Enter your diet type"
+                        value={formData.diet}
+                        onChange={handleChange}>
+                    </input>
+                    <br></br>
+                    <label htmlFor="allergies">Food Allergies: </label>
+                    <input 
+                        className='ProfileForm-allergiesInput'
+                        type="text"
+                        name="allergies"
+                        id="allergies"
+                        placeholder="Enter food allergies"
+                        value={formData.allergies}
+                        onChange={handleChange}>
+                    </input>
+                    <br></br>
+                    <label htmlFor="preferences">Food Preferences: </label>
+                    <input 
+                        className='ProfileForm-preferencesInput'
+                        type="text"
+                        name="preferences"
+                        id="preferences"
+                        placeholder="Enter your food preferences"
+                        value={formData.preferences}
+                        onChange={handleChange}>
+                    </input>
+                    <br></br>
+                    <label htmlFor="aversions">Food Aversions: </label>
+                    <input 
+                        className='ProfileForm-aversionsInput'
+                        type="text"
+                        name="aversions"
+                        id="aversions"
+                        placeholder="Enter your food aversions"
+                        value={formData.aversions}
+                        onChange={handleChange}>
+                    </input>
+                    <br></br>
                     <br></br>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                     {registrationConfirmed ? <Alert messages={["Registration successful!"]} /> : null}

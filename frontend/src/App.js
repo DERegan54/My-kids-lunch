@@ -21,10 +21,10 @@ function App() {
     async function getCurrentUser() {
       if (token) {
         try {
-          let {id} = jwt_decode(token);
+          let {username} = jwt_decode(token);
           MklApi.token = token;
           console.log(token)
-          const currentUser = await MklApi.getUser(id);
+          const currentUser = await MklApi.getUser(username);
           setCurrentUser(currentUser)
           setFavoriteIds(new Set(currentUser.applications));
         } catch (error) {

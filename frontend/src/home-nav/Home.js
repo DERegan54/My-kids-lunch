@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import Header from '../common/Header';
 import UserContext from '../users/UserContext'
-import MklApi from '../api';
-import SearchForm from '../common/SearchForm';
 
 
 const Home = () => {
