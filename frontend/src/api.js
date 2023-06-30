@@ -71,8 +71,8 @@ class MklApi {
     }
 
     // Gets details on a food by id
-    static async getFood(id) {
-        let res = await this.request(`foods/${id}`);
+    static async getFood(title) {
+        let res = await this.request(`foods/${title}`);
         return res.food;
     }
 
@@ -126,7 +126,7 @@ class MklApi {
 
     // Deletes a user 
     static async removeUser(id) {
-        let res = await this.request(`users/${id}`, data, "delete");
+        let res = await this.request(`users/${id}`, "delete");
         return res.user;
     }
 
