@@ -34,10 +34,9 @@ const ProfileForm = () => {
             preferences: formData.preferences,
             aversions: formData.aversions,
         };
-        let id = formData.id;
         let updatedUserProfile;
         try {
-            updatedUserProfile = await MklApi.updateUser(id, data);
+            updatedUserProfile = await MklApi.updateUser(data);
         } catch (errors) {
             setFormErrors(errors);
             return;

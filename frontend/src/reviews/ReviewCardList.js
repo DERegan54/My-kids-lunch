@@ -8,7 +8,7 @@ const ReviewCardList = ({reviews}) => {
                 <ReviewCard
                     key={review.id}
                     id={review.id}
-                    lunchTitle={review.lunchId.title}
+                    text={review.reviewText}
                 />    
             ))}
         </div>

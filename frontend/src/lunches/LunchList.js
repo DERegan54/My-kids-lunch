@@ -25,10 +25,10 @@ const LunchList = () => {
         <div className='LunchList'>
             <SearchForm searchTerm={search} />
             <br></br>
-            <hr></hr>
+       
             <h2>Lunches:</h2>
                 <div className='LunchList-lunches'>
-                    <LunchCardList lunches={lunches}/>
+                    <LunchCardList lunches={lunches} />
                 </div>        
         </div>
     );

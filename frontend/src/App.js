@@ -15,7 +15,7 @@ function App() {
   const [userLoaded, setUserLoaded] = useState(false);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
-  const [favoriteIds, setFavoriteIds] = useState(new Set([]));
+  const [reviewIds, setReviewIds] = useState(new Set([]));
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -26,7 +26,8 @@ function App() {
           console.log(token)
           const currentUser = await MklApi.getUser(username);
           setCurrentUser(currentUser)
-          setFavoriteIds(new Set(currentUser.applications));
+          setReviewIds(new Set(currentUser.reviews));
+          // setFavoriteIds(new Set(currentUser.applications));
         } catch (error) {
           console.error('App loadUser: problem loading', error)
           setCurrentUser(null)
@@ -67,25 +68,32 @@ function App() {
     }
   }
 
-  function hasFavoritedLunch(id) {
-    return  favoriteIds && favoriteIds.has(id);
+  function hasReviewedLunch(id) {
+    return reviewIds && reviewIds.has(id);
 
   }
   
-  const addLunchToFavorites = (id) => {
-    if(hasFavoritedLunch(id)) return;
-    MklApi.addToFavorites(currentUser.username, id);
-    setFavoriteIds(new Set([...favoriteIds, id]));
+  async function reviewLunch (data) {
+    if (hasReviewedLunch(true)) return;
+    try {
+      let reviewData = await MklApi.createReview(data);
+      setReviewIds(new Set([...reviewIds, reviewData.id]));
+      return {success: true};
+    } catch (errors) {
+      console.error("review failed", errors);
+      return {success: false, errors};
+    }
   }
-
+   
+   
   
-  console.log(favoriteIds);
+  // console.log(favoriteIds);
 
   return ( 
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider
-            value={{currentUser, setCurrentUser, hasFavoritedLunch, addLunchToFavorites}}>
+            value={{currentUser, setCurrentUser, hasReviewedLunch, reviewLunch}}>
           <div className="App-container">
             <Navbar logout={logout} />
             <Routes login={loginUser} signup={registerUser} />

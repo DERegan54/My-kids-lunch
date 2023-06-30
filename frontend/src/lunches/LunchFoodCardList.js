@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {useParams, Redirect} from 'react-router-dom';
+import React from 'react';
 import LunchFoodCard from "../lunches/LunchFoodCard";
-import MklApi from '../api';
+
 
 const LunchFoodCardList = ({foods}) => {
     return (

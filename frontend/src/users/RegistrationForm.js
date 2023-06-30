@@ -6,12 +6,12 @@ import Alert from "../common/Alert";
 const RegistrationForm = ({signup}) => {
     const history = useHistory();
     const initialState = {
-        username: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-    }
+                            username: "",
+                            password: "",
+                            firstName: "",
+                            lastName: "",
+                            email: "",
+                        }
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [registrationConfirmed, setRegistrationConfirmed] = useState(false);

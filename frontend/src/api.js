@@ -137,9 +137,15 @@ class MklApi {
     }
 
     // Gets a list of all reviews
-    static async getAllReviews(id) {
-        let res = await this.request(`reviews/`, {id});
+    static async getAllReviews() {
+        let res = await this.request(`reviews/`);
         return res.reviews;
+    }
+
+    // Gets a specific review
+    static async getReview(id) {
+        let res = await this.request(`reviews/${id}`)
+        return res.review;
     }
 
     // Updates a review

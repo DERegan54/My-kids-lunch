@@ -6,22 +6,25 @@ import ReviewCardList from './ReviewCardList';
 const ReviewList = () => {
     const [reviews, setReviews] = useState([]);
 
-    useEffect( async function getAllReviews() {
+    useEffect(function getAllReviews() {
+        getReviews();
+    },[]);
+
+    async function getReviews() {
         let reviews = await MklApi.getAllReviews();
         setReviews(reviews);
-    }, []);
+    }
 
     console.log(reviews)
 
-    // if (!reviews) <Redirect to='/'></Redirect>
+    if (!reviews) <Redirect to='/'></Redirect>
 
     return (
         <div className='ReviewList'>
             <h2 className='ReviewList-h2'>All Lunch Reviews: </h2>
-            {reviews.length 
-                ? <ReviewCardList reviews={reviews} />
-                : <p>Sorry, not reviews were found!</p> 
-            }
+                <div className='ReviewList-reviews'>
+                    <ReviewCardList reviews={reviews} />
+                </div>
         </div>
     );
 }
