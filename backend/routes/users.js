@@ -20,10 +20,10 @@ router.get("/", async function(req, res, next) {
     }
 });
 
-/** GET /users/[id]: gets a specific user */
-router.get("/:id", async function(req, res, next) {
+/** GET /users/[username]: gets a specific user */
+router.get("/:username", async function(req, res, next) {
     try {
-        const user = await User.get(req.params.id);
+        const user = await User.get(req.params.username);
         return res.json({user});
     } catch (err) {
         return next(err);

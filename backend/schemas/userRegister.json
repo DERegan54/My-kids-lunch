@@ -40,7 +40,7 @@
       },
       "aversions": {
         "type": "string"
-      }
+      } 
     },
     "additionalProperties": false,
     "required": [

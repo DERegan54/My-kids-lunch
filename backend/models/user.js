@@ -53,7 +53,7 @@ class User {
     *   Returns {id, username, password, firstName, lastName, email}
     *   Throws BadRequestError on duplicates
     */
-    static async register({username, password, firstName, lastName, email, diet, allergies, preferences, aversions}) {
+    static async register({username, password, firstName, lastName, email , diet, allergies, preferences, aversions}) {
         // const duplicateCheck = await db.query(
         //         `SELECT username
         //          FROM users
@@ -88,8 +88,8 @@ class User {
                 email,
                 diet,
                 allergies,
-                preferences,
-                aversions, 
+                preferences, 
+                aversions,
             ],
         );
 
@@ -120,7 +120,7 @@ class User {
     /** Given am id , return data about that user
      *  Returns {id, username, first_name, last_name, email, diet, allergies, preferences, aversions, favorites}
     */
-    static async get(id) {
+    static async get(username) {
         const userRes = await db.query(
                 `SELECT id,
                         username,
@@ -132,13 +132,13 @@ class User {
                         preferences,
                         aversions
                  FROM users
-                 WHERE id = $1`,
-            [id],
+                 WHERE username = $1`,
+            [username],
         );
 
         const user = userRes.rows[0];
 
-        if (!user) throw new NotFoundError(`No user: ${id}`);
+        if (!user) throw new NotFoundError(`No user: ${username}`);
 
         // const userFavoritesRes = await db.query(
         //         `SELECT f.lunch_id
