@@ -30,21 +30,21 @@ const Navbar = ({logout}) => {
     }
 
     return (
-        <div className="Navbar-loggedIn">
-                <span><button><NavLink to="/">Home</NavLink></button></span>
-                <span><button><NavLink to="/lunches">Lunches</NavLink></button></span>
-                <span><button><NavLink to="/foods">Food Items</NavLink></button></span>
-                <span><button><NavLink to="/reviews">Reviews</NavLink></button></span>
-                <span><button><NavLink to="/profile/favorites">Favorites</NavLink></button></span>
-                <span><button><NavLink to="/profile"> Profile</NavLink></button></span>
-                <span><button><Link to="/" onClick={logout}>Log Out</Link></button></span>
-        </div> 
-        );
-    }
-//         <div className='Navbar'>
-//             {currentUser ? navIfLoggedIn() : navIfLoggedOut()}
-//         </div>
-//     );
-// }
+    //     <div className="Navbar-loggedIn">
+    //             <span><button><NavLink to="/">Home</NavLink></button></span>
+    //             <span><button><NavLink to="/lunches">Lunches</NavLink></button></span>
+    //             <span><button><NavLink to="/foods">Foods</NavLink></button></span>
+    //             <span><button><NavLink to="/reviews">Reviews</NavLink></button></span>
+    //             <span><button><NavLink to="/profile/favorites">Favorites</NavLink></button></span>
+    //             <span><button><NavLink to="/profile"> Profile</NavLink></button></span>
+    //             <span><button><Link to="/" onClick={logout}>Log Out</Link></button></span>
+    //     </div> 
+    //     );
+    // }
+        <div className='Navbar'>
+            {currentUser ? navIfLoggedIn() : navIfLoggedOut()}
+        </div>
+    );
+}
 
 export default Navbar;

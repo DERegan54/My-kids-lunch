@@ -1,27 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {useParams, Redirect} from 'react-router-dom';
-import FoodCard from "../foods/FoodCard";
+import LunchFoodCard from "../lunches/LunchFoodCard";
 import MklApi from '../api';
 
-const LunchFoodCardList = ({id}) => {
-    const [lunch, setLunch] = useState();
-    const [foods, setFoods] = useState([]);
-    
-
-    useEffect(() => {
-        async function getLunch() {
-            let lunch = MklApi.getLunch(id);
-            setLunch(lunch)
-            setFoods(lunch.foods);
-        }
-        getLunch();
-        
-    }, [id]);
-
+const LunchFoodCardList = ({foods}) => {
     return (
         <div className='LunchFoodCardList'>
             {foods.map(food => (
-                <FoodCard
+                <LunchFoodCard
                     key={food.id}
                     id={food.id}
                     title={food.title}

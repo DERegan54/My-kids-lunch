@@ -3,6 +3,7 @@ import {useParams, Redirect} from 'react-router-dom';
 import MklApi from '../api';
 import Header from '../common/Header';
 import LunchCard from "./LunchCard";
+import LunchFoodCardList from "./LunchFoodCardList";
 
 const LunchDetail = () => {
     const {id} = useParams();
@@ -25,7 +26,10 @@ const LunchDetail = () => {
     return (
         <div className="LunchDetail">
             <Header />
-            <LunchCard lunch={lunch}/>
+            <br></br>
+            <div className='LunchDetail-foods'>
+                <LunchFoodCardList foods={foods} />
+            </div>
         </div>
     );
 }

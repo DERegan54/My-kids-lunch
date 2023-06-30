@@ -24,7 +24,9 @@ const LunchList = () => {
     return (
         <div className='LunchList'>
             <SearchForm searchTerm={search} />
-            <h2>All Lunches:</h2>
+            <br></br>
+            <hr></hr>
+            <h2>Lunches:</h2>
                 <div className='LunchList-lunches'>
                     <LunchCardList lunches={lunches}/>
                 </div>        

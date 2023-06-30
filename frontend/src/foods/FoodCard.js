@@ -1,12 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
-const FoodCard = ({id, title, category}) => {
+const FoodCard = ({title, servingSize, calories, fat, protein, carbohydrates, sugar, lunchId}) => {
     return (
         <div className="FoodCard">
-            <p>{`${title}`}</p>
-            <p>{`${category}`}</p>
-            <Link to={`/foods/${title}`}><button>See nutrition info for {`${title}`}</button> </Link>
+            <h2>{`${title}`}</h2>
+            <p><b>Serving Size: </b> {`${servingSize}`}</p>
+            <p><b>Calories:</b> {`${calories}`}</p>
+            <p><b>Fat: </b>{`${fat}`} grams</p>
+            <p><b>Protein: </b>{`${protein}`} grams</p>
+            <p><b>Carbohydrates: </b>{`${carbohydrates}`} grams</p>
+            <p><b>Sugar: </b>{`${sugar}`} grams</p>
+            <br></br>
             <hr></hr>
         </div>
     );

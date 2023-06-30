@@ -5,9 +5,10 @@ import {Link} from 'react-router-dom';
 const LunchCard = ({id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage}) => {
     return (
         <div className='LunchCard'>
-                <p>{title}</p>
+                <h3>{title}</h3>
                 <p>{description}</p>
-                <button className='LunchCard-linkToDetailsButton'><Link to={`/lunches/${id}`}>See Nutrition Info</Link></button>
+                <button className='LunchCard-linkToDetailsButton'><Link to={`/lunches/${id}`}>See Nutrition Information</Link></button>
+                <button className='LunchCard-addFavoriteButton'>Add Lunch to Favorites</button>
         </div>
     );
 }

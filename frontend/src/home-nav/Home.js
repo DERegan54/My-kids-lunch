@@ -36,20 +36,20 @@ const Home = () => {
     }
 
     return (
-        <div className='Home-loggedIn'>
-        <Header />
-        <h2>Welcome, Danielle!</h2>
-        <h4>What's for Lunch?</h4>
-    </div>
-    );
-}
-
-//         <div className="Home">
-//             <div className="Home-container">
-//                 {currentUser ? homeIfLoggedIn() : homeIfLoggedOut()}
-//             </div>
-//         </div>
+//         <div className='Home-loggedIn'>
+//         <Header />
+//         <h2>Welcome, Danielle!</h2>
+//         <h4>What's for Lunch?</h4>
+//     </div>
 //     );
 // }
+
+        <div className="Home">
+            <div className="Home-container">
+                {currentUser ? homeIfLoggedIn() : homeIfLoggedOut()}
+            </div>
+        </div>
+    );
+}
 
 export default Home;

@@ -3,7 +3,7 @@ import {BrowserRouter} from 'react-router-dom';
 import Navbar from './home-nav/Navbar';
 import Routes from './routes/Routes'
 import useLocalStorage from './UseLocalStorage';
-import JoblyApi from './api';
+import MklApi from './api';
 import UserContext from './users/UserContext';
 import jwt_decode from 'jwt-decode';
 import "./App.css"
@@ -15,18 +15,18 @@ function App() {
   const [userLoaded, setUserLoaded] = useState(false);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
-  const [applicationIds, setApplicationIds] = useState(new Set([]));
+  const [favoriteIds, setFavoriteIds] = useState(new Set([]));
 
   useEffect(() => {
     async function getCurrentUser() {
       if (token) {
         try {
-          let {username} = jwt_decode(token);
-          JoblyApi.token = token;
+          let {id} = jwt_decode(token);
+          MklApi.token = token;
           console.log(token)
-          const currentUser = await JoblyApi.getUser(username);
+          const currentUser = await MklApi.getUser(id);
           setCurrentUser(currentUser)
-          setApplicationIds(new Set(currentUser.applications));
+          setFavoriteIds(new Set(currentUser.applications));
         } catch (error) {
           console.error('App loadUser: problem loading', error)
           setCurrentUser(null)
@@ -47,7 +47,7 @@ function App() {
   // Handles user sign up
   async function registerUser(data) {
     try {
-      let token = await JoblyApi.registerUser(data);
+      let token = await MklApi.registerUser(data);
       setToken(token);
       return {success: true};
     } catch (errors) {
@@ -58,7 +58,7 @@ function App() {
 
   async function loginUser(data) {
     try {
-      let token = await JoblyApi.loginUser(data);
+      let token = await MklApi.loginUser(data);
       setToken(token);
       return {success: true};
     } catch (errors) {
@@ -67,25 +67,25 @@ function App() {
     }
   }
 
-  function hasAppliedToJob(id) {
-    return  applicationIds && applicationIds.has(id);
+  function hasFavoritedLunch(id) {
+    return  favoriteIds && favoriteIds.has(id);
 
   }
   
-  const applyToJob = (id) => {
-    if(hasAppliedToJob(id)) return;
-    JoblyApi.applyToJob(currentUser.username, id);
-    setApplicationIds(new Set([...applicationIds, id]));
+  const addLunchToFavorites = (id) => {
+    if(hasFavoritedLunch(id)) return;
+    MklApi.addToFavorites(currentUser.username, id);
+    setFavoriteIds(new Set([...favoriteIds, id]));
   }
 
   
-  console.log(applicationIds);
+  console.log(favoriteIds);
 
   return ( 
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider
-            value={{currentUser, setCurrentUser, hasAppliedToJob, applyToJob}}>
+            value={{currentUser, setCurrentUser, hasFavoritedLunch, addLunchToFavorites}}>
           <div className="App-container">
             <Navbar logout={logout} />
             <Routes login={loginUser} signup={registerUser} />
