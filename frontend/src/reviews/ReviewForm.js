@@ -1,15 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import React, {useState, useEffect, useContext} from 'react';
+import {Link} from 'react-router-dom';
 import Header from '../common/Header';
 import Alert from '../common/Alert';
+import UserContext from '../users/UserContext';
 import MklApi from '../api';
 
 const ReviewForm = ({id}) => {
+    const {currentUser, setCurrentUser} = useContext(UserContext);
     const initialState = {reviewText: "", userId: "", lunchId: ""}
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [reviewAdded, setReviewAdded] = useState(false);
     const [lunch, setLunch] = useState([]);
+
 
 
     useEffect(() => {
@@ -24,16 +27,21 @@ const ReviewForm = ({id}) => {
     // Handles form submit
     async function handleSubmit(evt) {
         evt.preventDefault();
-        let data = {reviewText: formData.reviewText};
-        let review;
+        let data = {
+            reviewText: formData.reviewText,
+            userId: currentUser.id,
+            lunchId: id
+        };
+        let userReview;
         try {
-            review = await MklApi.createReview(data);
+           userReview = await MklApi.createReview(data);
         } catch (errors) {
             setFormErrors(errors);
             return;
         }
         setFormData(data => ({...data}));
         setFormErrors([]);
+        setCurrentUser(userReview);
         setReviewAdded(true);
     }
 
@@ -47,7 +55,7 @@ const ReviewForm = ({id}) => {
         <div className='ReviewForm'>
             <Header />
             <div className='ReviewForm-container'>
-                <h3>Review {lunch.title} here:</h3>
+                <h3>Review here:</h3>
                 <br></br>
                 <form onSubmit={handleSubmit}>
                     <input 
@@ -66,7 +74,7 @@ const ReviewForm = ({id}) => {
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
 export default ReviewForm;

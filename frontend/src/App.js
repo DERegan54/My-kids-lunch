@@ -15,7 +15,9 @@ function App() {
   const [userLoaded, setUserLoaded] = useState(false);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
+  const [favoriteIds, setFavoriteIds] = useState(new Set([]));
   const [reviewIds, setReviewIds] = useState(new Set([]));
+
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -26,8 +28,8 @@ function App() {
           console.log(token)
           const currentUser = await MklApi.getUser(username);
           setCurrentUser(currentUser)
+          setFavoriteIds(new Set(currentUser.favorites));
           setReviewIds(new Set(currentUser.reviews));
-          // setFavoriteIds(new Set(currentUser.applications));
         } catch (error) {
           console.error('App loadUser: problem loading', error)
           setCurrentUser(null)
@@ -68,6 +70,18 @@ function App() {
     }
   }
 
+  const hasAddedToFavorites = (id) => {
+    return favoriteIds && favoriteIds.has(id);
+  }
+
+  const addToFavorites = (id) => {
+    if (hasAddedToFavorites(id)) return;
+    MklApi.addToFavorites(currentUser.id, id);
+    setFavoriteIds(new Set([...favoriteIds, id]));
+  }
+
+  console.log(typeof favoriteIds);
+
   function hasReviewedLunch(id) {
     return reviewIds && reviewIds.has(id);
 
@@ -85,15 +99,12 @@ function App() {
     }
   }
    
-   
-  
-  // console.log(favoriteIds);
 
   return ( 
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider
-            value={{currentUser, setCurrentUser, hasReviewedLunch, reviewLunch}}>
+            value={{currentUser, setCurrentUser, hasAddedToFavorites, addToFavorites, hasReviewedLunch, reviewLunch}}>
           <div className="App-container">
             <Navbar logout={logout} />
             <Routes login={loginUser} signup={registerUser} />

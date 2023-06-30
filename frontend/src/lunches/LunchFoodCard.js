@@ -1,5 +1,4 @@
 import React from 'react';
-import {useParams} from 'react-router-dom';
 
 const LunchFoodCard = ({title, servingSize, calories, fat, protein, carbohydrates, sugar, lunchId}) => {
    

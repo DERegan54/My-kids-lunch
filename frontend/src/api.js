@@ -159,6 +159,11 @@ class MklApi {
         let res = await this.request(`reviews/${id}`, "delete");
         return res.review;
     }
+
+    // // Adds lunch to favorites
+    // static async addToFavorites(userId, id) {
+    //     await this.request(`users/${userId}/lunches/${id}`, {}, "post")
+    // }
 }
 
 export default MklApi;

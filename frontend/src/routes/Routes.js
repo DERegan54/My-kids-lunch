@@ -5,10 +5,11 @@ import RegistrationForm from '../users/RegistrationForm';
 import Profile from '../users/ProfileCard';
 import LoginForm from '../users/LoginForm';
 import LunchList from '../lunches/LunchList';
-import LunchDetail from '../lunches/LunchDetail';
+import LunchNutrition from '../lunches/LunchNutrition';
+import ReviewList from '../reviews/ReviewList';
 import FoodList from '../foods/FoodList';
 import FoodDetail from '../foods/FoodDetail';
-import ReviewList from '../reviews/ReviewList';
+import LunchReview from '../lunches/LunchReview';
 import ReviewForm from '../reviews/ReviewForm';
 import PrivateRoute from './PrivateRoute';
 
@@ -25,13 +26,14 @@ const Routes = ({login, signup}) => {
 
                 <PrivateRoute exact path="/profile"><Profile /></PrivateRoute>
                 <PrivateRoute exact path="/lunches"><LunchList /></PrivateRoute>
-                <PrivateRoute exact path="/lunches/:id"><LunchDetail /></PrivateRoute>
+                <PrivateRoute exact path="/lunches/:id/nutrition"><LunchNutrition /></PrivateRoute>
+                <PrivateRoute exact path="/lunches/:id/reviews"><LunchReview /></PrivateRoute>
                 <PrivateRoute exact path="/lunches/:id/addreview"><ReviewForm /></PrivateRoute>
                 <PrivateRoute exact path="/foods"><FoodList /></PrivateRoute>
                 <PrivateRoute exact path="/foods/:id"><FoodDetail /></PrivateRoute>
-                <PrivateRoute exact path="/reviews"><ReviewList /></PrivateRoute>
+                {/* <PrivateRoute exact path="/reviews"><ReviewList /></PrivateRoute>
                 <PrivateRoute exact path="/reviews/:id"><ReviewForm /></PrivateRoute>
-                
+                 */}
                 <Redirect to="/"></Redirect>
 
             </Switch>
