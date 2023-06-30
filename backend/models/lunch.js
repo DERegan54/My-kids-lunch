@@ -158,12 +158,23 @@ class Lunch {
                         sugar,
                         lunch_id AS "lunchId"
                  FROM foods
-                  WHERE lunch_id = $1
-                  ORDER BY id`,
+                 WHERE lunch_id = $1
+                 ORDER BY id`,
             [id],
         ); 
 
         lunch.foods = foodsRes.rows;
+
+        const reviewsRes = await db.query (
+                `SELECT id, review_text AS "reviewText", user_id AS "userId", lunch_id AS "lunchId"
+                FROM reviews
+                WHERE lunch_id = $1
+                ORDER BY id`,
+            [id], 
+        );
+
+        lunch.reviews - reviewsRes.rows;
+
         return lunch;
     }
 
