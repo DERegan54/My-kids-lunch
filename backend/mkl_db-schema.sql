@@ -50,9 +50,9 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE favorites (
-    id SERIAL PRIMARY KEY,
     user_id INTEGER
         REFERENCES users ON DELETE CASCADE,
     lunch_id INTEGER 
-        REFERENCES lunches ON DELETE CASCADE
+        REFERENCES lunches ON DELETE CASCADE,
+    PRIMARY KEY (user_id, lunch_id)
 );

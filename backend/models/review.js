@@ -69,7 +69,7 @@ class Review {
                         sweet, 
                         beverage
                  FROM lunches
-                 WHERE rev_id = $1`,
+                 WHERE lunch_id = $1`,
             [lunch_id]
         );
 

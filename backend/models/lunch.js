@@ -173,7 +173,19 @@ class Lunch {
             [id], 
         );
 
-        lunch.reviews - reviewsRes.rows;
+        lunch.reviews = reviewsRes.rows;
+
+        // const favoritesRes = await db.query(
+        //         `SELECT id,
+        //                 user_id AS "userId",
+        //                 lunch_id AS "lunchId"
+        //          FROM favorites
+        //          WHERE lunch_id = $1
+        //          ORDER BY id`,       
+        //     [id],
+        // );
+
+        // lunch.favorites = favoritesRes.rows;
 
         return lunch;
     }

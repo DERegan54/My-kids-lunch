@@ -10,14 +10,14 @@ class Favorite {
     /** Creates a favorite (from data), update db, return new favorite data 
      *  Data should include {user_id, lunchId} 
     */
-    static async create({username, lunchId}) {
+    static async create({userId, lunchId}) {
         const result = await db.query(
                 `INSERT INTO favorites
-                 (username, lunch_id)
+                 (user_id, lunch_id)
                  VALUES ($1, $2)
                  RETURNING username, lunch_id AS "lunchId"`
             [
-                username,
+                userId,
                 lunchId
             ],
         );
