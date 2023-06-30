@@ -53,7 +53,7 @@ class User {
     *   Returns {id, username, password, firstName, lastName, email}
     *   Throws BadRequestError on duplicates
     */
-    static async register({username, password, firstName, lastName, email, diet, allergies, preferences, aversions, favorites}) {
+    static async register({username, password, firstName, lastName, email, diet, allergies, preferences, aversions}) {
         // const duplicateCheck = await db.query(
         //         `SELECT username
         //          FROM users
@@ -77,9 +77,8 @@ class User {
                  diet,
                  allergies,
                  preferences,
-                 aversions, 
-                 favorites)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                 aversions)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                 RETURNING username, first_name AS "firstName, last_name AS lastName, email, diet, allergies, preferences, aversions"`,
             [
                 username, 
@@ -91,7 +90,6 @@ class User {
                 allergies,
                 preferences,
                 aversions, 
-                favorites
             ],
         );
 
@@ -100,7 +98,7 @@ class User {
     }
 
     /** Find all users
-     *  Returns [{id, username, first_name, last_name, email, diet, allergies, preferences, aversions, favorites},...]
+     *  Returns [{id, username, first_name, last_name, email, diet, allergies, preferences, aversions},...]
      */
     static async findAll() {
         const result = await db.query(
@@ -112,8 +110,7 @@ class User {
                         diet,
                         allergies,
                         preferences, 
-                        aversions,
-                        favorites
+                        aversions
                  FROM users
                  ORDER BY username`,
         );
@@ -143,13 +140,13 @@ class User {
 
         if (!user) throw new NotFoundError(`No user: ${id}`);
 
-        const userFavoritesRes = await db.query(
-                `SELECT f.lunch_id
-                 FROM favorites AS f
-                 WHERE f.lunchId = $1`,
-            [lunchId]);
+        // const userFavoritesRes = await db.query(
+        //         `SELECT f.lunch_id
+        //          FROM favorites AS f
+        //          WHERE f.lunchId = $1`,
+        //     [lunchId]);
         
-        user.favorites = userFavoritesRes.rows.map(f => f.lunch_id);
+        // user.favorites = userFavoritesRes.rows.map(f => f.lunch_id);
 
         return user;
     }

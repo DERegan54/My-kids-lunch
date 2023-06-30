@@ -11,6 +11,20 @@ CREATE TABLE users(
     aversions TEXT
 );
 
+CREATE TABLE lunches (
+    id SERIAL PRIMARY KEY, 
+    title TEXT,  
+    description TEXT,   
+    protein TEXT,
+    carb TEXT,
+    fruit TEXT,
+    vegetable TEXT,
+    fat TEXT,
+    sweet TEXT,
+    beverage TEXT
+);
+
+
 CREATE TABLE foods (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
@@ -20,24 +34,11 @@ CREATE TABLE foods (
     fat FLOAT,
     protein FLOAT,
     carbohydrates FLOAT,
-    sugar FLOAT
+    sugar FLOAT,
+    lunch_id INTEGER
+        REFERENCES lunches
 );
 
-CREATE TABLE lunches (
-    id SERIAL PRIMARY KEY, 
-    title TEXT,     
-    protein TEXT,
-    carbohydrate TEXT,
-    fruit TEXT,
-    vegetable TEXT,
-    fat TEXT,
-    sweet TEXT,
-    beverage TEXT,
-    user_id INTEGER 
-        REFERENCES users,
-    food_id INTEGER 
-        REFERENCES foods
-);
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,  
@@ -49,9 +50,9 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE favorites (
+    id SERIAL PRIMARY KEY,
     user_id INTEGER
         REFERENCES users ON DELETE CASCADE,
     lunch_id INTEGER 
-        REFERENCES lunches ON DELETE CASCADE,
-    PRIMARY KEY (user_id, lunch_id)
+        REFERENCES lunches ON DELETE CASCADE
 );

@@ -31,32 +31,15 @@
         "minLength": 6,
         "maxLength": 60,
         "format": "email"
-      },
-      "diet": {
-        "type": "string"
-      },
-      "allergies": {
-        "type": "string"
-      },
-      "preferences": {
-        "type": "string"
-      },
-      "aversions": {
-        "type": "string"
       }
     },
     "additionalProperties": false,
-    "required": [
-      "id",  
+    "required": [ 
       "username",
       "firstName",
       "lastName",
       "password",
-      "email",
-      "diet",
-      "allergies",
-      "preferences",
-      "aversions"
+      "email"
     ]
   }
   

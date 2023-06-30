@@ -108,7 +108,6 @@ class Food {
     const food  = foodRes.rows[0];
 
     if (!food) throw new NotFoundError(`No food found: ${id}`);
-
     return food;
   }
 

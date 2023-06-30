@@ -9,10 +9,10 @@ const {sqlForPartialUpdate} = require("../helpers/sql");
 class Lunch {
 
     /** Creates a lunch (from data), update db, return new lunch data
-     *  Data should include {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}
+     *  Data should include {id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}
      *  Throws BadRequestError if lunch already in database
      */
-    static async create ({title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}) {
+    static async create ({title, description, protein, carb, fruit, vegetable, fat, sweet, beverage}) {
         // const duplicateCheck = await db.query(
         //         `SELECT title
         //          FROM lunches
@@ -24,11 +24,12 @@ class Lunch {
         
         const result = await db.query(
                 `INSERT INTO lunches
-                 (title, protein, carb, fruit, vegetable, fat, sweet, beverage, user_id)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-                 RETURNING id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, user_id AS "userId"`,
+                 (title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, user_id)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                 RETURNING id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, user_id AS "userId"`,
             [
                 title, 
+                description,
                 protein,
                 carb,
                 fruit,
@@ -45,29 +46,34 @@ class Lunch {
     }
 
     /** Finds all lunches (optinoal filter on searchFilters) 
-     *  searchFilters (all optional): title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId (will find case-insensitive, partial matches)
+     *  searchFilters (all optional): title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, userId (will find case-insensitive, partial matches)
      *  Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}, ...]
     */
     static async findAll(searchFilters = {}) {
         let query = `SELECT id,
                             title,
+                            description,
                             protein,
                             carb,
                             fruit,
                             vegetable,
                             fat,
                             sweet,
-                            beverage, 
-                            user_id AS "userId"
+                            beverage
                      FROM lunches`;
         let whereExpressions = [];
         let queryValues = [];
 
-        const {title, protein, carb, fruit, vegetable, fat, sweet, beverage} = searchFilters;
+        const {title, description, protein, carb, fruit, vegetable, fat, sweet, beverage} = searchFilters;
 
         if (title !== undefined) {
             queryValues.push(title);
             whereExpressions.push(`title ILIKE $${queryValues.length}`);
+        }
+
+        if (description !== undefined) {
+            queryValues.push(description);
+            whereExpressions.push(`description ILIKE $${queryValues.length}`);
         }
 
         if (protein !== undefined) {
@@ -125,6 +131,7 @@ class Lunch {
         const lunchRes = await db.query(
             `SELECT id,
                     title,
+                    description,
                     protein,
                     carb, 
                     fruit,
@@ -139,7 +146,24 @@ class Lunch {
         const lunch = lunchRes.rows[0];
 
         if (!lunch) throw new NotFoundError(`No lunch found: ${id}`);
+        
+        const foodsRes = await db.query(
+                `SELECT id,
+                        title, 
+                        serving_size AS "servingSize",
+                        calories,
+                        fat,
+                        protein,
+                        carbohydrates,
+                        sugar,
+                        lunch_id AS "lunchId"
+                 FROM foods
+                  WHERE lunch_id = $1
+                  ORDER BY id`,
+            [id],
+        ); 
 
+        lunch.foods = foodsRes.rows;
         return lunch;
     }
 
@@ -147,7 +171,7 @@ class Lunch {
    *
    * This is a "partial update" --- it's fine if data doesn't contain all the
    * fields; this only changes provided ones.
-   * Data can include: {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}
+   * Data can include: {id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage}
    * Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}, ...]
    * Throws NotFoundError if lunch not found.
    */
@@ -161,6 +185,7 @@ class Lunch {
                           WHERE id = ${idVarIdx} 
                           RETURNING id,
                                     title,
+                                    description,
                                     protein,
                                     carb,
                                     fruit,
