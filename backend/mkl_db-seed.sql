@@ -28,12 +28,10 @@ VALUES ('Ham', 'protein', '3 oz', 180, 5, 0.3, 0.5, 21, 1),
        
 
 INSERT INTO reviews (review_text, user_id, lunch_id)
-VALUES ('delicious', 2, 1),
-       ('boring', 3, 2);
+VALUES ('Delicious!  I love ham!', 3, 1),
+       ('I am allergic!', 4, 2),
+       ('Classic! Reminds me of being a kid!', 5, 2),
+       ('Boring and disappointing to find in a lunchbox.', 7, 2);
 
-
-INSERT INTO favorites (user_id, lunch_id)
-VALUES (2, 2),
-       (1, 1);
                    
      

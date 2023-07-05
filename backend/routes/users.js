@@ -30,6 +30,16 @@ router.get("/:username", async function(req, res, next) {
     }
 });
 
+/** GET /users/[id]: gets a user's username by id */
+router.get("/username/:id", async function (req, res, next) {
+    try {
+        const username = await User.getUsername(req.params.id);
+        return res.json({username});
+    } catch (err) {
+        return next(err);
+    }
+});
+
 /** PATCH /[id] { user } => { user }: updates a user */
 router.patch("/:id", async function (req, res, next) {
     try {
@@ -50,13 +60,14 @@ router.delete("/:id", async function (req, res, next) {
     }
 });
 
-/** POST /[username]/lunches/[id] {state} => {favorite}
+/** POST users/[username]/lunches/[id] {state} => {favorite} adds a favprotes
  *  returns {"favorited": id}
  */
-router.post("/:username/lunches/:id", async function (req, res, next) {
+router.post("/:userId/lunches/:lunchId", async function (req, res, next) {
     try {
-        const lunchId = +req.params.id;
-        await User.addFavorite(req.params.username, lunchId);
+        const userId = +req.params.userId;
+        const lunchId = +req.params.lunchId;
+        await User.addFavorite(userId, lunchId);
         return res.json({favorited: lunchId});
     } catch (err) {
         return next(err);

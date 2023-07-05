@@ -29,6 +29,9 @@
         },
         "beverage": {
           "type": "string"
+        },
+        "favorite": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false,

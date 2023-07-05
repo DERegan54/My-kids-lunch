@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import Header from '../common/Header';
 import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
@@ -11,18 +11,6 @@ const ReviewForm = ({id}) => {
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [reviewAdded, setReviewAdded] = useState(false);
-    const [lunch, setLunch] = useState([]);
-
-
-
-    useEffect(() => {
-        getLunch(id);
-    }, [id]);
-
-    async function getLunch(id) {
-        let lunch = MklApi.getLunch(id);
-        setLunch(lunch);
-    }
 
     // Handles form submit
     async function handleSubmit(evt) {
@@ -70,7 +58,7 @@ const ReviewForm = ({id}) => {
                     </input>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                     {reviewAdded ? <Alert messages={["Review added successfully"]} /> : null}
-                    <button type="submit" onSubmit={handleSubmit}><Link to="/reviews">Submit review!</Link></button>
+                    <button type="submit" onSubmit={handleSubmit}><Link to="/users/reviews">Submit review!</Link></button>
                 </form>
             </div>
         </div>

@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const {sqlForPartialUpdate} = require("../helpers/sql");
 const {
     NotFoundError,
-    BadRequestError,
     UnauthorizedError,
 } = require("../expressError");
 
@@ -21,7 +20,8 @@ class User {
     static async authenticate(username, password) {
         // look for user
         const result = await db.query(
-                `SELECT username, 
+                `SELECT id,
+                    username, 
                     password,
                     first_name AS "firstName",
                     last_name AS "lastName",
@@ -117,7 +117,7 @@ class User {
         return result.rows;
     }
 
-    /** Given am id , return data about that user
+    /** Given a username , return data about that user
      *  Returns {id, username, first_name, last_name, email, diet, allergies, preferences, aversions, favorites}
     */
     static async get(username) {
@@ -140,16 +140,28 @@ class User {
 
         if (!user) throw new NotFoundError(`No user: ${username}`);
 
-        // const userFavoritesRes = await db.query(
-        //         `SELECT f.lunch_id
-        //          FROM favorites AS f
-        //          WHERE f.lunchId = $1`,
-        //     [lunchId]);
-        
-        // user.favorites = userFavoritesRes.rows.map(f => f.lunch_id);
-
         return user;
     }
+    
+
+    /** Given an id return username
+     *  Returns {id, username}
+    **/
+    static async getUsername(id) {
+        const usernameRes = await db.query(
+                `SELECT id,
+                        username
+                 FROM users
+                 WHERE id = $1`,
+            [id],
+        );
+
+        const username = usernameRes.rows[0];
+        if (!username) throw new NotFoundError(`No userId: ${id}`);
+
+        return username;
+    }
+
 
     /** Updates user data with `data 
      *  This is a "partial update" -- it's find if data doesn't contain all
@@ -194,27 +206,29 @@ class User {
         return user;
     }
 
-    static async addFavorite(username, lunchId) {
+    static async addFavorite(id, lunchId) {
         const preCheck = await db.query(
                 `SELECT id
                  FROM lunches
-                 WHERE id = $1`, [lunchId]);
+                 WHERE id= $1`,
+            [lunchId]);
         const lunch = preCheck.rows[0];
 
         if (!lunch) throw new NotFoundError(`No lunch found: ${lunchId}`);
-
+       
         const preCheck2 = await db.query(
-                `SELECT username
+                `SELECT id
                  FROM users
-                 WHERE username = $1`,
-            [username]);
+                 WHERE id = $1`, 
+            [id]);
         const user = preCheck2.rows[0];
-        if (!user) throw new NotFoundError(`No user found: ${username}`);
+
+        if (!user) throw new NotFoundError(`No user found: ${id}`);
 
         await db.query(
-                `INSERT INTO favorites (lunch_Id, username)
+                `INSERT INTO favorites (lunch_id, user_id)
                  VALUES ($1, $2)`,
-            [lunchId, username]);        
+            [lunchId, id]);        
     }
 
     /** Delete a given user from database; returns undefined */

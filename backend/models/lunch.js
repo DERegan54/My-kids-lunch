@@ -47,7 +47,7 @@ class Lunch {
 
     /** Finds all lunches (optinoal filter on searchFilters) 
      *  searchFilters (all optional): title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, userId (will find case-insensitive, partial matches)
-     *  Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}, ...]
+     *  Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, favorite}, ...]
     */
     static async findAll(searchFilters = {}) {
         let query = `SELECT id,
@@ -59,12 +59,13 @@ class Lunch {
                             vegetable,
                             fat,
                             sweet,
-                            beverage
+                            beverage,
+                            favorite
                      FROM lunches`;
         let whereExpressions = [];
         let queryValues = [];
 
-        const {title, description, protein, carb, fruit, vegetable, fat, sweet, beverage} = searchFilters;
+        const {title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, favorite} = searchFilters;
 
         if (title !== undefined) {
             queryValues.push(title);
@@ -111,6 +112,11 @@ class Lunch {
             whereExpressions.push(`beverage ILIKE $${queryValues.length}`);
         }
 
+        if (favorite === true) {
+            queryValues.push(favorite);
+            whereExpressions.push(`favorite ILIKE $${queryValues.length}`);
+        }
+
         if (whereExpressions.length > 0) {
             query += " WHERE " + whereExpressions.join(" AND ");
         }
@@ -124,7 +130,7 @@ class Lunch {
 
     /** Given a lunch id, return data about lunch.
    *
-   * Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}, ...]
+   * Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, favorite}, ...]
    * Throws NotFoundError if lunch not found.
    **/
    static async get(id) {
@@ -138,7 +144,8 @@ class Lunch {
                     vegetable, 
                     fat, 
                     sweet,
-                    beverage
+                    beverage,
+                    favorite
             FROM lunches
             WHERE id = $1`,
         [id]);
@@ -174,18 +181,6 @@ class Lunch {
         );
 
         lunch.reviews = reviewsRes.rows;
-
-        // const favoritesRes = await db.query(
-        //         `SELECT id,
-        //                 user_id AS "userId",
-        //                 lunch_id AS "lunchId"
-        //          FROM favorites
-        //          WHERE lunch_id = $1
-        //          ORDER BY id`,       
-        //     [id],
-        // );
-
-        // lunch.favorites = favoritesRes.rows;
 
         return lunch;
     }

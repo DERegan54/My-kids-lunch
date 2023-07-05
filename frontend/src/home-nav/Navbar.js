@@ -10,10 +10,11 @@ const Navbar = ({logout}) => {
             <div className="Navbar-loggedIn">
                 <span><button><NavLink to="/">Home</NavLink></button></span>
                 <span><button><NavLink to="/lunches">Lunches</NavLink></button></span>
+                <span><button><NavLink to="/lunches/addlunch">Add a Lunch</NavLink></button></span>
                 <span><button><NavLink to="/foods">Food Items</NavLink></button></span>
-                <span><button><NavLink to="/reviews">Reviews</NavLink></button></span>
-                <span><button><NavLink to="/profile/favorites">{currentUser.firstName || currentUser.username}'s Favorites</NavLink></button></span>
-                <span><button><NavLink to="/profile">{currentUser.firstName || currentUser.username}'s Profile</NavLink></button></span>
+                {/* <span><button><NavLink to="users/:username/reviews">My Reviews</NavLink></button></span> */}
+                <span><button><NavLink to="users/favorites">My Favorites</NavLink></button></span>
+                <span><button><NavLink to="users/profile/">My Profile</NavLink></button></span>
                 <span><button><Link to="/" onClick={logout}>Log Out</Link></button></span>
             </div> 
         );

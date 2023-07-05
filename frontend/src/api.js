@@ -52,6 +52,11 @@ class MklApi {
         return res.lunch;
     }
 
+    // Gets favorite lunches
+    static async getFavoriteLunches(id) {
+        
+    }
+
     // Updates details on a lunch by id
     static async updateLunch(id, data) {
         let res = await this.request(`lunches/${id}`, data, "patch");
@@ -112,6 +117,12 @@ class MklApi {
         return res.user;
     }
 
+    //Gets username by id
+    static async getUsername(id) {
+        let res = await this.request(`users/username/${id}`);
+        return res.username;
+    }
+
     // Gets token for login from username and password
     static async loginUser(data) {
         let res = await this.request(`auth/token`, data, "post");
@@ -160,10 +171,17 @@ class MklApi {
         return res.review;
     }
 
-    // // Adds lunch to favorites
-    // static async addToFavorites(userId, id) {
-    //     await this.request(`users/${userId}/lunches/${id}`, {}, "post")
-    // }
+    // Gets list of a specific user's favorites
+    static async getUserfavorites(userId) {
+        let res = await this.request(`users/${userId}`);
+        return res.userFavorites;
+    }
+
+    // Adds lunch to favorites
+    static async addToFavorites(username, id) {
+        let res = await this.request(`users/${username}/lunches/${id}`, {}, "post")
+        return res.favorite;
+    }
 }
 
 export default MklApi;

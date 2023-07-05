@@ -10,17 +10,16 @@ class Favorite {
     /** Creates a favorite (from data), update db, return new favorite data 
      *  Data should include {user_id, lunchId} 
     */
-    static async create({userId, lunchId}) {
+    static async create(data) {
         const result = await db.query(
                 `INSERT INTO favorites
                  (user_id, lunch_id)
                  VALUES ($1, $2)
-                 RETURNING username, lunch_id AS "lunchId"`
+                 RETURNING id, user_id AS "userId, lunch_id AS "lunchId"`,
             [
-                userId,
-                lunchId
-            ],
-        );
+                data.userId,
+                data.lunchId,
+            ]);
         const favorite = result.rows[0];
         return favorite;
     }
@@ -30,16 +29,17 @@ class Favorite {
      *  Returns [{id, userId, lunchId}, ...]
     */
     static async findAll() {
-        let query = `SELECT f.id,
-                            f.username,
+        let query = `SELECT f.user_id AS "userId,
                             f.lunch_Id AS "lunchId"
                      FROM favorites f
-                        LEFT JOIN users AS u ON u.username = f.username`;
-        
-        query += " ORDER BY username";
+                        LEFT JOIN users AS u ON u.user_id = f.user_id`;
+
+        query += " ORDER BY user_id";
         const favoritesRes = await db.query(query);
         return favoritesRes.rows;
     }
+
+    
 
     /** Delete given favorite from database; returns undefined
      *  Throws NotFoundError if favorite not found

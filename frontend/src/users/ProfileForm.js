@@ -1,9 +1,11 @@
 import React, {useState, useContext} from 'react';
+import {useParams} from 'react-router-dom';
 import Alert from '../common/Alert';
 import UserContext from './UserContext';
 import MklApi from '../api';
 
 const ProfileForm = () => {
+    const {id} = useParams()
     const {currentUser, setCurrentUser} = useContext(UserContext);
     const initialState = {
         id: currentUser.id,
@@ -34,9 +36,10 @@ const ProfileForm = () => {
             preferences: formData.preferences,
             aversions: formData.aversions,
         };
+        let id = formData.id;
         let updatedUserProfile;
         try {
-            updatedUserProfile = await MklApi.updateUser(data);
+            updatedUserProfile = await MklApi.updateUser(id, data);
         } catch (errors) {
             setFormErrors(errors);
             return;
@@ -153,7 +156,7 @@ const ProfileForm = () => {
                     <br></br>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                     {updateConfirmed ? <Alert messages={["Profile successfully updated"]} /> : null}
-                <button type="submit">Save changes</button>
+                <button type="submit" onSubmit={handleSubmit}>Save changes</button>
             </form>
         </div>
     );
