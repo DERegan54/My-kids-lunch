@@ -1,6 +1,8 @@
 import React, {useState, useContext} from 'react';
 import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
+import FoodList from '../foods/FoodList';
+import Header from '../common/Header';
 import MklApi from '../api';
 
 const AddLunchForm = () => {
@@ -56,6 +58,7 @@ const AddLunchForm = () => {
 
     return (
         <div className='AddLunchForm'>
+            <Header />
             <h2>Add a Lunch to your Lunchbox</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='title'>Title: </label>
@@ -161,6 +164,9 @@ const AddLunchForm = () => {
                 {formErrors.length ? <Alert messages={formErrors} /> : null}
                     {lunchAdded ? <Alert messages={["Lunch added successfully"]} /> : null}
             </form>
+            <br></br>
+            <hr></hr>
+            <FoodList />
         </div>
     );
 }

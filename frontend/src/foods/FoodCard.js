@@ -10,6 +10,8 @@ const FoodCard = ({title, servingSize, calories, fat, protein, carbohydrates, su
             <p><b>Protein: </b>{`${protein}`} grams</p>
             <p><b>Carbohydrates: </b>{`${carbohydrates}`} grams</p>
             <p><b>Sugar: </b>{`${sugar}`} grams</p>
+            <button className='FoodCard-addToLunchButton'>Add To Lunch</button>
+            <br></br>
             <br></br>
             <hr></hr>
         </div>

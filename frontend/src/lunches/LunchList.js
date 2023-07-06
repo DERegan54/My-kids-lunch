@@ -13,7 +13,7 @@ const LunchList = () => {
     }, []);
 
     async function search(title) {
-        let lunches  = await MklApi.getAllLunches(title);
+        let lunches = await MklApi.getAllLunches(title);
         setLunches(lunches);
     };
 
@@ -25,8 +25,8 @@ const LunchList = () => {
         <div className='LunchList'>
             <SearchForm searchTerm={search} />
             <br></br>
-       
-            <h2>Lunches:</h2>
+            <hr></hr>
+            <h1 className='LunchList-header'>Lunches:</h1>
                 <div className='LunchList-lunches'>
                     <LunchCardList lunches={lunches} />
                 </div>        

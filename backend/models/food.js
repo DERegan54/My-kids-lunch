@@ -56,7 +56,8 @@ class Food {
                         fat,
                         protein,
                         carbohydrates,
-                        sugar
+                        sugar, 
+                        lunch_id AS "lunchId"
                  FROM foods`;
     let whereExpressions = [];
     let queryValues = [];
@@ -108,6 +109,27 @@ class Food {
     const food  = foodRes.rows[0];
 
     if (!food) throw new NotFoundError(`No food found: ${id}`);
+    
+    const lunchesRes = await db.query(
+          `SELECT id, 
+                  title,
+                  description,
+                  protein, 
+                  carb, 
+                  fruit,
+                  vegetable,
+                  fat, 
+                  sweet, 
+                  beverage, 
+                  favorite
+           FROM lunches
+           WHERE id = $1`
+        [id]);
+
+    food.lunches = lunchesRes.rows;
+
+    if (!lunch) throw new NotFoundError(`No lunch found: ${id}`)
+    
     return food;
   }
 

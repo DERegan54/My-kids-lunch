@@ -1,32 +1,26 @@
-import React, {useState, useEffect} from 'react';
-import {useParams, Redirect} from 'react-router-dom';
-import MklApi from '../api';
-import ReviewCardList from './ReviewCardList';
+import React, {useState, useEffect} from "react";
+import ReviewCardList from "../lunches/LunchReviewCardList";
+import MklApi from "../api";
 
 const ReviewList = () => {
-    const {id} = useParams();
     const [reviews, setReviews] = useState([]);
-    const [lunch, setLunch] = useState
 
-    useEffect(function getAllReviews() {
-        getReviews();
-    },[]);
+    useEffect(function getReviewsToRender() {
+        getAllReviews();
+    }, []);
 
-    async function getReviews() {
-        let reviews = await MklApi.getAllReviews();
-        setReviews(reviews);
+    async function getAllReviews() {
+        let reviewsRes = MklApi.getAllReviews();
+        setReviews(reviewsRes);
     }
 
-    console.log(reviews)
-
-    if (!reviews) <Redirect to='/'></Redirect>
+    console.log(reviews);
 
     return (
-        <div className='ReviewList'>
-            <h2 className='ReviewList-h2'>All Lunch Reviews: </h2>
-               
+        <div className="ReviewList">
+            <ReviewCardList reviews={reviews} />
         </div>
-    );
+    ); 
 }
 
 export default ReviewList;

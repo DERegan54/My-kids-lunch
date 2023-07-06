@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
 import SearchForm from '../common/SearchForm';
 import MklApi from '../api';
+import Header from '../common/Header';
 import FoodCardList from './FoodCardList';
 
 const FoodList = () => {
@@ -22,10 +23,11 @@ const FoodList = () => {
 
     return (
         <div className='FoodList'>
+            <Header />
             <SearchForm searchTerm={search} />
             <br></br>
             <hr></hr>
-            <h1 className='FoodList-h2'>Foods: </h1>
+            <h1 className='FoodList-header'>Foods: </h1>
                 <div className='FoodList-foods'>
                     <FoodCardList foods={foods} />
                 </div>

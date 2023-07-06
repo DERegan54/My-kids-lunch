@@ -54,8 +54,9 @@ router.get("/", async function (req, res, next) {
  *  Gets specific lunch by its id
  *  Returns {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}
  */
-router .get("/:id", async function (req, res, next) {
+router.get("/:id", async function (req, res, next) {
     try {
+        console.log(typeof req.params.id)
         const lunch = await Lunch.get(req.params.id);
         return res.json({lunch});
     } catch (err) {

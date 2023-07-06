@@ -8,30 +8,8 @@
           "minLength": 1,
           "maxLength": 50
         },
-        "protein": {
-          "type": "string",
-          "minimum": 0
-        },
-        "carb": {
+        "description": {
           "type": "string"
-        },
-        "fruit": {
-          "type": "string"
-        },
-        "vegetable": {
-          "type": "string"
-        },
-        "fat": {
-            "type": "string"
-        },
-        "sweet": {
-          "type": "string"
-        },
-        "beverage": {
-          "type": "string"
-        },
-        "favorite": {
-          "type": "boolean"
         }
       },
       "additionalProperties": false,

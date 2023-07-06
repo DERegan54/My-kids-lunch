@@ -16,9 +16,8 @@ function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
   const [reviewIds, setReviewIds] = useState(new Set([]));
-  const [favoriteIds, setFavoriteIds] = useState(new Set([]));
   const [lunches, setLunches] = useState(new Set([]));
- 
+  
   useEffect(() => {
     async function getCurrentUser() {
       if (token) {
@@ -40,20 +39,12 @@ function App() {
   }, [token]);
 
   useEffect(() => {
-    let lunches = MklApi.getAllLunches();
-    setLunches(lunches);
-  }, [])
-
-  function handleFavoritedLunch(updatedLunch) {
-    const updatedLunchArray = lunches.map((lunch) => {
-      if(lunch.id === updatedLunch.id) {
-        return updatedLunch;
-      } else {
-        return lunches;
-      }
-    });
-    setLunches(updatedLunchArray);
-  }
+    async function getLunches() {
+      let lunchesRes = await MklApi.getAllLunches();
+      setLunches(lunchesRes);
+    }
+    getLunches();
+  }, []);
 
   console.log(lunches)
 
@@ -85,6 +76,10 @@ function App() {
       return {success: false, errors};
     }
   }
+
+  function hasReviewedLunch(id) {
+    return reviewIds && reviewIds.has(id);
+  }
   
   async function reviewLunch (data) {
     if (hasReviewedLunch(true)) return;
@@ -98,19 +93,14 @@ function App() {
     }
   }
 
-  function hasReviewedLunch(id) {
-    return reviewIds && reviewIds.has(id);
-  }
-   
-  
   return ( 
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider
-            value={{currentUser, setCurrentUser, handleFavoritedLunch, reviewLunch, hasReviewedLunch}}>
+            value={{currentUser, setCurrentUser, reviewLunch, hasReviewedLunch}}>
           <div className="App-container">
             <Navbar logout={logout} />
-            <Routes login={loginUser} signup={registerUser} />
+            <Routes login={loginUser} signup={registerUser} review={reviewLunch} />
           </div>
         </UserContext.Provider>
       </BrowserRouter>

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import React, {useContext} from 'react';
+import {Link} from 'react-router-dom';
 import Header from '../common/Header';
 import UserContext from '../users/UserContext'
 
@@ -34,14 +34,6 @@ const Home = () => {
     }
 
     return (
-//         <div className='Home-loggedIn'>
-//         <Header />
-//         <h2>Welcome, Danielle!</h2>
-//         <h4>What's for Lunch?</h4>
-//     </div>
-//     );
-// }
-
         <div className="Home">
             <div className="Home-container">
                 {currentUser ? homeIfLoggedIn() : homeIfLoggedOut()}

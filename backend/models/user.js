@@ -38,7 +38,7 @@ class User {
         const user = result.rows[0];
 
         if (user) {
-            // compare hashed password to a new has from password
+            // compare hashed password to a new hash from password
             const isValid= await bcrypt.compare(password, user.password);
             if (isValid === true) {
                 delete user.password;
@@ -144,23 +144,23 @@ class User {
     }
     
 
-    /** Given an id return username
-     *  Returns {id, username}
-    **/
-    static async getUsername(id) {
-        const usernameRes = await db.query(
-                `SELECT id,
-                        username
-                 FROM users
-                 WHERE id = $1`,
-            [id],
-        );
+    // /** Given an id return username
+    //  *  Returns {id, username}
+    // **/
+    // static async getUsername(id) {
+    //     const usernameRes = await db.query(
+    //             `SELECT id,
+    //                     username
+    //              FROM users
+    //              WHERE id = $1`,
+    //         [id],
+    //     );
 
-        const username = usernameRes.rows[0];
-        if (!username) throw new NotFoundError(`No userId: ${id}`);
+    //     const username = usernameRes.rows[0];
+    //     if (!username) throw new NotFoundError(`No userId: ${id}`);
 
-        return username;
-    }
+    //     return username;
+    // }
 
 
     /** Updates user data with `data 
@@ -206,30 +206,30 @@ class User {
         return user;
     }
 
-    static async addFavorite(id, lunchId) {
-        const preCheck = await db.query(
-                `SELECT id
-                 FROM lunches
-                 WHERE id= $1`,
-            [lunchId]);
-        const lunch = preCheck.rows[0];
+    // static async addFavorite(id, lunchId) {
+    //     const preCheck = await db.query(
+    //             `SELECT id
+    //              FROM lunches
+    //              WHERE id= $1`,
+    //         [lunchId]);
+    //     const lunch = preCheck.rows[0];
 
-        if (!lunch) throw new NotFoundError(`No lunch found: ${lunchId}`);
+    //     if (!lunch) throw new NotFoundError(`No lunch found: ${lunchId}`);
        
-        const preCheck2 = await db.query(
-                `SELECT id
-                 FROM users
-                 WHERE id = $1`, 
-            [id]);
-        const user = preCheck2.rows[0];
+    //     const preCheck2 = await db.query(
+    //             `SELECT id
+    //              FROM users
+    //              WHERE id = $1`, 
+    //         [id]);
+    //     const user = preCheck2.rows[0];
 
-        if (!user) throw new NotFoundError(`No user found: ${id}`);
+    //     if (!user) throw new NotFoundError(`No user found: ${id}`);
 
-        await db.query(
-                `INSERT INTO favorites (lunch_id, user_id)
-                 VALUES ($1, $2)`,
-            [lunchId, id]);        
-    }
+    //     await db.query(
+    //             `INSERT INTO favorites (lunch_id, user_id)
+    //              VALUES ($1, $2)`,
+    //         [lunchId, id]);        
+    // }
 
     /** Delete a given user from database; returns undefined */
     static async remove(id) {

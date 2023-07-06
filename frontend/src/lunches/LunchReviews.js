@@ -7,27 +7,31 @@ import LunchReviewCardList from './LunchReviewCardList';
 const LunchReviews = () => {
     const {id} = useParams();
     const [lunch, setLunch] = useState([]);
-    const [reviews, setReviews] = useState([]);
-
-    console.log(reviews);
-
+    const [reviews, setReviews] = useState([])
+    console.log(typeof +id)
+   
     useEffect(() => {
-        async function getLunch() {
-            let lunch = await MklApi.getLunch(id);
-            setLunch(lunch);
-            setReviews(lunch.reviews); 
-        }
-        getLunch()
-    }, [id]);
+        getLunch();
+    }, []);
+    
+    async function getLunch() {
+        let lunchRes = await MklApi.getLunch(id);
+        setLunch(lunchRes);
+        setReviews(lunch.reviews)
+    }
+
+    console.log("lunch: ", lunch)
+    console.log("reviews: ", reviews)
+   
+    console.log("lunch.reviews: ", lunch.reviews);
 
     if (!lunch) <Redirect to='/'></Redirect>
 
     return (
-        <div className="LunchReviews">
-            <Header />
+        lunch && <div className="LunchReviews">
             <h2>Reviews For {lunch.title}:</h2>
             <div className='LunchReviews-reviews'>
-                <LunchReviewCardList reviews={reviews} />
+                <LunchReviewCardList reviews={lunch.reviews} />
             </div>
         </div>
     );   

@@ -59,13 +59,13 @@ class Lunch {
                             vegetable,
                             fat,
                             sweet,
-                            beverage,
+                            beverage, 
                             favorite
                      FROM lunches`;
         let whereExpressions = [];
         let queryValues = [];
 
-        const {title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, favorite} = searchFilters;
+        const {title, description} = searchFilters;
 
         if (title !== undefined) {
             queryValues.push(title);
@@ -75,46 +75,6 @@ class Lunch {
         if (description !== undefined) {
             queryValues.push(description);
             whereExpressions.push(`description ILIKE $${queryValues.length}`);
-        }
-
-        if (protein !== undefined) {
-            queryValues.push(protein);
-            whereExpressions.push(`protein ILIKE $${queryValues.length}`);
-        }
-
-        if (carb !== undefined) {
-            queryValues.push(carb);
-            whereExpressions.push(`carb ILIKE $${queryValues.length}`);
-        }
-
-        if (fruit !== undefined) {
-            queryValues.push(fruit);
-            whereExpressions.push(`fruit ILIKE $${queryValues.length}`);
-        }
-
-        if (vegetable !== undefined) {
-            queryValues.push(vegetable);
-            whereExpressions.push(`vegetable ILIKE $${queryValues.length}`);
-        }
-
-        if (fat !== undefined) {
-            queryValues.push(fat);
-            whereExpressions.push(`fat ILIKE $${queryValues.length}`);
-        }
-
-        if (sweet !== undefined) {
-            queryValues.push(sweet);
-            whereExpressions.push(`sweet ILIKE $${queryValues.length}`);
-        }
-
-        if (beverage !== undefined) {
-            queryValues.push(beverage);
-            whereExpressions.push(`beverage ILIKE $${queryValues.length}`);
-        }
-
-        if (favorite === true) {
-            queryValues.push(favorite);
-            whereExpressions.push(`favorite ILIKE $${queryValues.length}`);
         }
 
         if (whereExpressions.length > 0) {

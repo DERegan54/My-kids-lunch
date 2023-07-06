@@ -13,7 +13,7 @@ const router = express.Router({mergParams: true});
 /** ROUTES FOR REVIEWS */
 
 /** POST / {review} => {review} 
- *  Adds a reviewto database
+ *  Adds a review to database
  *  Review should be {reviewText, userId, lunchId}
  *  Returns {id, userId,lunchId}
  */

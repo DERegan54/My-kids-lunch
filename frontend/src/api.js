@@ -52,11 +52,6 @@ class MklApi {
         return res.lunch;
     }
 
-    // Gets favorite lunches
-    static async getFavoriteLunches(id) {
-        
-    }
-
     // Updates details on a lunch by id
     static async updateLunch(id, data) {
         let res = await this.request(`lunches/${id}`, data, "patch");
@@ -169,18 +164,6 @@ class MklApi {
     static async removeReview(id) {
         let res = await this.request(`reviews/${id}`, "delete");
         return res.review;
-    }
-
-    // Gets list of a specific user's favorites
-    static async getUserfavorites(userId) {
-        let res = await this.request(`users/${userId}`);
-        return res.userFavorites;
-    }
-
-    // Adds lunch to favorites
-    static async addToFavorites(username, id) {
-        let res = await this.request(`users/${username}/lunches/${id}`, {}, "post")
-        return res.favorite;
     }
 }
 

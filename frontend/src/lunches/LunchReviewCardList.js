@@ -1,5 +1,7 @@
-import React from 'react';
-import LunchReviewCard from "../lunches/LunchReviewCard";
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
+import MklApi from '../api';
+import LunchReviewCard from "./LunchReviewCard";
 
 const LunchReviewCardList = ({reviews}) => {
     return (

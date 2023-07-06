@@ -5,34 +5,44 @@ import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
 import MklApi from '../api';
 
-const ReviewForm = ({id}) => {
-    const {currentUser, setCurrentUser} = useContext(UserContext);
-    const initialState = {reviewText: "", userId: "", lunchId: ""}
-    const [formData, setFormData] = useState(initialState);
+const ReviewForm = () => {
+    const {id} = useParams();
+    const {currentUser} = useContext(UserContext);
+    const initialState = {reviewText: "", userId: currentUser.id, lunchId: Number(id)}
+    const [lunch, setLunch] = useState([]);
+    const [title, setTitle] = useState([]);
+    const [formData, setFormData] = useState(initialState)
     const [formErrors, setFormErrors] = useState([]);
     const [reviewAdded, setReviewAdded] = useState(false);
-
-    // Handles form submit
-    async function handleSubmit(evt) {
-        evt.preventDefault();
-        let data = {
-            reviewText: formData.reviewText,
-            userId: currentUser.id,
-            lunchId: id
-        };
-        let userReview;
-        try {
-           userReview = await MklApi.createReview(data);
-        } catch (errors) {
-            setFormErrors(errors);
-            return;
+    
+    useEffect(() => {
+        async function getLunch() {
+            let lunchRes = await MklApi.getLunch(id);
+            setLunch(lunchRes);
+            setTitle(lunchRes.title)
         }
-        setFormData(data => ({...data}));
-        setFormErrors([]);
-        setCurrentUser(userReview);
-        setReviewAdded(true);
+        getLunch();
+    }, [id]);
+
+    const data = {
+        reviewText: formData.reviewText,
+        userId: currentUser.id,
+        lunchId: lunch.id
     }
 
+    console.log(data)
+
+    // Handles form submit  
+    async function handleSubmit(evt) {
+        evt.preventDefault();
+        let reviewRes = await MklApi.createReview(data);
+        setReviewAdded(true);
+        console.log(reviewRes)
+        return reviewRes;
+    }
+
+   
+       
     // Updates form data fields on change
     function handleChange(evt) {
         const {name, value} = evt.target;
@@ -43,8 +53,7 @@ const ReviewForm = ({id}) => {
         <div className='ReviewForm'>
             <Header />
             <div className='ReviewForm-container'>
-                <h3>Review here:</h3>
-                <br></br>
+                <h3>Create a Review for {lunch.title} here:</h3>
                 <form onSubmit={handleSubmit}>
                     <input 
                         className='ReviewForm-reviewTextInput'
@@ -57,9 +66,11 @@ const ReviewForm = ({id}) => {
                         required>
                     </input>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
+                    <button type="submit" onSubmit={handleSubmit}><Link to={`/reviews`}>Submit review!</Link></button>
                     {reviewAdded ? <Alert messages={["Review added successfully"]} /> : null}
-                    <button type="submit" onSubmit={handleSubmit}><Link to="/users/reviews">Submit review!</Link></button>
                 </form>
+                <br></br>
+                <br></br>
             </div>
         </div>
     );

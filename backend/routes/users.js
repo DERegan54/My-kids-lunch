@@ -30,15 +30,15 @@ router.get("/:username", async function(req, res, next) {
     }
 });
 
-/** GET /users/[id]: gets a user's username by id */
-router.get("/username/:id", async function (req, res, next) {
-    try {
-        const username = await User.getUsername(req.params.id);
-        return res.json({username});
-    } catch (err) {
-        return next(err);
-    }
-});
+// /** GET /users/[id]: gets a user's username by id */
+// router.get("/username/:id", async function (req, res, next) {
+//     try {
+//         const username = await User.getUsername(req.params.id);
+//         return res.json({username});
+//     } catch (err) {
+//         return next(err);
+//     }
+// });
 
 /** PATCH /[id] { user } => { user }: updates a user */
 router.patch("/:id", async function (req, res, next) {
