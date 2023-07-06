@@ -40,6 +40,9 @@
       },
       "aversions": {
         "type": "string"
+      },
+      "favorites": {
+        "type": "string"
       } 
     },
     "additionalProperties": false,
@@ -48,11 +51,7 @@
       "password",
       "firstName",
       "lastName",
-      "email",
-      "diet",
-      "allergies",
-      "preferences",
-      "aversions"
+      "email"
     ]
   }
   

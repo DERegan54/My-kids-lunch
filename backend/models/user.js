@@ -77,7 +77,7 @@ class User {
                  diet,
                  allergies,
                  preferences,
-                 aversions)
+                 aversions,)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                 RETURNING username, first_name AS "firstName, last_name AS lastName, email, diet, allergies, preferences, aversions"`,
             [
@@ -118,7 +118,7 @@ class User {
     }
 
     /** Given a username , return data about that user
-     *  Returns {id, username, first_name, last_name, email, diet, allergies, preferences, aversions, favorites}
+     *  Returns {id, username, first_name, last_name, email, diet, allergies, preferences, aversions}
     */
     static async get(username) {
         const userRes = await db.query(
@@ -135,7 +135,7 @@ class User {
                  WHERE username = $1`,
             [username],
         );
-
+        
         const user = userRes.rows[0];
 
         if (!user) throw new NotFoundError(`No user: ${username}`);
@@ -144,23 +144,39 @@ class User {
     }
     
 
-    // /** Given an id return username
-    //  *  Returns {id, username}
-    // **/
-    // static async getUsername(id) {
-    //     const usernameRes = await db.query(
-    //             `SELECT id,
-    //                     username
-    //              FROM users
-    //              WHERE id = $1`,
-    //         [id],
-    //     );
+    /** Given an id return username
+     *  Returns {id, username, firstName, lastName, email, diet, allergies, preferences, aversions}
+    **/
+    static async getUsername(id) {
+        const usernameRes = await db.query(
+                `SELECT id,
+                        username,
+                        first_name AS "firstName",
+                        last_name AS "lastName",
+                        email,
+                        diet,
+                        allergies,
+                        preferences,
+                        aversions
+                 FROM users
+                 WHERE id = $1`,
+            [id],
+        );
 
-    //     const username = usernameRes.rows[0];
-    //     if (!username) throw new NotFoundError(`No userId: ${id}`);
-
-    //     return username;
-    // }
+        const username = usernameRes.rows[0];
+        if (!username) throw new NotFoundError(`No userId: ${id}`);
+        
+        const favoritesRes = await db.query(
+                `SELECT user_id AS "userId",
+                        lunch_id AS "lunchId"
+                 FROM favorites
+                 WHERE user_id = $1`,
+            [id],
+        );
+        username.favorites = favoritesRes.rows;
+        
+        return username;
+    }
 
 
     /** Updates user data with `data 
@@ -168,8 +184,8 @@ class User {
      *  the fields; this only changes provided ones
      * 
      *  Data can include: 
-     *      {firstName, lastName, email, eaters}
-     *  Returns {username, firstName, lastName, email, eaters}
+     *      {firstName, lastName, email, diet, allergies, preferences, aversions}
+     *  Returns {id, username, firstName, lastName, email, diet, preferences, aversions}
      *  Throws NotFoundError if not found
     */
     static async update(id, data) {
@@ -206,7 +222,7 @@ class User {
         return user;
     }
 
-    // static async addFavorite(id, lunchId) {
+    // static async addFavorite(lunchId) {
     //     const preCheck = await db.query(
     //             `SELECT id
     //              FROM lunches
@@ -216,19 +232,11 @@ class User {
 
     //     if (!lunch) throw new NotFoundError(`No lunch found: ${lunchId}`);
        
-    //     const preCheck2 = await db.query(
-    //             `SELECT id
-    //              FROM users
-    //              WHERE id = $1`, 
-    //         [id]);
-    //     const user = preCheck2.rows[0];
-
-    //     if (!user) throw new NotFoundError(`No user found: ${id}`);
-
+    
     //     await db.query(
-    //             `INSERT INTO favorites (lunch_id, user_id)
-    //              VALUES ($1, $2)`,
-    //         [lunchId, id]);        
+    //             `INSERT INTO users (lunch_id)
+    //              VALUES ($1)`,
+    //         [lunchId]);        
     // }
 
     /** Delete a given user from database; returns undefined */

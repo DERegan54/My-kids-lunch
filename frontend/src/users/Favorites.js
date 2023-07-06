@@ -1,11 +1,9 @@
-import React, {useState, useEffect, useContext} from "react";
-import LunchCard from "../lunches/LunchCard";
-import UserContext from "./UserContext";
+import React, {useState, useEffect} from "react";
+import FavoriteCard from "../users/FavoriteCard";
 import MklApi from "../api";
 
 
 const Favorites = () => {
-    const {currentUser} = useContext(UserContext);
     const [lunches, setLunches] = useState([]);
     
     useEffect(() => {
@@ -15,20 +13,23 @@ const Favorites = () => {
         }
         getLunches()
     }, [])
-    
-    console.log("lunches: ", lunches)
-    let favoriteLunches = [];
 
-    const getFavoriteLunches = (lunches) => {
-        for(let i of lunches) {
-            if(i.favorite === true) {
-                favoriteLunches.push(i);
+    console.log("lunches: ", lunches)
+
+    let favoriteLunches = [];
+    
+    useEffect(() => {
+        const getFavoriteLunches = (lunches) => {
+            for(let lunch of lunches) {
+                if(lunch.favorite === true) {
+                    favoriteLunches.push(lunch);
+                }
+                return favoriteLunches;
             }
-            console.log(favoriteLunches) 
-            return favoriteLunches;
         }
-    }
-    getFavoriteLunches(lunches)
+        getFavoriteLunches()
+    }, [])
+    
        
     
     console.log("favoriteLunches:", favoriteLunches)
@@ -38,9 +39,9 @@ const Favorites = () => {
             <div>
                 <h2 className="Favorites-header">My Favorite Lunches</h2>
                 <div className='Favorites-lunches'>
-                    {favoriteLunches.map((favoriteLunch) => ( 
+                   {favoriteLunches.map((favoriteLunch) => ( 
                         <ul>
-                            <LunchCard
+                            <FavoriteCard
                                 key={favoriteLunch.id}
                                 title={favoriteLunch.title}
                                 description={favoriteLunch.description}

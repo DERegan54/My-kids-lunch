@@ -35,6 +35,9 @@
       },
       "aversions": {
         "type": "string"
+      },
+      "favorites":{
+        "type": "string"
       }
     },
     "additionalProperties": false,

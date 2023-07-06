@@ -49,10 +49,10 @@ CREATE TABLE reviews (
         REFERENCES lunches
 );
 
--- CREATE TABLE favorites (
---     id SERIAL PRIMARY KEY,
---     username TEXT
---         REFERENCES users ON DELETE CASCADE,
---     lunch_title TEXT
---         REFERENCES lunches ON DELETE CASCADE
--- );
+CREATE TABLE favorites (
+    user_id INTEGER
+        REFERENCES users ON DELETE CASCADE,
+    lunch_id INTEGER
+        REFERENCES lunches ON DELETE CASCADE,
+    PRIMARY KEY (user_id, lunch_id)
+);
