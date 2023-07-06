@@ -26,7 +26,7 @@ const Routes = ({login, signup, review, favorite}) => {
                 <Route exact path="/register"><RegistrationForm signup={signup} /></Route>
                 <Route exact path="/login"><LoginForm login={login} /></Route>
                 <PrivateRoute exact path="/users/profile/"><ProfileCard /></PrivateRoute> 
-                <PrivateRoute exact path="/favorites/"><Favorites /></PrivateRoute>
+                <PrivateRoute exact path="/users/favorites/"><Favorites /></PrivateRoute>
                 <PrivateRoute exact path="/lunches"><LunchList /></PrivateRoute>
                 <PrivateRoute exact path="/lunches/:id/nutrition"><LunchNutrition /></PrivateRoute> 
                 <PrivateRoute exact path="/lunches/:id/reviews"><LunchReviews /></PrivateRoute>

@@ -16,7 +16,7 @@ function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
   const [reviewIds, setReviewIds] = useState(new Set([]));
-  const [lunches, setLunches] = useState(new Set([]));
+  // const [lunches, setLunches] = useState(new Set([]));
   
   useEffect(() => {
     async function getCurrentUser() {
@@ -38,15 +38,15 @@ function App() {
     getCurrentUser()
   }, [token]);
 
-  useEffect(() => {
-    async function getLunches() {
-      let lunchesRes = await MklApi.getAllLunches();
-      setLunches(lunchesRes);
-    }
-    getLunches();
-  }, []);
+  // useEffect(() => {
+  //   async function getLunches() {
+  //     let lunchesRes = await MklApi.getAllLunches();
+  //     setLunches(lunchesRes);
+  //   }
+  //   getLunches();
+  // }, []);
 
-  console.log(lunches)
+  // console.log(lunches)
 
   // Handles user logout
   function logout() {

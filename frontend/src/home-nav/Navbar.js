@@ -14,7 +14,7 @@ const Navbar = ({logout}) => {
                 <span><button><NavLink to="/foods">Food Items</NavLink></button></span>
                 <span><button><NavLink to="/reviews">All Reviews</NavLink></button></span>
                 <span><button><NavLink to="/users/:username/reviews">My Reviews</NavLink></button></span>
-                <span><button><NavLink to="/favorites">My Favorites</NavLink></button></span>
+                <span><button><NavLink to="/users/favorites">My Favorites</NavLink></button></span>
                 <span><button><NavLink to="/users/profile/">My Profile</NavLink></button></span>
                 <span><button><Link to="/" onClick={logout}>Log Out</Link></button></span>
             </div> 

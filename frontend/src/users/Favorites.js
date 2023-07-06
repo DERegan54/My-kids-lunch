@@ -16,17 +16,22 @@ const Favorites = () => {
         getLunches()
     }, [])
     
-    const favoriteLunches = (lunches) => {
-        for(let i = 0; i<lunches.length; i++) {
+    console.log("lunches: ", lunches)
+    let favoriteLunches = [];
+
+    const getFavoriteLunches = (lunches) => {
+        for(let i of lunches) {
             if(i.favorite === true) {
                 favoriteLunches.push(i);
             }
+            console.log(favoriteLunches) 
             return favoriteLunches;
         }
     }
+    getFavoriteLunches(lunches)
        
     
-    console.log(favoriteLunches)
+    console.log("favoriteLunches:", favoriteLunches)
    
     return (
         <div className='Favorites'>
