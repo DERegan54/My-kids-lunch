@@ -79,7 +79,7 @@ class User {
                  preferences,
                  aversions,)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-                RETURNING username, first_name AS "firstName, last_name AS lastName, email, diet, allergies, preferences, aversions"`,
+                RETURNING username, first_name AS "firstName", last_name AS "lastName", email, diet, allergies, preferences, aversions`,
             [
                 username, 
                 hashedPassword,
@@ -167,13 +167,14 @@ class User {
         if (!username) throw new NotFoundError(`No userId: ${id}`);
         
         const favoritesRes = await db.query(
-                `SELECT user_id AS "userId",
-                        lunch_id AS "lunchId"
+                `SELECT lunch_id AS "lunchId"
                  FROM favorites
                  WHERE user_id = $1`,
             [id],
         );
-        username.favorites = favoritesRes.rows;
+        let favorites = favoritesRes.rows;
+        username.favorites = favorites
+        
         
         return username;
     }
@@ -222,22 +223,42 @@ class User {
         return user;
     }
 
-    // static async addFavorite(lunchId) {
-    //     const preCheck = await db.query(
-    //             `SELECT id
-    //              FROM lunches
-    //              WHERE id= $1`,
-    //         [lunchId]);
-    //     const lunch = preCheck.rows[0];
+    /** Adds a favorite to database */
+    static async addFavorite(userId, lunchId) {
+        const preCheck = await db.query(
+                `SELECT id
+                 FROM lunches
+                 WHERE id= $2`,
+            [lunchId]);
+        const lunch = preCheck.rows[0];
 
-    //     if (!lunch) throw new NotFoundError(`No lunch found: ${lunchId}`);
+        if (!lunch) throw new NotFoundError(`No lunch found: ${lunchId}`);
        
+        const preCheck2 = await db.query(
+            `SELECT id
+             FROM users
+             WHERE id= $1`,
+        [userId]);
+        const user = preCheck2.rows[0];
+
+        if (!user) throw new NotFoundError(`No user found: ${userId}`);
+   
     
-    //     await db.query(
-    //             `INSERT INTO users (lunch_id)
-    //              VALUES ($1)`,
-    //         [lunchId]);        
-    // }
+        await db.query(
+                `INSERT INTO favorites (user_id, lunch_id)
+                 VALUES ($1, $2)`,
+            [userId, lunchId]);        
+    }
+
+    /** Removes a favorite from database */
+    static async removeFavorite(user_id, lunch_id) {
+        await db.query(
+                `DELETE
+                FROM favorites
+                WHERE user_id=$1 AND lunch_id = $2`,
+            [user_id, lunch_id],
+        );
+    }
 
     /** Delete a given user from database; returns undefined */
     static async remove(id) {

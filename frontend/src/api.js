@@ -165,6 +165,30 @@ class MklApi {
         let res = await this.request(`reviews/${id}`, "delete");
         return res.review;
     }
+
+    // Gets all favorites associated with a lunch
+    static async findAllFavoritesOnLunch(id) {
+        let res = await this.request(`favorites/lunch/${id}`);
+        return res.favorites;
+    }
+
+    // Gets all favorites associated with a user
+    static async findAllFavoritesOnUser(id) {
+        let res = await this.request(`favorites/user/${id}`);
+        return res.favorites;
+    }
+
+    // Updates the status of a favorite 
+    static async updateFavorite(id, data) {
+        let res = await this.request(`favorites/${id}`, data, "patch");
+        return res.favorite;
+    }
+
+    // Deletes a favorite
+    static async removeFavorite(id) {
+        let res = await this.request(`favorites/${id}`, "delete")
+        return res.favorite;
+    }
 }
 
 export default MklApi;

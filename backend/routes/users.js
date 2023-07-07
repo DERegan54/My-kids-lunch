@@ -4,7 +4,8 @@ const jsonschema = require("jsonschema");
 
 const express = require('express');
 const User = require("../models/user");
-
+const favoriteNewSchema = require('../schemas/favoriteNew')
+const {BadRequestError} = require("../expressError");
 const router = new express.Router();
 
 /** ROUTES FOR USERS */
@@ -58,6 +59,18 @@ router.delete("/:id", async function (req, res, next) {
         return res.json({deleted: req.params.id});
     } catch (err) {
         return next(err);
+    }
+});
+
+/** POST /[id]/lunches/[id]  adds a favorite to database */
+router.post("/:id/lunches/:id", async function (req, res, next) {
+    try {
+        const lunchId = +req.params.id;
+        await User.addFavorite(+req.params.id, lunchId);
+        return res.status(201).json({favorite});
+    } catch (err) {
+        return next(err);
+
     }
 });
 

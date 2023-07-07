@@ -2,41 +2,105 @@
 
 const db = require("../db")
 const {NotFoundError} = require("../expressError");
+const {sqlForPartialUpdate} = require("../helpers/sql");
 
 /** METHODS FOR FAVORITES */
 
 class Favorite {
 
     /** Creates a favorite (from data), update db, return new favorite data 
-     *  Data should include {user_id, lunchId} 
+     *  Data should include {userId, lunchId, isFavorite} 
     */
     static async create(data) {
         const result = await db.query(
-                `INSERT INTO favorites
-                 (user_id, lunch_id)
-                 VALUES ($1, $2)
-                 RETURNING id, user_id AS "userId, lunch_id AS "lunchId"`,
+                `INSERT INTO favorites (
+                        user_id, 
+                        lunch_id,
+                        is_favorite)
+                 VALUES ($1, $2, $3)
+                 RETURNING id, user_id AS "userId", lunch_id AS "lunchId", is_favorite AS "isFavorite"`,
             [
                 data.userId,
                 data.lunchId,
+                data.isFavorite,
             ]);
         const favorite = result.rows[0];
         return favorite;
     }
 
     /** FindAll favorites 
-     *  Finds all favorites associated with a user
+     *  Finds all favorites
      *  Returns [{id, userId, lunchId}, ...]
     */
     static async findAll() {
-        let query = `SELECT f.user_id AS "userId,
-                            f.lunch_Id AS "lunchId"
-                     FROM favorites f
-                        LEFT JOIN users AS u ON u.user_id = f.user_id`;
+        let result = await db.query(
+                `SELECT id,
+                        user_id AS "userId",
+                        lunch_id AS "lunchId",
+                        is_favorite AS "isFavorite"
+                FROM favorites
+                ORDER BY id`,
+        );
+       
+        return result.rows;
+    }
 
-        query += " ORDER BY user_id";
-        const favoritesRes = await db.query(query);
-        return favoritesRes.rows;
+    /** Gets all favorites associated with a lunch */
+    static async findAllFavoritesOnLunch(lunchId) {
+        let res = await db.query(
+                `SELECT user_id AS "userId",
+                        is_favorite AS "isFavorite"
+                     FROM favorites 
+                     WHERE lunch_id = $1`,
+                [lunchId]);
+        const favorites = res.rows;
+        return favorites;
+    }
+
+    /** Gets all favorites associated with a user */
+    static async findAllFavoritesOnUser(userId) {
+        let res = await db.query(
+                `SELECT lunch_id AS "lunchId",
+                        is_favorite AS "isFavorite"
+                     FROM favorites 
+                     WHERE user_id = $1`,
+                [userId]);
+        const favorites = res.rows;
+        return favorites;
+    }
+
+
+    /** Gets all  */
+    /** Updates favorite with `data 
+     *  Data can include: 
+     *      {userId, lunchId, isFavorite}
+     *  Returns {id, userId, lunchId, isFavorite}
+     *  Throws NotFoundError if not found
+    */
+    static async updateFavorite(id, data) {
+        const {setCols, values} = sqlForPartialUpdate(
+            data,
+            {   
+                lunchId: "lunch_id",
+                userId: "user_id",
+                isFavorite: "is_favorite",
+            });
+        const idVarIdx = "$" + (values.length + 1);
+
+        const querySql = `UPDATE favorites
+                          SET ${setCols}
+                          WHERE id = ${idVarIdx}
+                          RETURNING id,
+                                    user_id AS "userId",
+                                    lunch_id AS "lunchId",
+                                    is_favorite AS "isFavorite"`;
+        const result = await db.query(querySql, [...values, id]);
+        const favorite = result.rows[0];
+
+        if (!favorite) throw new NotFoundError(`No favorite: ${id}`);
+
+
+        return favorite;
     }
 
     
@@ -44,7 +108,7 @@ class Favorite {
     /** Delete given favorite from database; returns undefined
      *  Throws NotFoundError if favorite not found
      */
-    static async remove(id) {
+    static async removeFavorite(id) {
         const result = await db.query(
                 `DELETE
                  FROM favorites

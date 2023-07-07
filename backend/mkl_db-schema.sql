@@ -8,7 +8,8 @@ CREATE TABLE users(
     diet TEXT,
     allergies TEXT,
     preferences TEXT,
-    aversions TEXT
+    aversions TEXT,
+    lunches TEXT
 );
 
 CREATE TABLE lunches (
@@ -50,9 +51,10 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE favorites (
-    user_id INTEGER
-        REFERENCES users ON DELETE CASCADE,
+    id SERIAL PRIMARY KEY,
     lunch_id INTEGER
         REFERENCES lunches ON DELETE CASCADE,
-    PRIMARY KEY (user_id, lunch_id)
+    user_id INTEGER
+        REFERENCES users ON DELETE CASCADE,
+    isFavorite BOOLEAN
 );

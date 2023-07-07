@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.lunches.com/favoriteUpdate.schema.json",
+    "type": "object",
+    "properties": {
+      "userId": {
+        "type": "number"
+      },
+      "lunchId": {
+        "type": "number"
+      },
+      "isFavorite": {
+        "type": "boolean"
+      }
+    },
+    "additionalProperties": false,
+    "required": []
+}

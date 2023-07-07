@@ -7,28 +7,31 @@ import {VscHeartFilled} from "react-icons/vsc";
 
 
 
-const LunchCard = ({id, title, description, protein, carb, fruit, vegetable, fat, sweet, favorite}) => {
-    const {currentUser} = useContext(UserContext);
-    const [isFavorited, setIsFavorited] = useState(favorite);
+const LunchCard = ({id, title, description, protein, carb, fruit, vegetable, fat, sweet}) => {
+    const {hasFavoritedLunch, addFavorite, currentUser} = useContext(UserContext);
+    const [isFavorite, setIsFavorite] = useState([]);
     
-    
-    const handleFavoritedChange = () => {
-        let data = {favorite: !favorite};
-        MklApi.updateLunch(id, data);
-        setIsFavorited(isFavorited => !isFavorited);
+    const handleFavoriteChange = () => {
+        let data = {
+            userId: currentUser.id,
+            lunchId: id,
+            isFavorite: true ? false : true
+        }
+        MklApi.updateFavorite(id, data);
+        setIsFavorite(data.isFavorite);
     }
 
-    console.log(isFavorited);
+    console.log(isFavorite);
 
     return (
         <div className='LunchCard'>
             <div className='LunchCard-lunches'>
                 <p>
                     <b>{`${title}`} </b>
-                    {isFavorited ? (
-                        <VscHeartFilled onClick={handleFavoritedChange} />
+                    {isFavorite ? (
+                        <VscHeartFilled onClick={handleFavoriteChange} />
                     ) : (
-                        <VscHeart onClick={handleFavoritedChange} />  
+                        <VscHeart onClick={handleFavoriteChange} />  
                     )}  
                 </p>
                 <p>{`${description}`}</p>

@@ -16,7 +16,8 @@ function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
   const [reviewIds, setReviewIds] = useState(new Set([]));
-  // const [lunches, setLunches] = useState(new Set([]));
+  // const [favoriteLunchIds, setFavoriteLunchIds] = useState(new Set([]));
+  const [lunches, setLunches] = useState(new Set([]));
   
   useEffect(() => {
     async function getCurrentUser() {
@@ -38,15 +39,15 @@ function App() {
     getCurrentUser()
   }, [token]);
 
-  // useEffect(() => {
-  //   async function getLunches() {
-  //     let lunchesRes = await MklApi.getAllLunches();
-  //     setLunches(lunchesRes);
-  //   }
-  //   getLunches();
-  // }, []);
+  useEffect(() => {
+    async function getLunches() {
+      let lunches = await MklApi.getAllLunches();
+      setLunches(lunches);
+    }
+    getLunches();
+  }, []);
 
-  // console.log(lunches)
+  console.log(lunches)
 
   // Handles user logout
   function logout() {
@@ -93,11 +94,29 @@ function App() {
     }
   }
 
+  // function hasFavoritedLunch(id) {
+  //   return favoriteLunchIds && favoriteLunchIds.has(id);
+  // }
+
+  // const addFavorite = (id) => {
+  //   if(hasFavoritedLunch(id)) return;
+  //   MklApi.addFavorite(currentUser.id, id);
+  //   setFavoriteLunchIds(new Set([...favoriteLunchIds, id]));
+  // }
+
+  // const removeFavorite = (id) => {
+  //   if (!hasFavoritedLunch(id)) return;
+  //   MklApi.removeFavorite(currentUser.id, id);
+  //   setFavoriteLunchIds(new Set([...favoriteLunchIds, id]));
+  // }
+
+  // console.log(favoriteLunchIds);
+
   return ( 
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider
-            value={{currentUser, setCurrentUser, reviewLunch, hasReviewedLunch}}>
+            value={{currentUser, setCurrentUser, lunches, reviewLunch, hasReviewedLunch}}>
           <div className="App-container">
             <Navbar logout={logout} />
             <Routes login={loginUser} signup={registerUser} review={reviewLunch} />
