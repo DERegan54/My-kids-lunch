@@ -56,6 +56,7 @@ img {
 .LunchNutrition-foods {
     column-count: 3;
     margin-left: 4em;
+    margin-right: -11em;
 }
 
 .LunchFoodCard {
@@ -151,7 +152,6 @@ p {
     width: 50em;
 }
 
-
 .LunchList-header {
     color: sienna;
     margin-left: 2em;
@@ -159,9 +159,7 @@ p {
 
 .SearchForm {
     text-align: center;
-
 }
-
 
 .LoginForm-container {
     color: sienna;
@@ -195,3 +193,41 @@ p {
 button {
     margin-top: 1em;
 }
+
+.ReviewForm-container {
+    color: sienna;
+    text-align: center;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 2em;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 2em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin: auto;
+    width: 30em;
+}
+
+.ReviewForm-reviewTextArea {
+    width: 30em;
+    height: 20em;
+
+}
+
+.LunchReviewCard {
+    color:darkseagreen;
+    text-align: center;
+    background-color:tan;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 1em;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 1em;
+    margin-left: 3em;
+    margin-bottom: 1em;
+    width: 40em;
+}
+

@@ -55,17 +55,17 @@ const ReviewForm = () => {
             <div className='ReviewForm-container'>
                 <h3>Create a Review for {lunch.title} here:</h3>
                 <form onSubmit={handleSubmit}>
-                    <input 
-                        className='ReviewForm-reviewTextInput'
-                        type="text"
+                    <textarea
+                        className='ReviewForm-reviewTextArea'
                         name="reviewText"
                         id="reviewText"
                         placeholder="Enter comments here"
                         value={formData.reviewText}
                         onChange={handleChange}
                         required>
-                    </input>
+                    </textarea>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
+                    <br></br>
                     <button type="submit" onSubmit={handleSubmit}><Link to={`/reviews`}>Submit review!</Link></button>
                     {reviewAdded ? <Alert messages={["Review added successfully"]} /> : null}
                 </form>

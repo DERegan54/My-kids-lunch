@@ -17,7 +17,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [reviewIds, setReviewIds] = useState(new Set([]));
   // const [favoriteLunchIds, setFavoriteLunchIds] = useState(new Set([]));
-  const [lunches, setLunches] = useState(new Set([]));
+  const [lunches, setLunches] = useState([]);
+  const [reviews, setReviews] = useState(new Set([]));
   
   useEffect(() => {
     async function getCurrentUser() {
@@ -46,8 +47,16 @@ function App() {
     }
     getLunches();
   }, []);
+  console.log("lunches: ",lunches)
 
-  console.log(lunches)
+  useEffect(() => {
+    async function getReviews() {
+      let reviews = await MklApi.getAllReviews();
+      setReviews(reviews);
+    }
+    getReviews();
+  },[]);
+  console.log("reviews: ", reviews);
 
   // Handles user logout
   function logout() {
@@ -116,7 +125,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider
-            value={{currentUser, setCurrentUser, lunches, reviewLunch, hasReviewedLunch}}>
+            value={{currentUser, setCurrentUser, lunches, reviews, reviewLunch, hasReviewedLunch}}>
           <div className="App-container">
             <Navbar logout={logout} />
             <Routes login={loginUser} signup={registerUser} review={reviewLunch} />

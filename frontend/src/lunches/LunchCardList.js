@@ -18,6 +18,7 @@ const LunchCardList = ({lunches}) => {
                     sweet={lunch.sweet}
                     beverage={lunch.beverage}
                     favorite={lunch.favorite}
+                    reviews={lunch.reviews}
                 />
             ))}
         </div>

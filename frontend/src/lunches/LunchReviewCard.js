@@ -1,38 +1,35 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import MklApi from '../api';
 
-
 const LunchReviewCard = ({review}) => {
-    const {reviewText, userId, lunchId} = review
-    const [lunch, setLunch] = useState([]);
-    const [reviewer, setReviewer] = useState([]);
-
+    const [reviewer, setReviewer] = useState();
+    const [lunch, setLunch] = useState();
+    
     useEffect(() => {
         async function getUsername() {
-            let reviewer = await MklApi.getUsername(userId);
+            let reviewer = await MklApi.getUsername(review.userId);
             setReviewer(reviewer);
         }
-        getUsername(userId);
-    }, [userId])
+        review && getUsername();
+    }, [review.userId])
+    console.log("reviewer: ", reviewer);
 
     useEffect(() => {
         async function getLunch() {
-            let lunch = await MklApi.getLunch(lunchId);
-            setLunch(lunch);
+            let lunchRes = await MklApi.getLunch(review.lunchId);
+            setLunch(lunchRes);
         }
-        getLunch();
-    }, [lunchId])
-
-    console.log(reviewer);
+        review && getLunch();
+    }, [review.lunchId])
+    console.log("lunch: ", lunch);
+    
 
     return (
         <div className='LunchReviewCard'>
             <div className='lunchReviewCard-reviews'>
-                <p><b>Lunch: </b>{lunch.title}</p>
-                <p><b>Review comments: </b>{`${reviewText}`}</p>
-                <p><b>Reviewed by: </b>{`${reviewer}`}</p>
+                {/* <p>{`${review.reviewText}`}</p>
+                <p>~ {`${reviewer.firstName || reviewer.username}`}</p> */}
             </div>
-            <hr></hr>
         </div>
     );
 }
