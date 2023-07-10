@@ -12,6 +12,23 @@ class Favorite {
      *  Data should include {userId, lunchId, isFavorite} 
     */
     static async create(data) {
+        let {userId, lunchId} = data;
+
+        // const duplicateCheck = await db.query(
+        //         `SELECT user_id AS "userId"
+        //          FROM favorites
+        //          WHERE lunch_id = lunchId`,
+        //     [lunchId],
+        // );
+
+        // if (duplicateCheck.rows.contains(userId)) {
+        //     throw new BadRequestError(`Duplicate userId, lunchId combination`)
+        // }
+
+        // let userFavorites = this.findAllFavoritesOnUser(userId)
+        // if (userFavorites.contains(lunchId)) throw new BadRequestError(`Duplicate userId, lunchId combination`)
+
+
         const result = await db.query(
                 `INSERT INTO favorites (
                         user_id, 
@@ -60,7 +77,8 @@ class Favorite {
     /** Gets all favorites associated with a user */
     static async findAllFavoritesOnUser(userId) {
         let res = await db.query(
-                `SELECT lunch_id AS "lunchId",
+                `SELECT id,
+                        lunch_id AS "lunchId",
                         is_favorite AS "isFavorite"
                      FROM favorites 
                      WHERE user_id = $1`,
@@ -102,8 +120,6 @@ class Favorite {
 
         return favorite;
     }
-
-    
 
     /** Delete given favorite from database; returns undefined
      *  Throws NotFoundError if favorite not found
