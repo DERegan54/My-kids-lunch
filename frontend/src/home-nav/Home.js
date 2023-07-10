@@ -10,9 +10,8 @@ const Home = () => {
     const homeIfLoggedIn = () => {
         return (
             <div className='Home-loggedIn'>
-                <Header />
-                <h2>Welcome, {currentUser.firstName || currentUser.username}!</h2>
-                <h4>What's for Lunch?</h4>
+                <h1>Welcome, {currentUser.firstName || currentUser.username}!</h1>
+                <h3>What's for Lunch?</h3>
             </div>
         );
     }
@@ -20,14 +19,13 @@ const Home = () => {
     const homeIfLoggedOut = () => {
         return (
             <div className='Home-loggedOut'>
-                <Header />
                 <br></br>
                 <br></br>
-                <h3>New around here?</h3>
+                <h2>New around here?</h2>
                 <button><Link to="/register">Sign Up Here!</Link></button>
                 <br></br>
                 <br></br>
-                <h3>Let's pack some lunches!</h3>
+                <h2>Let's pack some lunches!</h2>
                 <button><Link to="/login">Log In Here!</Link></button>
             </div>
         );
@@ -36,6 +34,7 @@ const Home = () => {
     return (
         <div className="Home">
             <div className="Home-container">
+                <Header />
                 {currentUser ? homeIfLoggedIn() : homeIfLoggedOut()}
             </div>
         </div>

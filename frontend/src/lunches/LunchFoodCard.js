@@ -14,7 +14,7 @@ const LunchFoodCard = ({title, servingSize, calories, fat, protein, carbohydrate
                 <p><b>Sugar: </b>{`${sugar}`} grams</p>
                 <br></br>
             </div>
-            <hr></hr>
+            <br></br>
         </div>
     );
 }

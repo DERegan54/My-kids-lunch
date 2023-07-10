@@ -26,7 +26,6 @@ const FoodList = () => {
             <Header />
             <SearchForm searchTerm={search} />
             <br></br>
-            <hr></hr>
             <h1 className='FoodList-header'>Foods: </h1>
                 <div className='FoodList-foods'>
                     <FoodCardList foods={foods} />

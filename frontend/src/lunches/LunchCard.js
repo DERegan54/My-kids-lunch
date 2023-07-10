@@ -5,24 +5,50 @@ import UserContext from '../users/UserContext';
 import {VscHeart} from "react-icons/vsc";
 import {VscHeartFilled} from "react-icons/vsc";
 
-
-
 const LunchCard = ({id, title, description, protein, carb, fruit, vegetable, fat, sweet}) => {
-    const {hasFavoritedLunch, addFavorite, currentUser} = useContext(UserContext);
+    const {currentUser} = useContext(UserContext);
     const [isFavorite, setIsFavorite] = useState([]);
+    const [userFavorites, setUserFavorites] = useState([]);
+    const [favoriteId, setFavoriteId] = useState()
     
+    console.log("userFavorites: ", userFavorites);
+    console.log("favoriteId: ", favoriteId)
+    console.log("favId: ", favId)
+
+    let userId = currentUser.id;
+    useEffect(() => {
+        async function getUserFavorites() {
+            let userFavoritesRes = await MklApi.findAllFavoritesOnUser(userId);
+            setUserFavorites(userFavoritesRes);
+        }
+        getUserFavorites(userId);
+    }, [userId]);
+
+    let favId;
+    useEffect(() => {
+        function getFavoriteId(id) {
+            for(let favorite of userFavorites) {
+                if (favorite.lunchId === id) {
+                    favId = favorite.id;
+                    return favId;
+                }
+            }
+        }
+        console.log("favId: ", favId)
+        getFavoriteId(favId)
+        setFavoriteId(favId)
+    }, [id])
+
     const handleFavoriteChange = () => {
         let data = {
             userId: currentUser.id,
             lunchId: id,
-            isFavorite: true ? false : true
+            isFavorite: false ? true : false
         }
-        MklApi.updateFavorite(id, data);
+        MklApi.updateFavorite(favoriteId, data);
         setIsFavorite(data.isFavorite);
     }
-
-    console.log(isFavorite);
-
+    console.log("isFavorite: ", isFavorite)
     return (
         <div className='LunchCard'>
             <div className='LunchCard-lunches'>
@@ -39,8 +65,7 @@ const LunchCard = ({id, title, description, protein, carb, fruit, vegetable, fat
                 <button className='LunchCard-linkToReviewsButton'><Link to={`/lunches/${id}/reviews`}>See Reviews for this lunch</Link></button>
                 <button className='LunchCard-linkToReviewForm'><Link to={`/lunches/${id}/addreview`}>Review this Lunch</Link></button>
                 <br></br>        
-            </div>
-            <hr></hr>            
+            </div>       
         </div>
     );
 }

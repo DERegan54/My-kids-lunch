@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import FavoriteCard from "./FavoriteCard";
 import UserContext from "../users/UserContext";
 import MklApi from "../api";
-
+import Header from "../common/Header";
 
 const UserFavoritesList = () => {
     const {lunches, currentUser} = useContext(UserContext);
@@ -40,10 +40,11 @@ const UserFavoritesList = () => {
 
    
     return (
-        <div className='Favorites'>
+        <div className='UserFavoritesList'>
             <div>
-                <h2 className="Favorites-header">My Favorite Lunches</h2>
-                <div className='Favorites-lunches'>
+                <Header />
+                <h2 className="UserFavoritesList-header"> {currentUser.firstName|| currentUser.username}'s Favorite Lunches:</h2>
+                <div className='UserFavoritesList-lunches'>
                    {favoriteLunches.map((favorite) => ( 
                         <ul>
                             <FavoriteCard favorite={favorite} />

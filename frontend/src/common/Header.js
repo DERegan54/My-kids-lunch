@@ -1,12 +1,11 @@
 import React from 'react';
-
+import Lunchbox from '../images/lunchbox.jpg';
 const Header = () => {
     return (
         <div className='Header'>
-            <br></br>
-            <h1 className='Header-h1'>My Kids' Lunchbox </h1>
-            <h3 className='Header-h3'>...pack a lunch they'll actually eat!</h3>
-            <br></br>
+            <span className='Header-h1'>My Kids' Lunchbox</span>
+            <img className='Header-lunchbox' src={Lunchbox} alt={"red lunch box"} />
+            <h4 className='Header-h4'>...pack a lunch they'll actually eat!</h4>
             <hr></hr>
             <br></br>
         </div>

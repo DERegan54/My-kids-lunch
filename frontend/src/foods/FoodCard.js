@@ -13,7 +13,6 @@ const FoodCard = ({title, servingSize, calories, fat, protein, carbohydrates, su
             <button className='FoodCard-addToLunchButton'>Add To Lunch</button>
             <br></br>
             <br></br>
-            <hr></hr>
         </div>
     );
 }

@@ -27,10 +27,14 @@ const LunchNutrition = () => {
     return (
         <div className="LunchNutrition">
             <Header />
-            <h1> {lunch.title}</h1>
-            <p><b>Description:</b> {lunch.description}</p>
+            <div className='LunchNutrition-container'>
+                <h1> {lunch.title}</h1>
+                <p><b>Description:</b> {lunch.description}</p>
+            </div>
             <br></br>
-            <h2>Nutrition Information For Lunch Items:</h2>
+
+            <br></br>
+            <h2 className='LunchNutrition-foodList'>Nutrition Information For Lunch Items:</h2>
             <div className='LunchNutrition-foods'>
                 <LunchFoodCardList foods={foods} />
             </div>

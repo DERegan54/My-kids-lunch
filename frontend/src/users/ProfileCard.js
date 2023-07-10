@@ -11,7 +11,7 @@ const ProfileCard = () => {
         <div className='Profile'>
             <Header />
             <div className='Profile-container'>
-                <h2>{currentUser.firstName || currentUser.username}'s Profile</h2>
+                <h2>{currentUser.firstName || currentUser.username}'s Profile:</h2>
                 <p><b>Username: </b> {currentUser.username}</p>
                 <p><b>First Name: </b>{currentUser.firstName}</p>
                 <p><b>Last Name: </b>{currentUser.lastName}</p>

@@ -3,7 +3,7 @@ import {Redirect} from 'react-router-dom';
 import MklApi from '../api';
 import SearchForm from '../common/SearchForm';
 import LunchCardList from './LunchCardList';
-
+import Header from '../common/Header';
 
 const LunchList = () => {
     const [lunches, setLunches] = useState([]);
@@ -23,10 +23,11 @@ const LunchList = () => {
 
     return (
         <div className='LunchList'>
-            <SearchForm searchTerm={search} />
+            <Header />
+            {/* <SearchForm searchTerm={search} /> */}
             <br></br>
-            <hr></hr>
-            <h1 className='LunchList-header'>Lunches:</h1>
+            <br></br>
+            <h2 className='LunchList-header'>Lunches:</h2>
                 <div className='LunchList-lunches'>
                     <LunchCardList lunches={lunches} />
                 </div>        
