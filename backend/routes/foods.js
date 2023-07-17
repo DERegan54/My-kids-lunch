@@ -14,8 +14,8 @@ const router = express.Router({mergeParams: true});
 
 /** POST /{food} => {food}
  *  Adds a food to the database
- *  Food should be {title, category, servingSize, calories, fat, protein, carbodydrates, sugar, lunchId}
- *  Returns {id, title, category, servingSize, calories, fat, protein, carbodydrates, sugar, lunchId}
+ *  Food should be {foodTitle, category, servingSize, calories, fatContent, proteinContent, carbodydrates, sugar, lunchId}
+ *  Returns {id, foodTitle, category, servingSize, calories, fatContent, proteinContent, carbodydrates, sugar, lunchId}
  */
 router.post("/", async function (req, res, next) {
     try {
@@ -24,7 +24,7 @@ router.post("/", async function (req, res, next) {
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
-        const food = await Food.create(req.body);
+        const food = await Food.create({...req.body});
         return res.status(201).json({food});
     } catch (err) {
         return next(err);
@@ -55,7 +55,7 @@ router.get("/", async function (req, res, next) {
 
 /** GET /[id] => {food} 
  *  Gets a food given its id
- * Returns {id, title, category, servingSize, calories, fat, protein, carbohydrates, sugar, lunchId}
+ * Returns {id, foodTitle, category, servingSize, calories, fatContent, proteinContent, carbohydrates, sugar, lunchId}
 */
 router.get("/:id", async function (req, res, next) {
     try {
@@ -68,7 +68,7 @@ router.get("/:id", async function (req, res, next) {
 
 /** PATCH /[id] {fld1, fld2, ...} => {food}
  *  Updates a food given its id and new data
- *  Returns {id, title, category, servingSize, calories, fat, protein, carbohydrates, sugar, lunchId}
+ *  Returns {id, foodTitle, category, servingSize, calories, fatContent, proteinContent, carbohydrates, sugar, lunchId}
  */
 router.patch("/:id", async function (req, res, next) {
     try {

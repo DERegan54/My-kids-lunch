@@ -14,8 +14,8 @@ const router = express.Router({mergParams: true});
 
 /** POST / {review} => {review} 
  *  Adds a review to database
- *  Review should be {reviewText, userId, lunchId}
- *  Returns {id, userId,lunchId}
+ *  Review should be {reviewText, username, lunchId}
+ *  Returns {id, username,lunchId}
  */
 router.post("/", async function(req, res, next) {
     try {
@@ -31,7 +31,7 @@ router.post("/", async function(req, res, next) {
     }
 });
 
-/** GET / => {reviews: [{id, reviewText, userId, lunchId}, ...]} 
+/** GET / => {reviews: [{id, reviewText, username, lunchId}, ...]} 
  *  Gets all reviews
 */
 router.get("/", async function (req, res, next) {
@@ -51,30 +51,11 @@ router.get("/", async function (req, res, next) {
 
 /** GET /[reviewId] => {review}
  *  Gets specific review by its id
- *  Returns {id, reviewText, userId, lunchId}
+ *  Returns {id, reviewText, username, lunchId}
  */
 router .get("/:id", async function (req, res, next) {
     try {
         const review = await Review.get(req.params.id);
-        return res.json({review});
-    } catch (err) {
-        return next(err);
-    }
-});
-
-/** PATCH /[reviewId] {fld} => {review}
- *  Updates a review given its id and new data
- *  Data can include: {reviewText}
- *  Returns (id, reviewText, userId, lunchId)
- */
-router.patch("/:id", async function (req, res, next) {
-    try{
-        const validator = jsonschema.validate(req.body, reviewUpdateSchema);
-        if (!validator.valid) {
-            const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(errs);
-        }
-        const review = await Review.update(req.params.id, req.body);
         return res.json({review});
     } catch (err) {
         return next(err);

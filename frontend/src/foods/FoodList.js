@@ -1,35 +1,61 @@
 import React, {useState, useEffect} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import SearchForm from '../common/SearchForm';
 import MklApi from '../api';
 import Header from '../common/Header';
-import FoodCardList from './FoodCardList';
+import FoodCard from './FoodCard';
+import AddLunchForm from '../lunches/AddLunchForm';
 
 const FoodList = () => {
     const [foods, setFoods] = useState([]);
 
-    useEffect(function getAllFoods() {
-        search();
-    }, []);
-
-    async function search(title) {
-        let foods = await MklApi.getAllFoods(title);
-        setFoods(foods)
+    async function search(foodTitle) {
+        let foods = await MklApi.getAllFoods(foodTitle);
+        setFoods(foods);
     }
 
-    console.log(foods);
+    useEffect(() => {
+        function getAllFoods() {
+            search();
+        }
+        getAllFoods();
+    }, []);
+
+    console.log("foods: ", foods);
 
     if (!foods) <Redirect to='/'></Redirect>
 
     return (
         <div className='FoodList'>
-            <Header />
-            <SearchForm searchTerm={search} />
-            <br></br>
-            <h1 className='FoodList-header'>Foods: </h1>
-                <div className='FoodList-foods'>
-                    <FoodCardList foods={foods} />
+            <div className='FoodList-container'>
+                <Header />
+                <h1 className='FoodList-header'>My Kitchen: </h1>
+                <div className='FoodList-createLunch'>
+                    <AddLunchForm foods={foods} />
                 </div>
+                <br></br>
+                <hr></hr>
+                <br></br>
+                
+                <h1>Foods in the Fridge:</h1>
+                <SearchForm searchTerm={search} />
+                <div className='FoodList-addFoodButton'>
+                    <label htmlFor="FoodList-addFoodButton">Add a new food to the fridge: </label>
+                    <button><Link to="/foods/addFood">Go!</Link></button>
+                </div>
+                <div className='FoodList-foods'>
+                    {foods.length
+                        ? (
+                        <div>
+                            {foods.map((food) => (
+                                <FoodCard key={food.id} food={food}/>
+                            ))}
+                        </div>
+                        ) : (
+                            <h4>Sorry, no foods with that search term found.</h4>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

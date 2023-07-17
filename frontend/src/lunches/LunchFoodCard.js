@@ -1,15 +1,15 @@
 import React from 'react';
 
-const LunchFoodCard = ({title, servingSize, calories, fat, protein, carbohydrates, sugar, lunchId}) => {
+const LunchFoodCard = ({food_title, serving_size, calories, fat_content, protein_content, carbohydrates, sugar, lunchId}) => {
    
     return (
         <div className='LunchFoodCard'>
             <div className='LunchFoodCard-foods'>
-                <p><b>Item: </b> {`${title}`}</p>
-                <p><b>Serving Size: </b> {`${servingSize}`}</p>
+                <p><b>Item: </b> {`${food_title}`}</p>
+                <p><b>Serving Size: </b> {`${serving_size}`}</p>
                 <p><b>Calories:</b> {`${calories}`}</p>
-                <p><b>Fat: </b>{`${fat}`} grams</p>
-                <p><b>Protein: </b>{`${protein}`} grams</p>
+                <p><b>Fat: </b>{`${fat_content}`} grams</p>
+                <p><b>Protein: </b>{`${protein_content}`} grams</p>
                 <p><b>Carbohydrates: </b>{`${carbohydrates}`} grams</p>
                 <p><b>Sugar: </b>{`${sugar}`} grams</p>
                 <br></br>

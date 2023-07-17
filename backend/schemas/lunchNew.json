@@ -8,6 +8,9 @@
         "minLength": 1,
         "maxLength": 50
       },
+      "description": {
+        "type": "string"
+      },
       "protein": {
         "type": "string",
         "minimum": 0
@@ -31,15 +34,9 @@
         "type": "string"
       }
     },
-    "additionalProperties": false,
+    "additionalProperties": true,
     "required": [
       "title",
-      "protein",
-      "carb",
-      "fruit",
-      "vegetable",
-      "fat",
-      "sweet",
-      "beverage"
+      "description"
     ]
   }

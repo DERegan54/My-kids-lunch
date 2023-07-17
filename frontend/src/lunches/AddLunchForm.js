@@ -1,12 +1,11 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import Alert from '../common/Alert';
-import UserContext from '../users/UserContext';
-import FoodList from '../foods/FoodList';
-import Header from '../common/Header';
 import MklApi from '../api';
 
-const AddLunchForm = () => {
-    const {currentUser, setCurrentUser} = useContext(UserContext);
+const AddLunchForm = ({addLunch}) => {
+    const history = useHistory();
+   
     const initialState = {
         title: "",
         description: "", 
@@ -22,31 +21,27 @@ const AddLunchForm = () => {
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [lunchAdded, setLunchAdded] = useState(false);
+    const [foods, setFoods] = useState([]);
+
+    useEffect(function getAllFoods() {
+        search();
+    }, []);
+
+    async function search(title) {
+        let foods = await MklApi.getAllFoods(title);
+        setFoods(foods)
+    }
 
     // Handles form submit
     async function handleSubmit(evt) {
         evt.preventDefault();
-        let data = {
-            title: formData.title,
-            description: formData.description,
-            protein: formData.protein,
-            carb: formData.carb,
-            fruit: formData.fruit,
-            vegetable: formData.vegetable,
-            fat: formData.fat,
-            sweet: formData.sweet,
-            beverage: formData.beverage,
-        };
-        let newLunch;
-        try {
-            newLunch = await MklApi.createLunch(data);
-        } catch (errors) {
-            setFormErrors(errors);
-            return;
+        let res = await addLunch(formData);
+        if(res.success) {
+            setLunchAdded(true)
+            history.push('/lunches');
+        } else {
+            setFormErrors(res.errors);
         }
-        setFormData(data => ({...data}));
-        setFormErrors([]);
-        setLunchAdded(true);
     }
 
     // Updates form fields on change
@@ -58,8 +53,7 @@ const AddLunchForm = () => {
 
     return (
         <div className='AddLunchForm'>
-            <Header />
-            <h2>Add a Lunch to your Lunchbox</h2>
+            <h3 className='AddLunchForm-h1'>Add a Lunch to your Lunchbox:</h3>
             <div className='AddLunchForm-container'>
                 <form className='AddLunchForm-form' onSubmit={handleSubmit}>
                     <label htmlFor='title'>Title: </label>
@@ -74,15 +68,14 @@ const AddLunchForm = () => {
                     </input>
                     <br></br>
                     <label htmlFor='title'>Description: </label>
-                    <input 
+                    <textarea 
                         className='AddLunchForm-description'
-                        type='text'
                         name='description'
                         id='description'
                         placeholder='Describe this lunch'
                         value={formData.description}
                         onChange={handleChange}>
-                    </input>
+                    </textarea>
                     <br></br>
                     <label htmlFor='title'>Protein: </label>
                     <input 
@@ -161,11 +154,13 @@ const AddLunchForm = () => {
                         onChange={handleChange}>
                     </input>
                     <br></br>
-                    <button type="submit" onSubmit={handleSubmit}>Add Lunch!</button>
+                    <button className='AddLunchForm-button' type="submit" onSubmit={handleSubmit}>Create Lunch!</button>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                         {lunchAdded ? <Alert messages={["Lunch added successfully"]} /> : null}
                 </form>
             </div>
+            <br></br>
+            <br></br>
         </div>
     );
 }

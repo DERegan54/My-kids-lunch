@@ -9,7 +9,7 @@ const {sqlForPartialUpdate} = require("../helpers/sql");
 class Lunch {
 
     /** Creates a lunch (from data), update db, return new lunch data
-     *  Data should include {id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}
+     *  Data should include {id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage}
      *  Throws BadRequestError if lunch already in database
      */
     static async create ({title, description, protein, carb, fruit, vegetable, fat, sweet, beverage}) {
@@ -24,9 +24,9 @@ class Lunch {
         
         const result = await db.query(
                 `INSERT INTO lunches
-                 (title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, user_id)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                 RETURNING id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, user_id AS "userId"`,
+                 (title, description, protein, carb, fruit, vegetable, fat, sweet, beverage)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                 RETURNING id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage`,
             [
                 title, 
                 description,
@@ -37,7 +37,6 @@ class Lunch {
                 fat,
                 sweet, 
                 beverage, 
-                userId,
             ],
         );
         const lunch = result.rows[0];
@@ -59,8 +58,7 @@ class Lunch {
                             vegetable,
                             fat,
                             sweet,
-                            beverage, 
-                            favorite
+                            beverage
                      FROM lunches`;
         let whereExpressions = [];
         let queryValues = [];
@@ -104,8 +102,7 @@ class Lunch {
                     vegetable, 
                     fat, 
                     sweet,
-                    beverage,
-                    favorite
+                    beverage
             FROM lunches
             WHERE id = $1`,
         [id]);
@@ -114,26 +111,19 @@ class Lunch {
 
         if (!lunch) throw new NotFoundError(`No lunch found: ${id}`);
         
+        // lunch_food is abbreviated with j because it is a junction table
+
         const foodsRes = await db.query(
-                `SELECT id,
-                        title, 
-                        serving_size AS "servingSize",
-                        calories,
-                        fat,
-                        protein,
-                        carbohydrates,
-                        sugar,
-                        lunch_id AS "lunchId"
-                 FROM foods
-                 WHERE lunch_id = $1
-                 ORDER BY id`,
-            [id],
-        ); 
+               `SELECT f.*
+                 FROM lunch_foods AS j
+                 JOIN foods AS f ON j.food_id = f.id
+                 WHERE j.lunch_id=$1`,
+            [id]); 
 
         lunch.foods = foodsRes.rows;
 
         const reviewsRes = await db.query (
-                `SELECT id, review_text AS "reviewText", user_id AS "userId", lunch_id AS "lunchId"
+                `SELECT id, review_text AS "reviewText", username, lunch_id AS "lunchId"
                 FROM reviews
                 WHERE lunch_id = $1
                 ORDER BY id`,

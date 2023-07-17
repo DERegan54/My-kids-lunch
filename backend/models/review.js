@@ -9,17 +9,17 @@ const {sqlForPartialUpdate} = require("../helpers/sql");
 class Review {
     
     /** Creates a review (from data), update db, return new review data
-     *  Data should include {id, reviewText, userId, lunchId}
+     *  Data should include {id, reviewText, username, lunchId}
      */
-    static async create ({reviewText, userId, lunchId}) {
+    static async create ({reviewText, username, lunchId}) {
        const result = await db.query(
                 `INSERT INTO reviews
-                 (review_text, user_id, lunch_id)
+                 (review_text, username, lunch_id)
                  VALUES ($1, $2, $3)
-                 RETURNING id, review_text AS "reviewText", user_id AS "userId", lunch_id AS "lunchId"`,
+                 RETURNING id, review_text AS "reviewText", username, lunch_id AS "lunchId"`,
             [
                 reviewText,
-                userId,
+                username,
                 lunchId,
             ],
        );
@@ -28,12 +28,12 @@ class Review {
     }
 
     /** Finds all reviews
-     *  Returns [{id, reviewText, userId, lunchId}, ...]
+     *  Returns [{id, reviewText, username, lunchId}, ...]
      */
     static async findAll() {
         let query = `SELECT id,
                             review_text AS "reviewText",
-                            user_id AS "userId",
+                            username,
                             lunch_id AS "lunchId"
                      FROM reviews`;
         
@@ -43,14 +43,14 @@ class Review {
     }
 
     /** Given a review id, return data about a review
-     *  Returns [{id, reviewText, userId, lunchId}, ...]
+     *  Returns [{id, reviewText, username, lunchId}, ...]
      *  Throws NotFoundError if review is not found
      */
     static async get(id) {
         const reviewRes = await db.query(
                 `SELECT id,
                         review_text AS "reviewText",
-                        user_id AS "userId",
+                        username",
                         lunch_id AS "lunchId"
                  FROM reviews
                  WHERE id = $1`,
@@ -87,7 +87,7 @@ class Review {
             data,
             {
                 reviewText: "review_text",
-                userId: "user_id",
+                username,
                 lunchId: "lunch_id",
             });
         const idVarIdx = "$" + (values.length + 1);
@@ -96,7 +96,7 @@ class Review {
                           WHERE id = ${idVarIdx}
                           RETURNING id, 
                                     review_text AS "reviewText",
-                                    user_id AS "userId",
+                                    username,
                                     lunch_id AS "lunchId"`
         const result = await db.query(querySql, [...values, id]);
         const review = result.rows[0];

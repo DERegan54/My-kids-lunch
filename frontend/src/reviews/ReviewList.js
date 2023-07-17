@@ -1,24 +1,41 @@
-import React, {useState, useEffect} from "react";
-import ReviewCardList from "../lunches/LunchReviewCardList";
-import MklApi from "../api";
+import React, {useState, useEffect, useContext} from "react";
+import ReviewCard from "../reviews/ReviewCard";
+import UserContext from "../users/UserContext";
+import Header from "../common/Header";
 
-const ReviewList = () => {
-    const [reviews, setReviews] = useState([]);
 
-    useEffect(function getReviewsToRender() {
-        getAllReviews();
-    }, []);
+const ReviewList = ({reviews}) => {
+    const {currentUser} = useContext(UserContext);
+    const [userReviews, setUserReviews] = useState([]);
 
-    async function getAllReviews() {
-        let reviewsRes = MklApi.getAllReviews();
-        setReviews(reviewsRes);
-    }
+    let username = currentUser.username;
+    useEffect(() => {
+        function getUserReviews(username) {
+            setUserReviews(reviews.filter((reviews) => reviews.username = username));
+        };
+        getUserReviews(username)
+    }, [username]);
 
-    console.log(reviews);
-
+    console.log("userReviews: ", userReviews);
+    console.log("reviews: ", reviews);
+ 
     return (
-        <div className="ReviewList">
-            <ReviewCardList reviews={reviews} />
+        <div className="ReviewList-container">
+            <Header />
+            <br></br>
+            <br></br>
+            <h1 className="ReviewList-header">{currentUser.firstName || currentUser.username}'s Lunch Reviews:</h1>
+            {userReviews.length
+                ? (
+                    <div className='ReviewsList-reviews'>
+                        {userReviews.map((userReview) => (
+                            <ReviewCard userReview={userReview} />
+                        ))} 
+                    </div>
+                ) : (
+                    <h4>No reviews yet.</h4>
+            )}
+            
         </div>
     ); 
 }

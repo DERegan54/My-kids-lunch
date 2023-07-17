@@ -3,14 +3,14 @@
 const jsonschema = require("jsonschema");
 const express = require("express");
 const {BadRequestError} = require("../expressError");
-const Lunch = require("../models/lunch");
-const lunchNewSchema = require("../schemas/lunchNew.json");
-const lunchUpdateSchema = require("../schemas/lunchUpdate");
-const lunchSearchSchema = require("../schemas/lunchSearch.json");
+const LunchFood = require("../models/lunchFood");
+const lunchFoodNewSchema = require("../schemas/lunchFoodNew.json");
+const lunchFoodUpdateSchema = require("../schemas/lunchFoodUpdate.json");
+
 
 const router = express.Router({mergeParams: true});
 
-/** ROUTES FOR LUNCHES */
+/** ROUTES FOR LunchFoods */
 
 /** POST / {lunch} => {lunch} 
  *  Adds a lunch to database
@@ -19,64 +19,58 @@ const router = express.Router({mergeParams: true});
  */
 router.post("/", async function(req, res, next) {
     try {
-        const validator = jsonschema.validate(req.body, lunchNewSchema);
+        const validator = jsonschema.validate(req.body, lunchFoodNewSchema);
         if (!validator.valid) {
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
-        const lunch = await Lunch.create(req.body);
+        const lunch = await LunchFood.create(req.body);
         return res.status(201).json({lunch});
     } catch (err) {
         return next(err);
     }
 });
 
-/** GET / => {lunches: [{id, title, protein, carb, fruit, vegetable, fat, sweet, bevereage, userId}, ...]} 
- *  Gets all lunches or search results
- *  Can provide search filter in query: title, protein, carb, fruit, vegetable, fat, sweet, beverage
-*/
-router.get("/", async function (req, res, next) {
-    const q = req.query;  
-    try {
-        const validator = jsonschema.validate(q, lunchSearchSchema);
-        if (!validator.valid) {
-            const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(errs);
-        }
-        const lunches = await Lunch.findAll(q);
-        return res.json({lunches});
-    } catch (err) {
-        return next(err);
-    }
-});
-
-/** GET /[lunchId] => {lunch}
- *  Gets specific lunch by its id
- *  Returns {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}
+/** GET /[lunchId] => {lunchFoods}
+ *  Gets foods associated with a lunch by lunchId
  */
-router.get("/:id", async function (req, res, next) {
+router.get("/lunches/:id", async function (req, res, next) {
     try {
         console.log(typeof req.params.id)
-        const lunch = await Lunch.get(req.params.id);
-        return res.json({lunch});
+        const lunchFoods = await LunchFood.getFoodsForLunch(req.params.id);
+        return res.json({lunchFoods});
     } catch (err) {
         return next(err);
     }
 });
 
-/** PATCH /[lunchId] {fld1, fld2, ...} => {lunch}
- *  Updates a lunch given its id and new data
- *  Data can include: {title, protein, carb, fruit, vegetable, fat, sweet, beverage}
- *  Returns (id, title, protein, carb, fruit, vegetable, fat, sweet, beverage)
+/** GET /[foodId] => {foodLunches}
+ *  Gets lunches associated with a food by foodId
+ *  Returns {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}
+ */
+router.get("/foods/:id", async function (req, res, next) {
+    try {
+        console.log(typeof req.params.id)
+        const foodLunches = await LunchFood.getLunchesForFood(req.params.id);
+        return res.json({foodLunches});
+    } catch (err) {
+        return next(err);
+    }
+});
+
+/** PATCH /[id] {fld1, fld2, ...} => {lunchFood}
+ *  Updates a lunchFood given its id and new data
+ *  Data can include: {lunch_id, food_id}
+ *  Returns (id, lunch_id, food_id)
  */
 router.patch("/:id", async function (req, res, next) {
     try{
-        const validator = jsonschema.validate(req.body, lunchUpdateSchema);
+        const validator = jsonschema.validate(req.body, lunchFoodUpdateSchema);
         if (!validator.valid) {
             const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
-        const lunch = await Lunch.update(req.params.id, req.body);
+        const lunch = await LunchFood.update(req.params.id, req.body);
         return res.json({lunch});
     } catch (err) {
         return next(err);
@@ -95,7 +89,6 @@ router.delete("/:id", async function (req, res, next) {
         return next(err);
     }
 });
-
 
 
 module.exports = router;

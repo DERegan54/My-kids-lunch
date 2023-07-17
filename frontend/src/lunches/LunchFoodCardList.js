@@ -3,17 +3,18 @@ import LunchFoodCard from "../lunches/LunchFoodCard";
 
 
 const LunchFoodCardList = ({foods}) => {
+    
     return (
         <div className='LunchFoodCardList'>
             {foods.map(food => (
                 <LunchFoodCard
                     key={food.id}
                     id={food.id}
-                    title={food.title}
-                    servingSize={food.servingSize}
+                    food_title={food.food_title}
+                    serving_size={food.serving_size}
                     calories={food.calories}
-                    fat={food.fat}
-                    protein={food.protein}
+                    fat_content={food.fat_content}
+                    protein_content={food.protein_content}
                     carbohydrates={food.carbohydrates}
                     sugar={food.sugar}
                 />

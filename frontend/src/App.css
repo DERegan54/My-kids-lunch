@@ -15,7 +15,7 @@ body {
     text-align: left;
     font-size: large;
     color: olivedrab;
-    margin-left: 2em;
+    /* margin-left: 2em; */
 }
 
 .Header-h1 {
@@ -43,17 +43,23 @@ img {
     text-align: center;
 }
 
-.LunchNutrition-container {
+.LunchDetails-header {
     color: sienna;
+    margin-top: 2em;
     margin-left: 2em;
 }
 
-.LunchNutrition-foodList {
+.LunchDetails-container {
+    color: sienna;
+    margin-left: 6em;
+}
+
+.LunchDetails-foodList {
     color: sienna;
     margin-left: 3em;
 }
 
-.LunchNutrition-foods {
+.LunchDetails-foods {
     column-count: 3;
     margin-left: 4em;
     margin-right: -11em;
@@ -89,13 +95,25 @@ p {
     column-gap: 50px;
 }
 
-.FoodList {
+.FoodList-container {
     color: sienna;
-    margin-left: 1em;
+    margin-left: 4em;
+}
+
+.FoodList-addFoodButton {
+    text-align: center;
+}
+
+.FoodList-createLunchButton {
+    text-align: center;
+}
+
+.FoodList-foods {
+    margin-left: 6em;
 }
 
 .FoodCardList {
-    margin-left: 2em;
+    margin-left: 6em;
 }
 .FoodCard {
     color: sienna;
@@ -107,8 +125,55 @@ p {
     margin-bottom: 1em;
     margin-left: 1em;
     padding-top: 1em;
+    padding-bottom: 2em;
     padding-left: 2em;
     width: 15em;
+}
+
+.ReviewList-container {
+    color: sienna;
+}
+
+.ReviewList-header {
+    color: sienna;
+    margin-left: 2em;
+}
+
+
+.ReviewCard {
+    color: sienna;
+    text-align: center;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 1em;
+    padding-right: 2em;
+    padding-bottom: 2em;
+    padding-left: 2em;
+    margin-left: 8em;
+    margin-bottom: 1em;
+    width: 40em;
+}
+
+.ReviewCard-updateForm {
+    color: sienna;
+    text-align: center;
+    background-color: tan;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 1em;
+    padding-right: 3em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin: auto;
+    width: 10em;
+}
+
+.ReviewUpdateForm-submitButton {
+    text-align: center;
+    margin-left: 1em;
 }
 
 .ProfileForm {
@@ -124,10 +189,12 @@ p {
 
 .UserFavoritesList-header {
     color: sienna;
+    margin-left: 2em;
 }
 
-.UserFavoritesList {
-    margin-left: 2em;
+.UserFavoritesList-lunches {
+    margin-left: 6em;
+    
 }
 .FavoriteCard{
     color: sienna;
@@ -137,6 +204,7 @@ p {
     padding-left: 2em;
     margin-right: 2em;
     padding-bottom: 1em;
+    width: 40em;
 }
 
 .LunchCard {
@@ -172,12 +240,50 @@ p {
     width: 20em;
 }
 
+.RegistrationForm-container {
+    color: sienna;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 2em;
+    padding-bottom: 1em;
+    margin: auto;
+    width: 20em;
+}
+
 .AddLunchForm {
+    color: sienna;
+    margin-top: 2em;
+}
+
+.AddLunchForm-container {
+    color: sienna;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 2em;
+    padding-left: 2em;
+    padding-bottom: 2em;
+    
+    margin: auto;
+    width: 20em;
+}
+
+.AddLunchForm-container,
+button {
+    margin-top: 1em;
+}
+
+.AddLunchForm-h1 {
+    margin-left: 2em;
+}
+
+.AddFoodForm {
     color: sienna;
     margin-top: 1em;
 }
 
-.AddLunchForm-container {
+.AddFoodForm-container {
     color: sienna;
     background-color: darkseagreen;
     border: 1px solid black;
@@ -189,9 +295,13 @@ p {
     width: 20em;
 }
 
-.AddLunchForm-container,
+.AddFoodForm-container,
 button {
     margin-top: 1em;
+}
+
+.AddFoodForm-h2 {
+    margin-left: 4em;
 }
 
 .ReviewForm-container {
@@ -213,13 +323,12 @@ button {
 .ReviewForm-reviewTextArea {
     width: 30em;
     height: 20em;
-
 }
 
 .LunchReviewCard {
-    color:darkseagreen;
+    color: sienna;
     text-align: center;
-    background-color:tan;
+    background-color: tan;
     border: 1px solid black;
     border-radius: 5px;
     padding-top: 1em;

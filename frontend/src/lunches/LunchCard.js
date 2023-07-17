@@ -6,87 +6,72 @@ import LunchReviews from './LunchReviews';
 import {VscHeart} from "react-icons/vsc";
 import {VscHeartFilled} from "react-icons/vsc";
 
-const LunchCard = ({id, title, description, protein, carb, fruit, vegetable, fat, sweet}) => {
-    const {currentUser} = useContext(UserContext);
-    const [isFavorite, setIsFavorite] = useState([]);
-    const [userFavorites, setUserFavorites] = useState([]);
-    const [favoriteId, setFavoriteId] = useState();
-    const [reviews, setReviews] = useState([]);
-    
+
+const LunchCard = ({lunch, reviews }) => {  
+    const {currentUser, userFavoriteIds, isFavorited, addFavorite, removeFavorite} = useContext(UserContext)
+    const [lunchReviews, setLunchReviews] = useState([]);
+    const [favorited, setFavorited] = useState();
 
     useEffect(() => {
-        async function getReviews(){
-            let reviewsRes = await MklApi.getAllReviews(id);
-            setReviews(reviewsRes);
+        function getLunchReviews(reviews) {
+            setLunchReviews(reviews.filter((lunchReview) => lunchReview.lunchId === lunch.id));
         }
-        getReviews();
-    }, [id]);
+        getLunchReviews(reviews);
+    }, [reviews]);
 
-    console.log("userFavorites: ", userFavorites);
-    console.log("favoriteId: ", favoriteId)
-    console.log("favId: ", favId)
-    console.log("reviews: ", reviews)
+    const currentUserFavorites = currentUser.favorites;
 
-    let userId = currentUser.id;
     useEffect(() => {
-        async function getUserFavorites() {
-            let userFavoritesRes = await MklApi.findAllFavoritesOnUser(userId);
-            setUserFavorites(userFavoritesRes);
-        }
-        getUserFavorites(userId);
-    }, [userId]);
+        setFavorited(isFavorited(lunch.id));
+    }, [lunch.id, isFavorited]);
 
-    let favId;
-    useEffect(() => {
-        function getFavoriteId(id) {
-            for(let favorite of userFavorites) {
-                if (favorite.lunchId === id) {
-                    favId = favorite.id;
-                    return favId;
-                }
-            }
+    async function handleToggleFavorite(evt) {
+        if (isFavorited(lunch.id)) {
+            removeFavorite(lunch.id);
+            setFavorited(false);
+        } else if (!isFavorited(lunch.id)) {
+          addFavorite(lunch.id);
+          setFavorited(true);
         }
-        console.log("favId: ", favId)
-        getFavoriteId(favId)
-        setFavoriteId(favId)
-    }, [id])
-
-    const handleFavoriteChange = () => {
-        let data = {
-            userId: currentUser.id,
-            lunchId: id,
-            isFavorite: false ? true : false
-        }
-        MklApi.updateFavorite(favoriteId, data);
-        setIsFavorite(data.isFavorite);
     }
-    console.log("isFavorite: ", isFavorite)
+
+    console.log("lunch: ", lunch)
+    console.log("favorited: ", favorited)
+    console.log("isFavorited: ", isFavorited(lunch.id))
+    
+    
+    // console.log("reviews: ", reviews)
+    // console.log("lunch.id: ", lunch.id);
+    // console.log("lunchReviews: ", lunchReviews)
+    // console.log("userFavorites: ", userFavorites)
+    // const userFavorites = currentUser.favorites;
+ 
+    
     return (
         <div className='LunchCard'>
             <div className='LunchCard-lunches'>
                 <div className='LunchCard-lunchInfo'>
                     <br></br>
-                    <span>
-                        <b>{`${title}`} </b>
-                        {isFavorite ? (
-                            <VscHeartFilled onClick={handleFavoriteChange} />
-                        ) : (
-                            <VscHeart onClick={handleFavoriteChange} />  
-                        )}  
-                    </span>
+                    <div>
+                        <b>{`${lunch.title}`} </b>
+                        {favorited || currentUserFavorites.includes(lunch.id) ? (<VscHeartFilled onClick={handleToggleFavorite} />) : (<VscHeart onClick={handleToggleFavorite} />)  }   
+                    </div>
                     <br></br>
                     <br></br>
-                    <span>{`${description}`}</span>
-                    <button className='LunchCard-linkToDetailsButton'><Link to={`/lunches/${id}/nutrition`}>See Nutrition Information</Link></button>
-                    <button className='LunchCard-linkToReviewForm'><Link to={`/lunches/${id}/addreview`}>Add comments for this Lunch</Link></button>
+                    <span>{`${lunch.description}`}</span>
+                    <br></br>
+                    <button className='LunchCard-linkToDetailsButton'><Link to={`/lunches/${lunch.id}/details`}>See Lunch Details</Link></button>
+                    <button className='LunchCard-linkToReviewForm'><Link to={`/lunches/${lunch.id}/addreview`}>Add comments for this Lunch</Link></button>
                 </div>
                 <br></br>
                 <hr></hr>
                 <br></br>
                 <div className="LunchCard-comments">
+                    <br></br>
                     <span><b>User Comments: </b></span>
                     <br></br>
-                    <LunchReviews id={id} reviews={reviews} />
+                    <br></br>
+                    <LunchReviews lunchId={lunch.id} lunchReviews={lunchReviews} />
                 </div>      
             </div>       
         </div>

@@ -6,8 +6,8 @@
       "reviewText": {
         "type": "string"
       },
-      "userId": {
-        "type": "number"
+      "username": {
+        "type": "string"
       },
       "lunchId": {
         "type": "number"

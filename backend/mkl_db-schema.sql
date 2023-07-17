@@ -1,6 +1,6 @@
 CREATE TABLE users(
-    id SERIAL PRIMARY KEY,  
-    username VARCHAR(25) UNIQUE NOT NULL,
+    username VARCHAR(25) UNIQUE NOT NULL PRIMARY KEY,
+    id SERIAL, 
     password TEXT NOT NULL, 
     first_name TEXT,
     last_name TEXT,
@@ -31,30 +31,36 @@ CREATE TABLE foods (
     title TEXT NOT NULL,
     category TEXT NOT NULL,
     serving_size TEXT,
-    calories FLOAT,
-    fat FLOAT,
-    protein FLOAT,
-    carbohydrates FLOAT,
-    sugar FLOAT,
-    lunch_id INTEGER
+    calories TEXT,
+    fat TEXT,
+    protein TEXT,
+    carbohydrates TEXT,
+    sugar TEXT,
+    lunch_id TEXT
         REFERENCES lunches
+);
+
+CREATE TABLE lunch_foods (
+    lunch_id INTEGER    
+        REFERENCES lunches,
+    food_id INTEGER
+        REFERENCES foods
 );
 
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,  
     review_text TEXT NOT NULL,
-    user_id INTEGER 
-        REFERENCES users,
+    username VARCHAR (25)
+        REFERENCES users ON DELETE CASCADE,
     lunch_id INTEGER 
-        REFERENCES lunches
+        REFERENCES lunches ON DELETE CASCADE
 );
 
 CREATE TABLE favorites (
-    id SERIAL PRIMARY KEY,
+    username VARCHAR (25)
+        REFERENCES users ON DELETE CASCADE,
     lunch_id INTEGER
         REFERENCES lunches ON DELETE CASCADE,
-    user_id INTEGER
-        REFERENCES users ON DELETE CASCADE,
-    isFavorite BOOLEAN
+    PRIMARY KEY (username, lunch_id)
 );

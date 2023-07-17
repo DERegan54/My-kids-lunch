@@ -5,32 +5,20 @@ import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
 import MklApi from '../api';
 
-const ReviewForm = () => {
-    const {id} = useParams();
-
+const ReviewUpdateForm = ({userReview}) => {
     const {currentUser} = useContext(UserContext);
     const initialState = {reviewText: "", userId: currentUser.id, lunchId: Number(id)}
     const [lunch, setLunch] = useState([]);
-    const [title, setTitle] = useState([]);
     const [formData, setFormData] = useState(initialState)
     const [formErrors, setFormErrors] = useState([]);
     const [reviewAdded, setReviewAdded] = useState(false);
     
-    useEffect(() => {
-        async function getLunch() {
-            let lunchRes = await MklApi.getLunch(id);
-            setLunch(lunchRes);
-            setTitle(lunch.title);
-        }
-        getLunch()
-    },[id]);
-
-    
-    // console.log("lunch: ", lunch);
-    // console.log("id: ", id);
-
-
-    let newLunchReview;
+    let id = userReview.id;
+    let username = currentUser.username
+    let lunchId = userReview.lunchId
+    console.log("id: ", id);
+    console.log("username: ", username);
+    console.log("lunchId: ", lunchId);
 
     // Handles form submit  
     async function handleSubmit(evt) {
@@ -38,10 +26,10 @@ const ReviewForm = () => {
         let data = {
             reviewText: formData.reviewText,
             username: currentUser.username,
-            lunchId: +id
+            lunchId: userReview.lunchId
         }; 
         try {
-            newLunchReview =   await MklApi.createReview(data);
+            await MklApi.updateReview(id, data);
         } catch (errors) {
             setFormErrors(errors);
             return;
@@ -58,13 +46,14 @@ const ReviewForm = () => {
     }
 
     return (
-        <div className='ReviewForm'>
-            <Header />
-            <div className='ReviewForm-container'>
-                <h3>Create a Review for {lunch.title} here:</h3>
+        <div className='ReviewUpdateForm'>
+            <div className='ReviewUpdateForm-container'>
                 <form onSubmit={handleSubmit}>
+                    <label htmlFor='reviewText'>Update Review: </label>
+                    <br></br>
+                    <br></br>
                     <textarea
-                        className='ReviewForm-reviewTextArea'
+                        className='ReviewUpdateForm'
                         name="reviewText"
                         id="reviewText"
                         placeholder="Enter comments here"
@@ -74,14 +63,12 @@ const ReviewForm = () => {
                     </textarea>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                     <br></br>
-                    <button type="submit" onSubmit={handleSubmit}>Submit review!</button>
+                    <button className='ReviewUpdateForm-submitButton'type="submit" onSubmit={handleSubmit}>Save changes!</button>
                     {reviewAdded ? <Alert messages={["Review added successfully"]} /> : null}
                 </form>
-                <br></br>
-                <br></br>
             </div>
         </div>
     );
 }
 
-export default ReviewForm;
+export default ReviewUpdateForm;

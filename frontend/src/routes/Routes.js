@@ -5,36 +5,49 @@ import RegistrationForm from '../users/RegistrationForm';
 import ProfileCard from '../users/ProfileCard';
 import LoginForm from '../users/LoginForm';
 import LunchList from '../lunches/LunchList';
-import LunchNutrition from '../lunches/LunchNutrition';
+import LunchDetails from '../lunches/LunchDetails';
 import FoodList from '../foods/FoodList';
-import FoodDetail from '../foods/FoodDetail';
 import LunchReviews from '../lunches/LunchReviews';
 import UserFavoritesList from '../favorites/UserFavoritesList';
 import ReviewForm from '../reviews/ReviewForm';
-import AddLunchForm from '../lunches/AddLunchForm';
+import ReviewUpdateForm from '../reviews/ReviewUpdateForm';
 import ReviewList from '../reviews/ReviewList';
+import AddLunchForm from '../lunches/AddLunchForm';
+import AddFoodForm from '../foods/AddFoodForm';
 import PrivateRoute from './PrivateRoute';
 
 
-const Routes = ({login, signup}) => {
+const Routes = ({   
+                    allUsers,
+                    lunches, 
+                    reviews, 
+                    foods, 
+                    login, 
+                    signup, 
+                    addFood, 
+                    addLunch, 
+                    reviewLunch, 
+                }) => {
 
     return (
         <div className='Routes'>
             <Switch>
                 <Route exact path="/"><Home /></Route>
-                <Route exact path="/register"><RegistrationForm signup={signup} /></Route>
+                <Route exact path="/register"><RegistrationForm signup={signup} lunches={lunches} /></Route>
                 <Route exact path="/login"><LoginForm login={login} /></Route>
                 <PrivateRoute exact path="/users/profile/"><ProfileCard /></PrivateRoute> 
                 <PrivateRoute exact path="/users/favorites/"><UserFavoritesList /></PrivateRoute>
-                <PrivateRoute exact path="/lunches"><LunchList /></PrivateRoute>
-                <PrivateRoute exact path="/lunches/:id/nutrition"><LunchNutrition /></PrivateRoute> 
-                <PrivateRoute exact path="/lunches/:id/reviews"><LunchReviews /></PrivateRoute>
-                <PrivateRoute exact path="/lunches/:id/addreview"><ReviewForm  /></PrivateRoute>
-                <PrivateRoute exact path="/foods"><FoodList /></PrivateRoute>
-                <PrivateRoute exact path="/foods/:id"><FoodDetail /></PrivateRoute>
-                <PrivateRoute exact path="/lunches/addlunch"><AddLunchForm /></PrivateRoute>
-                <PrivateRoute exact path="/reviews"><ReviewList /></PrivateRoute>
-                <Redirect to="/"></Redirect>
+                <PrivateRoute exact path="/users/reviews"><ReviewList reviews={reviews} /></PrivateRoute>
+                <PrivateRoute exact path="/reviews/:id/"><ReviewUpdateForm /></PrivateRoute>
+                <PrivateRoute exact path="/lunches"><LunchList allUsers={allUsers} lunches={lunches} reviews={reviews} /></PrivateRoute>
+                <PrivateRoute exact path="/lunches/:id/details"><LunchDetails foods={foods} /></PrivateRoute> 
+                <PrivateRoute exact path="/lunches/:id/reviews"><LunchReviews reviews={reviews} /></PrivateRoute>
+                <PrivateRoute exact path="/lunches/:id/addreview"><ReviewForm reviewLunch={reviewLunch}  /></PrivateRoute>
+                <PrivateRoute exact path="/lunches/addlunch"><AddLunchForm addLunch={addLunch} /></PrivateRoute>
+                <PrivateRoute exact path="/foods"><FoodList foods={foods} /></PrivateRoute>
+                <PrivateRoute exact path="/foods/addfood"><AddFoodForm addFood={addFood} /></PrivateRoute>
+                
+                {/* <Redirect to="/"></Redirect> */}
             </Switch>
         </div>
     );

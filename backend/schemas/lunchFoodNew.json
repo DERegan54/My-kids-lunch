@@ -1,18 +1,19 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://our.lunches.com/reviewUpdate.schema.json",
+    "$id": "http://example.com/lunchfoodnew.json",
     "type": "object",
     "properties": {
-      "reviewText": {
-        "type": "string"
-      },
-      "username": {
-        "type": "string"
-      },
       "lunchId": {
+        "type": "number"
+      },
+      "foodId": {
         "type": "number"
       }
     },
     "additionalProperties": false,
-    "required": []
+    "required": [
+      "lunchId",
+      "foodId"
+    ]
 }
+  

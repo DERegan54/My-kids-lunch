@@ -1,53 +1,24 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import FavoriteCard from "./FavoriteCard";
 import UserContext from "../users/UserContext";
-import MklApi from "../api";
 import Header from "../common/Header";
 
 const UserFavoritesList = () => {
-    const {lunches, currentUser} = useContext(UserContext);
-    const [favorites, setFavorites] = useState([]);
-    const [favoriteLunches, setFavoriteLunches] = useState([]);
+    const {currentUser, userFavoriteIds, addFavorite, removeFavorite, isFavorited} = useContext(UserContext);
     
-    useEffect(() => {
-        async function getUserFavorites() {
-            let favoritesRes = await MklApi.findAllFavoritesOnUser(currentUser.id);
-            setFavorites(favoritesRes);
-        }
-        getUserFavorites()
-    }, [currentUser.id]);
-    
-    console.log("lunches: ", lunches)
-    console.log("favorites: ", favorites);
+    console.log("userFavoriteIds: ", userFavoriteIds);
 
-    let favoriteLunchesArray = []
-    function getFavoriteLunches(favorites) {
-        for(let favorite of favorites) {
-            if (favorite.isFavorite === true) { 
-                favoriteLunchesArray.push(favorite);
-            }
-        }
-        return favoriteLunchesArray;
-    }
-    
-    useEffect(() => {
-        let favoriteLunches = getFavoriteLunches(favorites);
-        setFavoriteLunches(favoriteLunches)
-    }, [favorites])
-    
-   console.log("favoriteLunches: ", favoriteLunches)
-   
-
-   
     return (
         <div className='UserFavoritesList'>
             <div>
                 <Header />
-                <h2 className="UserFavoritesList-header"> {currentUser.firstName|| currentUser.username}'s Favorite Lunches:</h2>
+                <br></br>
+                <br></br>
+                <h1 className="UserFavoritesList-header"> {currentUser.firstName|| currentUser.username}'s Favorite Lunches:</h1>
                 <div className='UserFavoritesList-lunches'>
-                   {favoriteLunches.map((favorite) => ( 
+                   {[...userFavoriteIds].map((userFavoriteId) => ( 
                         <ul>
-                            <FavoriteCard favorite={favorite} />
+                            <FavoriteCard key={userFavoriteId} userFavoriteId={userFavoriteId} addFavorite={addFavorite} removeFavorite={removeFavorite} />
                         </ul>
                     ))}
                 </div>

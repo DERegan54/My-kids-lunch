@@ -1,34 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import UserContext from '../users/UserContext';
 import MklApi from '../api';
 
-const LunchReviewCard = ({review}) => {
-    const [reviewer, setReviewer] = useState();
-    const [lunch, setLunch] = useState();
-    
-    useEffect(() => {
-        async function getUsername() {
-            let reviewer = await MklApi.getUsername(review.userId);
-            setReviewer(reviewer);
-        }
-        review && getUsername();
-    }, [review.userId])
-    console.log("reviewer: ", reviewer);
-
-    useEffect(() => {
-        async function getLunch() {
-            let lunchRes = await MklApi.getLunch(review.lunchId);
-            setLunch(lunchRes);
-        }
-        review && getLunch();
-    }, [review.lunchId])
-    console.log("lunch: ", lunch);
-    
+const LunchReviewCard = ({lunchReview}) => {
+    // console.log("lunchReview: ", lunchReview)
 
     return (
         <div className='LunchReviewCard'>
             <div className='lunchReviewCard-reviews'>
-                {/* <p>{`${review.reviewText}`}</p>
-                <p>~ {`${reviewer.firstName || reviewer.username}`}</p> */}
+                <p>{`${lunchReview.reviewText}`}</p> 
+                <p>~ {`${lunchReview.username}`}</p> 
             </div>
         </div>
     );

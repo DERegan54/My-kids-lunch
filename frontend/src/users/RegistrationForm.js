@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import Header from '../common/Header';
 import Alert from "../common/Alert";
 
-const RegistrationForm = ({signup}) => {
+const RegistrationForm = ({signup, lunches}) => {
     const history = useHistory();
     const initialState = {
                             username: "",
@@ -15,6 +15,8 @@ const RegistrationForm = ({signup}) => {
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [registrationConfirmed, setRegistrationConfirmed] = useState(false);
+           
+  
 
     // Handles form submit
     async function handleSubmit(evt) {
@@ -34,6 +36,7 @@ const RegistrationForm = ({signup}) => {
         setFormData(data => ({...data, [name]: value}));
     }
 
+    console.log("lunches: ", lunches)
     return (
         <div className='RegistrationForm'>
             <Header />

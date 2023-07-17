@@ -1,17 +1,19 @@
 import React from 'react';
-import LunchReviewCardList from './LunchReviewCardList';
+import LunchReviewCard from './LunchReviewCard';
 
-const LunchReviews = ({id, reviews}) => {
-
-    console.log("id: ", id)
-    console.log("reviews: ", reviews)
-
+const LunchReviews = ({lunchReviews}) => {    
     return (
         <div className="LunchReviews">
-            <div className='LunchReviews-reviews'>
-                <br></br>
-                <LunchReviewCardList id={id} reviews={reviews} />
-            </div>
+            {lunchReviews.length
+                ? (
+                    <div className='LunchReviews-reviews'>
+                        {lunchReviews.map((lunchReview) => (
+                            <LunchReviewCard key={lunchReview.id} lunchReview={lunchReview} />
+                        ))}      
+                    </div>
+                ) : (
+                    <h4>No reviews on this lunch yet.</h4>
+            )}       
         </div>
     );   
 }

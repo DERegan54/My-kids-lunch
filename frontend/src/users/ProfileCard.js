@@ -2,11 +2,14 @@ import React, {useContext} from 'react';
 import Header from '../common/Header';
 import UserContext from './UserContext';
 import ProfileForm from './ProfileForm';
+import ReviewList from '../reviews/ReviewList';
 
 const ProfileCard = () => {
-    const {currentUser} = useContext(UserContext);
-    console.log(currentUser);
+    const {currentUser, reviews} = useContext(UserContext);
 
+    console.log("currentUser: ", currentUser);
+    console.log("reviews: ", reviews);
+   
     return (
         <div className='Profile'>
             <Header />

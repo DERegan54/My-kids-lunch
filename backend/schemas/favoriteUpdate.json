@@ -3,14 +3,11 @@
     "$id": "http://our.lunches.com/favoriteUpdate.schema.json",
     "type": "object",
     "properties": {
-      "userId": {
-        "type": "number"
+      "username": {
+        "type": "string"
       },
       "lunchId": {
         "type": "number"
-      },
-      "isFavorite": {
-        "type": "boolean"
       }
     },
     "additionalProperties": false,
