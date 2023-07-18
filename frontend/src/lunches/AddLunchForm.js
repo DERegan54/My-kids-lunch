@@ -3,9 +3,11 @@ import {useHistory} from 'react-router-dom';
 import Alert from '../common/Alert';
 import MklApi from '../api';
 
-const AddLunchForm = ({addLunch}) => {
+const AddLunchForm = ({addLunch, setFoodData}) => {
     const history = useHistory();
-   
+
+    console.log("addLunch: ", addLunch);
+
     const initialState = {
         title: "",
         description: "", 

@@ -7,11 +7,9 @@ import MklApi from '../api';
 
 const ReviewForm = () => {
     const {id} = useParams();
-
     const {currentUser} = useContext(UserContext);
     const initialState = {reviewText: "", userId: currentUser.id, lunchId: Number(id)}
     const [lunch, setLunch] = useState([]);
-    const [title, setTitle] = useState([]);
     const [formData, setFormData] = useState(initialState)
     const [formErrors, setFormErrors] = useState([]);
     const [reviewAdded, setReviewAdded] = useState(false);
@@ -20,7 +18,6 @@ const ReviewForm = () => {
         async function getLunch() {
             let lunchRes = await MklApi.getLunch(id);
             setLunch(lunchRes);
-            setTitle(lunch.title);
         }
         getLunch()
     },[id]);
@@ -61,7 +58,7 @@ const ReviewForm = () => {
         <div className='ReviewForm'>
             <Header />
             <div className='ReviewForm-container'>
-                <h3>Create a Review for {lunch.title} here:</h3>
+                <h3>Review {lunch.title} here:</h3>
                 <form onSubmit={handleSubmit}>
                     <textarea
                         className='ReviewForm-reviewTextArea'

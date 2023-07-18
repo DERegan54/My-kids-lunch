@@ -6,9 +6,10 @@ import {VscHeartFilled} from "react-icons/vsc";
 
 
 const FavoriteCard = ({userFavoriteId}) => {
-    const {currentUser, userFavoriteIds, isFavorited, addFavorite, removeFavorite} = useContext(UserContext);
-    const [favorited, setFavorited] = useState();
+    const {isFavorited, addFavorite, removeFavorite} = useContext(UserContext);
     const [lunch, setLunch] = useState([]);
+    const initialState = isFavorited(userFavoriteId);
+    const [favorited, setFavorited] = useState(initialState);
 
     useEffect(() => {
         async function getLunch() {
@@ -17,39 +18,28 @@ const FavoriteCard = ({userFavoriteId}) => {
         }
         getLunch();
     }, [userFavoriteId])
-
-    useEffect(() => {
-        setFavorited(isFavorited(userFavoriteId));
-    }, [userFavoriteId, isFavorited])
-
-    const currentUserFavorites = currentUser.favorites;
-    
-
-    const handleToggleFavorite = (evt) => {
-        if (favorited) {
-            removeFavorite(userFavoriteId);
-            setFavorited(false);
-            isFavorited(userFavoriteId);
-        } else {
-            addFavorite(userFavoriteId);
-            setFavorited(true);
-            isFavorited(userFavoriteId);
-        }
-    }
    
-    console.log("lunch: ", lunch);
-    console.log("favorited: ", favorited)
-    console.log("isFavorited: ", isFavorited(userFavoriteId))
+    async function handleAddFavorite(evt) {
+        if(favorited) return;
+        addFavorite(userFavoriteId);
+        setFavorited(true);
+    }
+
+    async function handleRemoveFavorite(evt) {
+        if(!isFavorited) return;
+        removeFavorite(userFavoriteId);
+        setFavorited(false);
+    }
 
     return (
         <div className='FavoriteCard'>
             <div className='FavoriteCard-lunches'>
                 <p>
                     <b>{`${lunch.title}`} </b>
-                    {favorited || currentUserFavorites.includes(userFavoriteId) ? (
-                        <VscHeartFilled onClick={handleToggleFavorite} />
+                    {favorited ? (
+                        <VscHeartFilled onClick={handleRemoveFavorite} />
                     ) : (
-                        <VscHeart onClick={handleToggleFavorite} />  
+                        <VscHeart onClick={handleAddFavorite} />  
                     )}  
                 </p>
                 <p>{`${lunch.description}`}</p>    

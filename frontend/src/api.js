@@ -161,6 +161,12 @@ class MklApi {
         return res.reviews;
     }
 
+    // Gets a single review
+    static async getReview(id) {
+        let res = await this.request(`reviews/${id}`, {}, "get");
+        return res.review;
+    }
+
     // Updates a review
     static async updateReview(id, data) {
         let res = await this.request(`users/reviews/${id}`, data, "patch");
@@ -173,29 +179,11 @@ class MklApi {
         return res.review;
     }
 
-    // //Gets all favorites
-    // static async findAllFavorites() {
-    //     let res = await this.request(`favorites/`, {}, "get");
-    //     return res.favorites;
-    // }
-
-    // // Gets all favorites associated with a lunch
-    // static async findAllFavoritesOnLunch(id) {
-    //     let res = await this.request(`favorites/lunch/${id}`, {}, "get");
-    //     return res.favorites;
-    // }
-
     // Gets all favorites associated with a user
     static async getUserFavorites(username) {
         let res = await this.request(`users/${username}/favorites`, {}, "get");
         return res.favorites;
     }
-
-    // // Updates the status of a favorite 
-    // static async updateFavorite(id, data) {
-    //     let res = await this.request(`favorites/${id}`, data, "patch");
-    //     return res.favorite;
-    // }
 
     // Adds a favorite
     static async addFavorite(username, id) {

@@ -111,14 +111,15 @@ function App() {
   // Handles adding a lunch to db
   async function addLunch(data) {
     try{
-      let lunchRes = await MklApi.createLunch(data)
-      console.log("lunchRes: ", lunchRes)
-      return {success: true}
+      let lunchRes = await MklApi.createLunch(data);
+      console.log("lunchRes: ", lunchRes);
+      return {success: true};
     } catch (errors) {
       console.error("lunch add failed", errors);
-      return {success: false, errors}
+      return {success: false, errors};
     }
   }
+  
   function hasReviewedLunch(id) {
     return reviewIds && reviewIds.has(id);
   }

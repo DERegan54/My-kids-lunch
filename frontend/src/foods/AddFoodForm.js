@@ -17,6 +17,8 @@ const AddFoodForm = ({addFood}) => {
         sugar: "",
     }
 
+    console.log("addFood: ", addFood);
+
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [foodAdded, setFoodAdded] = useState(false);

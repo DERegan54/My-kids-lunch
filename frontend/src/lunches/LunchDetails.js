@@ -9,6 +9,7 @@ const LunchDetails = () => {
     const {id} = useParams();
     const [lunch, setLunch] = useState([]);
     const [foods, setFoods] = useState([]);
+    const [lunchFoods, setLunchFoods] = useState([]);
     
     useEffect(() => {
         async function getLunch() {
@@ -19,6 +20,16 @@ const LunchDetails = () => {
         getLunch()
     }, [id]);  
     
+    const currentLunchFoods = lunch.foods;
+
+    useEffect(() => {
+        function getLunchFoods(lunch) {
+            setLunchFoods(lunch.foods)
+        }
+        getLunchFoods(lunch);
+    }, [lunch])
+
+    console.log("lunchFoods: ", lunchFoods && Object.keys(lunchFoods).length );
     // console.log("foods: ", foods);
     // console.log("lunch: ", lunch);
 
@@ -40,7 +51,9 @@ const LunchDetails = () => {
             </div>
             <br></br>
             <br></br>
-            <h2 className='LunchDetails-foodList'>Nutrition Information For Lunch Items:</h2>
+            <h2 className='LunchDetails-foodList'>
+                {lunchFoods && Object.keys(lunchFoods).length<1 ? null : "Nutrition Information For Lunch Items:"}
+            </h2>
             <div className='LunchDetails-foods'>
                 <LunchFoodCardList foods={foods} />
             </div>

@@ -6,7 +6,7 @@ import Header from '../common/Header';
 import FoodCard from './FoodCard';
 import AddLunchForm from '../lunches/AddLunchForm';
 
-const FoodList = () => {
+const FoodList = ({addLunch}) => {
     const [foods, setFoods] = useState([]);
 
     async function search(foodTitle) {
@@ -21,6 +21,8 @@ const FoodList = () => {
         getAllFoods();
     }, []);
 
+    
+
     console.log("foods: ", foods);
 
     if (!foods) <Redirect to='/'></Redirect>
@@ -31,13 +33,9 @@ const FoodList = () => {
                 <Header />
                 <h1 className='FoodList-header'>My Kitchen: </h1>
                 <div className='FoodList-createLunch'>
-                    <AddLunchForm foods={foods} />
+                    <AddLunchForm foods={foods} addLunch={addLunch} />
                 </div>
-                <br></br>
-                <hr></hr>
-                <br></br>
-                
-                <h1>Foods in the Fridge:</h1>
+                {/* <h1>Foods in the Fridge:</h1>
                 <SearchForm searchTerm={search} />
                 <div className='FoodList-addFoodButton'>
                     <label htmlFor="FoodList-addFoodButton">Add a new food to the fridge: </label>
@@ -54,7 +52,7 @@ const FoodList = () => {
                         ) : (
                             <h4>Sorry, no foods with that search term found.</h4>
                     )}
-                </div>
+                </div> */}
             </div>
         </div>
     );

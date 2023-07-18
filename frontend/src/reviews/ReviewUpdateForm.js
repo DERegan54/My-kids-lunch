@@ -5,20 +5,26 @@ import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
 import MklApi from '../api';
 
-const ReviewUpdateForm = ({userReview}) => {
+const ReviewUpdateForm = () => {
+    const {id, username} = useParams();
     const {currentUser} = useContext(UserContext);
     const initialState = {reviewText: "", userId: currentUser.id, lunchId: Number(id)}
-    const [lunch, setLunch] = useState([]);
     const [formData, setFormData] = useState(initialState)
     const [formErrors, setFormErrors] = useState([]);
+    const [review, setReview] = useState([])
     const [reviewAdded, setReviewAdded] = useState(false);
-    
-    let id = userReview.id;
-    let username = currentUser.username
-    let lunchId = userReview.lunchId
+
     console.log("id: ", id);
-    console.log("username: ", username);
-    console.log("lunchId: ", lunchId);
+    console.log("review: ", review);
+
+
+    useEffect(() => {
+        async function getReview() {
+            let reviewRes = await MklApi.getReview(id);
+            setReview(reviewRes);
+        }
+        getReview();
+    }, [id])
 
     // Handles form submit  
     async function handleSubmit(evt) {
@@ -26,10 +32,10 @@ const ReviewUpdateForm = ({userReview}) => {
         let data = {
             reviewText: formData.reviewText,
             username: currentUser.username,
-            lunchId: userReview.lunchId
+            lunchId: review.lunchId,
         }; 
         try {
-            await MklApi.updateReview(id, data);
+            await MklApi.updateReview(review.id, data);
         } catch (errors) {
             setFormErrors(errors);
             return;
@@ -47,6 +53,7 @@ const ReviewUpdateForm = ({userReview}) => {
 
     return (
         <div className='ReviewUpdateForm'>
+            <Header />
             <div className='ReviewUpdateForm-container'>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor='reviewText'>Update Review: </label>
