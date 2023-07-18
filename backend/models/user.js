@@ -6,6 +6,7 @@ const {sqlForPartialUpdate} = require("../helpers/sql");
 const {
     NotFoundError,
     UnauthorizedError,
+    BadRequestError,
 } = require("../expressError");
 
 const {BCRYPT_WORK_FACTOR} = require("../config.js");
@@ -53,17 +54,17 @@ class User {
     *   Returns {id, username, password, firstName, lastName, email}
     *   Throws BadRequestError on duplicates
     */
-    static async register({username, password, firstName, lastName, email , diet, allergies, preferences, aversions}) {
-        // const duplicateCheck = await db.query(
-        //         `SELECT username
-        //          FROM users
-        //          WHERE username = $1`
-        //     [username],
-        // );
+    static async register({username, password, firstName, lastName, email, diet, allergies, preferences, aversions}) {
+        const duplicateCheck = await db.query(
+                `SELECT username
+                 FROM users
+                 WHERE username = $1`,
+            [username],
+        );
 
-        // if (duplicateCheck.rows[0]) {
-        //     throw new BadRequestError(`Duplicate username: ${username}`);
-        // }
+        if (duplicateCheck.rows[0]) {
+            throw new BadRequestError(`Duplicate username: ${username}`);
+        }
 
         const hashedPassword  = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
 
@@ -160,57 +161,6 @@ class User {
 
         return user;
     }
-
-    // /** Given an id return username
-    //  *  Returns {id, username, firstName, lastName, email, diet, allergies, preferences, aversions}
-    // **/
-    // static async getUsername(id) {
-    //     const usernameRes = await db.query(
-    //             `SELECT id,
-    //                     username,
-    //                     first_name AS "firstName",
-    //                     last_name AS "lastName",
-    //                     email,
-    //                     diet,
-    //                     allergies,
-    //                     preferences,
-    //                     aversions
-    //              FROM users
-    //              WHERE id = $1`,
-    //         [id],
-    //     );
-
-    //     const username = usernameRes.rows[0];
-    //     if (!username) throw new NotFoundError(`No userId: ${id}`);
-        
-    //     const reviewsRes = await db.query(
-    //             `SELECT id,
-    //                     review_text AS "reviewText",
-    //                     user_id AS "userId",
-    //                     lunch_id AS "lunchId"
-    //              FROM reviews
-    //              WHERE user_id = $1`,
-    //         [id],
-    //     );
-    //     let reviews = reviewsRes.rows;
-    //     username.reviews = reviews;
-
-    //     const favoritesRes = await db.query(
-    //             `SELECT id,
-    //                     user_id AS "userId",
-    //                     lunch_id AS "lunchId",
-    //                     is_Favorite AS "isFavorite"
-    //              FROM favorites
-    //              WHERE user_id = $1`,
-    //         [id],
-    //     );
-    //     let favorites = favoritesRes.rows;
-    //     username.favorites = favorites
-        
-        
-    //     return username;
-    // }
-
 
     /** Updates user data with `data 
      *  This is a "partial update" -- it's find if data doesn't contain all

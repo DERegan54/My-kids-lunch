@@ -50,7 +50,7 @@ class Review {
         const reviewRes = await db.query(
                 `SELECT id,
                         review_text AS "reviewText",
-                        username",
+                        username,
                         lunch_id AS "lunchId"
                  FROM reviews
                  WHERE id = $1`,
@@ -58,22 +58,22 @@ class Review {
         
         const review = reviewRes.rows[0];
 
-        const lunchRes = await db.query(
-                `SELECT id,
-                        title,
-                        description, 
-                        protein,
-                        fruit,
-                        vegetable,
-                        fat,
-                        sweet, 
-                        beverage
-                 FROM lunches
-                 WHERE lunch_id = $1`,
-            [lunch_id]
-        );
+        // const lunchRes = await db.query(
+        //         `SELECT id,
+        //                 title,
+        //                 description, 
+        //                 protein,
+        //                 fruit,
+        //                 vegetable,
+        //                 fat,
+        //                 sweet, 
+        //                 beverage
+        //          FROM lunches
+        //          WHERE lunch_id = $1`,
+        //     [lunch_id]
+        // );
 
-        review.lunch = lunchRes.rows;
+        // review.lunch = lunchRes.rows;
 
         return review;
     }
@@ -87,7 +87,7 @@ class Review {
             data,
             {
                 reviewText: "review_text",
-                username,
+                username: "username",
                 lunchId: "lunch_id",
             });
         const idVarIdx = "$" + (values.length + 1);

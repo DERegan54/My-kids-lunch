@@ -13,7 +13,8 @@ const usersRoutes = require("./routes/users");
 const foodsRoutes = require("./routes/foods");
 const lunchRoutes = require("./routes/lunches");
 const reviewRoutes = require("./routes/reviews");
-const favoriteRoutes = require("./routes/favorites");
+// const favoriteRoutes = require("./routes/favorites");
+const lunchFoodsRoutes = require("./routes/lunchFoods");
 
 const app = express();
 
@@ -25,7 +26,8 @@ app.use("/users", usersRoutes);
 app.use("/foods", foodsRoutes);
 app.use("/lunches", lunchRoutes);
 app.use("/reviews", reviewRoutes);
-app.use("/favorites", favoriteRoutes)
+// app.use("/favorites", favoriteRoutes);
+app.use("/lunchfoods", lunchFoodsRoutes);
 
 
 app.use(express.json());
