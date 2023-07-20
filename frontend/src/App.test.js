@@ -2,7 +2,14 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import App from './App';
 
-// Smoke Test
-test('it renders without crashing', function() {
+// Smoke test
+it('renders without crashing', function() {
   render(<App />);
+});
+
+// Snapshot test
+it("matches snapshot", () => {
+  const {asFragment} = render(<App />);
+  expect(asFragment()).toMatchSnapshot();
+
 });

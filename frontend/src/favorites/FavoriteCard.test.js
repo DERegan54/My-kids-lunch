@@ -2,8 +2,14 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import FavoriteCard from '../favorites/FavoriteCard';
 
-// Smoke Test
+// Smoke test
 
-test('it renders without crashing', function() {
+it('should render without crashing', function() {
   render(<FavoriteCard />);
+});
+
+// Snapshot test
+it('should match snapshot', () => {
+  const {asFragment} = render(<FavoriteCard />);
+  expect(asFragment).toMatchSnapshot()
 });
