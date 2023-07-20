@@ -7,6 +7,8 @@ import UserContext from '../users/UserContext'
 const Home = () => {
     const {currentUser} = useContext(UserContext);
     
+    // console.log("currentUser: ", currentUser);
+    
     const homeIfLoggedIn = () => {
         return (
             <div className='Home-loggedIn'>

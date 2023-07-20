@@ -1,8 +1,8 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import App from './App';
+import ProfileCard from '../users/ProfileCard';
 
 // Smoke Test
 test('it renders without crashing', function() {
-  render(<App />);
+  render(<ProfileCard />);
 });

@@ -1,8 +1,9 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import App from './App';
+import ReviewList from '../reviews/ReviewList';
 
-// Smoke Test
+// Smoke Test 
+
 test('it renders without crashing', function() {
-  render(<App />);
+  render(<ReviewList />);
 });

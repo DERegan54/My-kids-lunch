@@ -1,8 +1,9 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import App from './App';
+import FavoriteCard from '../favorites/FavoriteCard';
 
 // Smoke Test
+
 test('it renders without crashing', function() {
-  render(<App />);
+  render(<FavoriteCard />);
 });

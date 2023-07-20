@@ -1,12 +1,16 @@
 import React, {useContext, useState, useEffect} from "react";
-import FavoriteCard from "./FavoriteCard";
+import UserFavoriteCardList from "./UserFavoriteCardList";
 import UserContext from "../users/UserContext";
 import Header from "../common/Header";
 
 const UserFavoritesList = () => {
-    const {currentUser, userFavoriteIds, addFavorite, removeFavorite, isFavorited} = useContext(UserContext);
+    const {currentUser, userFavoriteIds, removeFavorite} = useContext(UserContext);
     
-    console.log("userFavoriteIds: ", userFavoriteIds);
+    // console.log("userFavoriteIds: ", userFavoriteIds);
+    // console.log("currentUser: ", currentUser);
+    
+    let favoriteIdsArr = [...userFavoriteIds];
+    console.log("favoriteIdsArr: ", favoriteIdsArr);
 
     return (
         <div className='UserFavoritesList'>
@@ -15,13 +19,10 @@ const UserFavoritesList = () => {
                 <br></br>
                 <br></br>
                 <h1 className="UserFavoritesList-header"> {currentUser.firstName|| currentUser.username}'s Favorite Lunches:</h1>
-                <div className='UserFavoritesList-lunches'>
-                   {[...userFavoriteIds].map((userFavoriteId) => ( 
-                        <ul>
-                            <FavoriteCard key={userFavoriteId} userFavoriteId={userFavoriteId} addFavorite={addFavorite} removeFavorite={removeFavorite} />
-                        </ul>
-                    ))}
-                </div>
+                {favoriteIdsArr.length 
+                    ? <UserFavoriteCardList key={userFavoriteIds} favoriteIdsArr={favoriteIdsArr} removeFavorite={removeFavorite} /> 
+                    : <p>Your Favorites List is Empty</p>          
+                } 
             </div>
         </div>
     );

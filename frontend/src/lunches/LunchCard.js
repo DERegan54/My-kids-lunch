@@ -13,6 +13,8 @@ const LunchCard = ({lunch, reviews }) => {
     const initialState = isFavorited(lunch.id);
     const [favorited, setFavorited] = useState(initialState);
 
+    // console.log("isFavorited: ", isFavorited);
+
     useEffect(() => {
         function getLunchReviews(reviews) {
             setLunchReviews(reviews.filter((lunchReview) => lunchReview.lunchId === lunch.id));
