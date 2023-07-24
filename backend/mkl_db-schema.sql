@@ -26,26 +26,26 @@ CREATE TABLE lunches (
 );
 
 
-CREATE TABLE foods (
-    id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    category TEXT NOT NULL,
-    serving_size TEXT,
-    calories TEXT,
-    fat TEXT,
-    protein TEXT,
-    carbohydrates TEXT,
-    sugar TEXT,
-    lunch_id TEXT
-        REFERENCES lunches
-);
+-- CREATE TABLE foods (
+--     id SERIAL PRIMARY KEY,
+--     title TEXT NOT NULL,
+--     category TEXT NOT NULL,
+--     serving_size TEXT,
+--     calories TEXT,
+--     fat TEXT,
+--     protein TEXT,
+--     carbohydrates TEXT,
+--     sugar TEXT,
+--     lunch_id TEXT
+--         REFERENCES lunches
+-- );
 
-CREATE TABLE lunch_foods (
-    lunch_id INTEGER    
-        REFERENCES lunches,
-    food_id INTEGER
-        REFERENCES foods
-);
+-- CREATE TABLE lunch_foods (
+--     lunch_id INTEGER    
+--         REFERENCES lunches,
+--     food_id INTEGER
+--         REFERENCES foods
+-- );
 
 
 CREATE TABLE reviews (

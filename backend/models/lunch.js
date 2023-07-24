@@ -23,8 +23,7 @@ class Lunch {
         //     throw new BadRequestError(`Duplicate lunch: ${title}`);
         
         const result = await db.query(
-                `INSERT INTO lunches
-                 (title, description, protein, carb, fruit, vegetable, fat, sweet, beverage)
+                `INSERT INTO lunches (title, description, protein, carb, fruit, vegetable, fat, sweet, beverage)
                  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                  RETURNING id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage`,
             [
@@ -113,14 +112,14 @@ class Lunch {
         
         // lunch_food is abbreviated with j because it is a junction table
 
-        const foodsRes = await db.query(
-               `SELECT f.*
-                 FROM lunch_foods AS j
-                 JOIN foods AS f ON j.food_id = f.id
-                 WHERE j.lunch_id=$1`,
-            [id]); 
+        // const foodsRes = await db.query(
+        //        `SELECT f.*
+        //          FROM lunch_foods AS j
+        //          JOIN foods AS f ON j.food_id = f.id
+        //          WHERE j.lunch_id=$1`,
+        //     [id]); 
 
-        lunch.foods = foodsRes.rows;
+        // lunch.foods = foodsRes.rows;
 
         const reviewsRes = await db.query (
                 `SELECT id, review_text AS "reviewText", username, lunch_id AS "lunchId"
