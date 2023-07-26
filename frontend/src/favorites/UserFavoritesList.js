@@ -4,7 +4,8 @@ import UserContext from "../users/UserContext";
 import Header from "../common/Header";
 
 const UserFavoritesList = () => {
-    const {currentUser, userFavoriteIds, removeFavorite} = useContext(UserContext);
+    const {currentUser, isFavorited, userFavoriteIds, removeFavorite} = useContext(UserContext);
+    
     
     // console.log("userFavoriteIds: ", userFavoriteIds);
     // console.log("currentUser: ", currentUser);
@@ -20,7 +21,7 @@ const UserFavoritesList = () => {
                 <br></br>
                 <h1 className="UserFavoritesList-header"> {currentUser.firstName|| currentUser.username}'s Favorite Lunches:</h1>
                 {favoriteIdsArr.length 
-                    ? <UserFavoriteCardList key={userFavoriteIds} favoriteIdsArr={favoriteIdsArr} removeFavorite={removeFavorite} /> 
+                    ? <UserFavoriteCardList key={userFavoriteIds} favoriteIdsArr={favoriteIdsArr} removeFavorite={removeFavorite} isFavorited={isFavorited} /> 
                     : <p>Your Favorites List is Empty</p>          
                 } 
             </div>

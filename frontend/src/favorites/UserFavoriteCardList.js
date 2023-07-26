@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import FavoriteCard from './FavoriteCard';
 
 
-const UserFavoriteCardList= ({favoriteIdsArr, removeFavorite}) => {
-    const [showFavorite, setShowFavorite] = useState(true);
+const UserFavoriteCardList= ({favoriteIdsArr, removeFavorite, isFavorited}) => {
+    
     
    
     //console.log("favoriteIdsArr: ", favoriteIdsArr)   
@@ -12,9 +12,7 @@ const UserFavoriteCardList= ({favoriteIdsArr, removeFavorite}) => {
         <div className='UserFavoriteCardList'>
             {favoriteIdsArr.map((userFavoriteId) => (
                 <div>
-                    {showFavorite ?
-                        <FavoriteCard key={userFavoriteId} userFavoriteId={userFavoriteId} removeFavorite={removeFavorite} setShowFavorite={setShowFavorite} />
-                    : null}
+                    <FavoriteCard key={userFavoriteId} userFavoriteId={userFavoriteId} removeFavorite={removeFavorite} isFavorited={isFavorited} />
                 </div>
             ))}
         </div>

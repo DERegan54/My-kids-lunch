@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import MklApi from '../api';
 import UserContext from '../users/UserContext';
 import LunchReviews from './LunchReviews';
 import {VscHeart} from "react-icons/vsc";
@@ -35,7 +34,7 @@ const LunchCard = ({lunch, reviews }) => {
     }
 
     
-    console.log(lunch.title, ':' ,favorited)
+    // console.log(lunch.title, ':' ,favorited)
     // console.log("isFavorited: ", isFavorited(lunch.id))
     // console.log("reviews: ", reviews)
     // console.log("lunch.id: ", lunch.id);

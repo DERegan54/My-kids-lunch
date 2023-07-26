@@ -40,7 +40,7 @@ const Routes = ({
                 <PrivateRoute exact path="/users/reviews"><ReviewList reviews={reviews} /></PrivateRoute>
                 <PrivateRoute exact path="/users/reviews/:id/"><ReviewUpdateForm /></PrivateRoute>
                 <PrivateRoute exact path="/lunches"><LunchList allUsers={allUsers} lunches={lunches} reviews={reviews} /></PrivateRoute>
-                <PrivateRoute exact path="/lunches/:id/details"><LunchDetails foods={foods} /></PrivateRoute> 
+                <PrivateRoute exact path="/lunches/:id/details"><LunchDetails /></PrivateRoute> 
                 <PrivateRoute exact path="/lunches/:id/reviews"><LunchReviews reviews={reviews} /></PrivateRoute>
                 <PrivateRoute exact path="/lunches/:id/addreview"><ReviewForm reviewLunch={reviewLunch}  /></PrivateRoute>
                 <PrivateRoute exact path="/lunches/addlunch"><AddLunchForm addLunch={addLunch} /></PrivateRoute>

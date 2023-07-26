@@ -142,14 +142,14 @@ function App() {
 
   function addFavorite(id) {
     if (isFavorited(id)) return;
-    MklApi.addFavorite(currentUser.username, id);
     setUserFavoriteIds(new Set([...userFavoriteIds, id]));
+    MklApi.addFavorite(currentUser.username, id);
   }
 
   function removeFavorite(id) {
     if (!isFavorited(id)) return;
-    MklApi.removeFavorite(currentUser.username, id);
     setUserFavoriteIds(new Set([...userFavoriteIds]));
+    MklApi.removeFavorite(currentUser.username, id); 
   } 
    
   // console.log("currentUser: ", currentUser);
