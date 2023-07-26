@@ -4,24 +4,100 @@ const db = require("../db.js");
 const User = require("../models/user");
 const Lunch  = require("../models/lunch");
 const Review = require("../models/review");
-// const Food = require("../models/food");
-// const LunchFood = require("../models/lunchFood");
 const {createToken} = require("../helpers/tokens");
 
 const testFavoriteIds = [];
-// const testReviewIds = [];
 
 async function commonBeforeAll() {
     await db.query("DELETE FROM reviews");
     await db.query("DELETE FROM favorites");
     await db.query("DELETE FROM users");
     await db.query("DELETE FROM lunches");
-    // await db.query("DELETE FROM foods");
-    // await db.query("DELETE FROM lunch_foods");
-
     
+    await User.register({
+        username: "testuser1", 
+        password: "password", 
+        firstName: "First1", 
+        lastName: "Last1", 
+        email: "testuser1@email.com", 
+        diet: "standard", 
+        allergies: "none", 
+        preferences: "chocolate", 
+        aversions: "salad",
+    });
 
-    // await Food.create(
+    await User.register({
+        username: "testuser2", 
+        password: "password", 
+        firstName: "First2", 
+        lastName: "Last2", 
+        email: "testuser2@email.com", 
+        diet: "vegetarian", 
+        allergies: "shellfish", 
+        preferences: "pasta", 
+        aversions: "meat",
+    });
+    
+    await Lunch.create({
+        title: "ham sandwich", 
+        description: "ham and cheese",
+        protein:"ham", 
+        carb: "wheat bread", 
+        fruit: "apple", 
+        vegetable: "baby carrots", 
+        fat: "american cheese", 
+        sweet: "oreos", 
+        beverage: "gatorade",
+    });
+    
+    await Lunch.create({
+        title: "PBJ", 
+        description: "peanut butter and jelly",
+        protein: "peanut butter", 
+        carb: "sourdough bread", 
+        fruit: "clementine", 
+        vegetable: "celery", 
+        fat: "string cheese", 
+        sweet: "fruit leather", 
+        beverage: "whole milk",
+    });
+  
+    // await Review.create({
+    //     reviewText: 'delicious', 
+    //     username: testuser1, 
+    //     lunchId: 1,
+    // });
+}
+
+async function commonBeforeEach() {
+    await db.query("BEGIN");
+}
+  
+async function commonAfterEach() {
+    await db.query("ROLLBACK");
+}
+  
+async function commonAfterAll() {
+    await db.end();
+}
+
+const testuser1Token = createToken({username: 'testuser1'});
+const testuser2Token = createToken({username: 'testuser2'});
+
+
+module.exports = {
+    commonBeforeAll,
+    commonBeforeEach,
+    commonAfterEach,
+    commonAfterAll,
+    testFavoriteIds,
+    testuser1Token,
+    testuser2Token,
+};
+
+
+
+// await Food.create(
     //     {foodTitle: 'ham', category: 'protein', servingSize: '100g', calories: '1', fatContent: '1g', proteinContent: '1g', carbohydrates: '1g', sugar: '1g'});
     // await Food.create(
     //     {foodTitle: 'wheat bread', category: 'carb', servingSize: '100g', calories: '1', fatContent: '1g', proteinContent: '1g', carbohydrates: '1g', sugar: '1g'});
@@ -50,62 +126,7 @@ async function commonBeforeAll() {
     // await Food.create(
     //     {foodTitle: 'whole milk', category: 'beverage', servingSize: '100g', calories: '1', fatContent: '1g', proteinContent: '1g', carbohydrates: '1g', sugar: '1g'});
             
-    await User.register({
-        username: "testuser1", 
-        password: "password", 
-        firstName: "First1", 
-        lastName: "Last1", 
-        email: "testuser1@email.com", 
-        diet: "standard", 
-        allergies: "none", 
-        preferences: "chocolate", 
-        aversions: "salad",
-    });
-    await User.register({
-        username: "testuser2", 
-        password: "password", 
-        firstName: "First2", 
-        lastName: "Last2", 
-        email: "testuser2@email.com", 
-        diet: "vegetarian", 
-        allergies: "shellfish", 
-        preferences: "pasta", 
-        aversions: "meat",
-    });
-
-    await Lunch.create({
-        title: "ham sandwich", 
-        protein:"ham", 
-        carb: "wheat bread", 
-        fruit: "apple", 
-        vegetable: "baby carrots", 
-        fat: "american cheese", 
-        sweet: "oreos", 
-        beverage: "gatorade",
-    });
-
-    await Lunch.create({
-        title: "PBJ", 
-        protein: "peanut butter", 
-        carb: "sourdough bread", 
-        fruit: "clementine", 
-        vegetable: "celery", 
-        fat: "string cheese", 
-        sweet: "fruit leather", 
-        beverage: "whole milk",
-    });
-
-    
-    await Review.create({
-        reviewText: 'delicious', 
-        userId: 1, 
-        lunchId: 1,
-    });
-    
-    // testReviewIds[0] = (await Job.create(
-    //     { reviewText: "delicious", username: "testuser1", lunchId: "1" })).id;
-    
-    // await LunchFood.create(
+// await LunchFood.create(
     //     {lunchId: 1, foodId: 1,});
     // await LunchFood.create(
     //     {lunchId: 1, foodId: 2,});
@@ -133,31 +154,3 @@ async function commonBeforeAll() {
     //     {lunchId: 2, foodId: 13,});
     // await LunchFood.create(
     //     {lunchId: 2, foodId: 14,});    
-}
-
-async function commonBeforeEach() {
-    await db.query("BEGIN");
-}
-  
-async function commonAfterEach() {
-    await db.query("ROLLBACK");
-}
-  
-async function commonAfterAll() {
-    await db.end();
-}
-
-const testuser1Token = createToken({username: 'testuser1'});
-const testuser2Token = createToken({username: 'testuser2'});
-
-
-module.exports = {
-    commonBeforeAll,
-    commonBeforeEach,
-    commonAfterEach,
-    commonAfterAll,
-    testFavoriteIds,
-    //testReviewIds,
-    testuser1Token,
-    testuser2Token,
-};
