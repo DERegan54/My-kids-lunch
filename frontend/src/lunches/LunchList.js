@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Redirect} from 'react-router-dom';
 import MklApi from '../api';
 import SearchForm from '../common/SearchForm';
+import UserContext from '../users/UserContext';
 import LunchCard from './LunchCard';
 import Header from '../common/Header';
 
@@ -16,8 +17,6 @@ const LunchList = ({reviews}) => {
     useEffect (function getAllLunches() {
         search();
     }, []);
-
-    if (!lunches) <Redirect to="/"></Redirect>
 
     // console.log("id: ", id);
     // console.log("lunches: ", lunches);
@@ -37,7 +36,10 @@ const LunchList = ({reviews}) => {
                 ? (
                     <div className='LunchList-lunches'>
                         {lunches.map((lunch) => (
-                            <LunchCard key={lunch.id} lunch={lunch} reviews={reviews} />
+                            <LunchCard  key={lunch.id} 
+                                        lunch={lunch} 
+                                        reviews={reviews} 
+                            />
                         ))}
                     </div> 
                 ) : (

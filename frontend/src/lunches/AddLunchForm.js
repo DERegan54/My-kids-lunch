@@ -1,12 +1,11 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import Alert from '../common/Alert';
+import Header from '../common/Header';
 import MklApi from '../api';
 
 const AddLunchForm = ({addLunch, setFoodData}) => {
     const history = useHistory();
-
-    console.log("addLunch: ", addLunch);
 
     const initialState = {
         title: "",
@@ -23,16 +22,16 @@ const AddLunchForm = ({addLunch, setFoodData}) => {
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [lunchAdded, setLunchAdded] = useState(false);
-    const [foods, setFoods] = useState([]);
+    // const [foods, setFoods] = useState([]);
 
-    useEffect(function getAllFoods() {
-        search();
-    }, []);
+    // useEffect(function getAllFoods() {
+    //     search();
+    // }, []);
 
-    async function search(title) {
-        let foods = await MklApi.getAllFoods(title);
-        setFoods(foods)
-    }
+    // async function search(title) {
+    //     let foods = await MklApi.getAllFoods(title);
+    //     setFoods(foods)
+    // }
 
     // Handles form submit
     async function handleSubmit(evt) {
@@ -55,7 +54,9 @@ const AddLunchForm = ({addLunch, setFoodData}) => {
 
     return (
         <div className='AddLunchForm'>
-            <h3 className='AddLunchForm-h1'>Add a Lunch to your Lunchbox:</h3>
+            <Header />
+            <h1 className='AddLunchForm-h1'>Add a Lunch to your Lunchbox:</h1>
+            <br></br>
             <div className='AddLunchForm-container'>
                 <form className='AddLunchForm-form' onSubmit={handleSubmit}>
                     <label htmlFor='title'>Title: </label>

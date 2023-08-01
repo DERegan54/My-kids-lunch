@@ -20,11 +20,9 @@ import PrivateRoute from './PrivateRoute';
 const Routes = ({   
                     allUsers,
                     lunches, 
-                    reviews, 
-                    foods, 
+                    reviews,
                     login, 
                     signup, 
-                    addFood, 
                     addLunch, 
                     reviewLunch, 
                 }) => {
@@ -32,20 +30,18 @@ const Routes = ({
     return (
         <div className='Routes'>
             <Switch>
+                
                 <Route exact path="/"><Home /></Route>
                 <Route exact path="/register"><RegistrationForm signup={signup} lunches={lunches} /></Route>
                 <Route exact path="/login"><LoginForm login={login} /></Route>
+                <PrivateRoute exact path="/createlunch"><AddLunchForm addLunch={addLunch} /></PrivateRoute>
                 <PrivateRoute exact path="/users/profile/"><ProfileCard /></PrivateRoute> 
                 <PrivateRoute exact path="/users/favorites/"><UserFavoritesList /></PrivateRoute>
-                <PrivateRoute exact path="/users/reviews"><ReviewList reviews={reviews} /></PrivateRoute>
+                <PrivateRoute exact path="/users/reviews"><ReviewList reviews={reviews} lunches={lunches} /></PrivateRoute>
                 <PrivateRoute exact path="/users/reviews/:id/"><ReviewUpdateForm /></PrivateRoute>
                 <PrivateRoute exact path="/lunches"><LunchList allUsers={allUsers} lunches={lunches} reviews={reviews} /></PrivateRoute>
                 <PrivateRoute exact path="/lunches/:id/details"><LunchDetails /></PrivateRoute> 
-                <PrivateRoute exact path="/lunches/:id/reviews"><LunchReviews reviews={reviews} /></PrivateRoute>
-                <PrivateRoute exact path="/lunches/:id/addreview"><ReviewForm reviewLunch={reviewLunch}  /></PrivateRoute>
-                <PrivateRoute exact path="/lunches/addlunch"><AddLunchForm addLunch={addLunch} /></PrivateRoute>
-                <PrivateRoute exact path="/foods"><FoodList foods={foods} addLunch={addLunch} /></PrivateRoute>
-                <PrivateRoute exact path="/foods/addfood"><AddFoodForm addFood={addFood} /></PrivateRoute>
+                <PrivateRoute exact path="/lunches/:id/addreview"><ReviewForm reviewLunch={reviewLunch} reviews={reviews}  /></PrivateRoute>
                 
                 {/* <Redirect to="/"></Redirect> */}
             </Switch>
@@ -54,3 +50,8 @@ const Routes = ({
 }
 
 export default Routes;
+
+{/* <PrivateRoute exact path="/lunches/:id/reviews"><LunchReviews reviews={reviews} /></PrivateRoute> */}
+{/* <PrivateRoute exact path="/foods"><FoodList foods={foods} addLunch={addLunch} /></PrivateRoute> */}
+{/* <PrivateRoute exact path="/foods/addfood"><AddFoodForm addFood={addFood} /></PrivateRoute> */}
+                

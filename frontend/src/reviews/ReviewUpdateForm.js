@@ -6,13 +6,14 @@ import UserContext from '../users/UserContext';
 import MklApi from '../api';
 
 const ReviewUpdateForm = () => {
-    const {id, username} = useParams();
-    const {currentUser} = useContext(UserContext);
+    const {id} = useParams();
+    const {currentUser, setReviewed} = useContext(UserContext);
     const initialState = {reviewText: "", userId: currentUser.id, lunchId: Number(id)}
     const [formData, setFormData] = useState(initialState)
     const [formErrors, setFormErrors] = useState([]);
     const [review, setReview] = useState([])
     const [reviewAdded, setReviewAdded] = useState(false);
+    const [lunch, setLunch] = useState([]);
 
     console.log("id: ", id);
     console.log("review: ", review);
@@ -24,7 +25,17 @@ const ReviewUpdateForm = () => {
             setReview(reviewRes);
         }
         getReview();
-    }, [id])
+    }, [id]);
+
+    let lunchId = review.lunchId;
+    
+    useEffect(() => {
+        async function getLunch(lunchId) {
+           let lunchRes = await MklApi.getLunch(lunchId);
+           setLunch(lunchRes);
+        }
+        getLunch(lunchId)
+    }, []);
 
     // Handles form submit  
     async function handleSubmit(evt) {
@@ -40,6 +51,7 @@ const ReviewUpdateForm = () => {
             setFormErrors(errors);
             return;
         } 
+        setReviewed(true);
         setFormData(initialState);
         setFormErrors([]);
         setReviewAdded(true);
@@ -54,13 +66,13 @@ const ReviewUpdateForm = () => {
     return (
         <div className='ReviewUpdateForm'>
             <Header />
+            <h1 className='ReviewUpdateForm-h1'>Update Review for {lunch.title}: </h1>
             <div className='ReviewUpdateForm-container'>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor='reviewText'>Update Review: </label>
                     <br></br>
                     <br></br>
                     <textarea
-                        className='ReviewUpdateForm'
+                        className='ReviewUpdateForm-textarea'
                         name="reviewText"
                         id="reviewText"
                         placeholder="Enter comments here"

@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import MklApi from '../api';
+import UserContext from '../users/UserContext';
 import {VscHeartFilled} from "react-icons/vsc";
 
 
-const FavoriteCard = ({userFavoriteId, removeFavorite, isFavorited}) => {
+const FavoriteCard = ({userFavoriteId, removeFavorite, userFavoriteIds, setUserFavoriteIds}) => {
     const [lunch, setLunch] = useState([]);
-    const [favorited, setFavorited] = useState(true);
-    const [showFavorite, setShowFavorite] = useState(true);
+    const [heartFilled, setHeartFilled] = useState(userFavoriteIds.has(userFavoriteId));
+    
     
     useEffect(() => {
         async function getLunch() {
@@ -15,25 +16,28 @@ const FavoriteCard = ({userFavoriteId, removeFavorite, isFavorited}) => {
         }
         getLunch();
     }, [userFavoriteId])
-   
-    async function handleRemoveFavorite(evt) {
-        if (!favorited) return;
-        removeFavorite(userFavoriteId);
-        setFavorited(false);
-        setShowFavorite(false);
-    }
-    console.log('isFavorited:', isFavorited(userFavoriteId))
+    
+    
 
-    return (
+    async function handleRemoveFavorite(evt) {
+        removeFavorite(lunch.id);
+        userFavoriteIds.delete(lunch.id)
+        setUserFavoriteIds(new Set([...userFavoriteIds]));
+        setHeartFilled(false);
+    }
+    
+   // console.log("favorited: ", favorited)
+   // console.log("isFavorited: ", isFavorited)
+    
+   return (
         <div>
-            {showFavorite ?
+            {heartFilled ?
                 <div className='FavoriteCard' >
                     <p>
                         <b>{`${lunch.title}`} </b>
-                        <VscHeartFilled />
+                        <VscHeartFilled onClick={handleRemoveFavorite} />
                     </p>
                     <p>{`${lunch.description}`}</p>   
-                    <button onClick={handleRemoveFavorite}>Remove from Favorites</button>    
                 </div>
             :
             null}

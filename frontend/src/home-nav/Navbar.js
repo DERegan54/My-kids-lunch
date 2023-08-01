@@ -10,7 +10,7 @@ const Navbar = ({logout}) => {
             <div className="Navbar-loggedIn">
                 <span><button><NavLink to="/">Home</NavLink></button></span>
                 <span><button><NavLink to="/lunches">Lunches</NavLink></button></span>
-                <span><button><NavLink to="/foods">My Kitchen</NavLink></button></span>
+                <span><button><NavLink to="/createlunch">My Kitchen</NavLink></button></span>
                 <span><button><NavLink to="/users/reviews">My Reviews</NavLink></button></span>
                 <span><button><NavLink to="/users/favorites">My Favorites</NavLink></button></span>
                 <span><button><NavLink to="/users/profile/">My Profile</NavLink></button></span>

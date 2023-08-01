@@ -4,21 +4,27 @@ import UserContext from "../users/UserContext";
 import Header from "../common/Header";
 
 
-const ReviewList = ({reviews}) => {
-    const {currentUser} = useContext(UserContext);
+const ReviewList = ({lunches, reviews}) => {
+    const {currentUser, setReviewIds} = useContext(UserContext);
     const [userReviews, setUserReviews] = useState([]);
-
-    let username = currentUser.username;
+   
     useEffect(() => {
-        function getUserReviews(username) {
-            setUserReviews(reviews.filter((reviews) => reviews.username = username));
+        function getUserReviews(currentUser) {
+            setUserReviews(currentUser.reviews);
         };
-        getUserReviews(username)
-    }, [username]);
+        getUserReviews(currentUser)
+    }, []);
 
+    useEffect(() => {
+        function getReviewIds(reviews) {
+          setReviewIds(reviews.map((review) => (review.id)))
+        }
+        getReviewIds(reviews)
+    }, [reviews])
+
+    //console.log("reviewIds: ", reviewIds)
     console.log("userReviews: ", userReviews);
-    console.log("reviews: ", reviews);
- 
+    
     return (
         <div className="ReviewList-container">
             <Header />
@@ -28,8 +34,11 @@ const ReviewList = ({reviews}) => {
             {userReviews.length
                 ? (
                     <div className='ReviewsList-reviews'>
-                        {userReviews.map((userReview) => (
-                            <ReviewCard userReview={userReview} />
+                        {userReviews.map((userReview) => ( 
+                            <ReviewCard userReview={userReview} 
+                                        lunches={lunches} 
+                                        key={userReview.id}
+                            />
                         ))} 
                     </div>
                 ) : (

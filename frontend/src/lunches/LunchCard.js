@@ -6,13 +6,11 @@ import {VscHeart} from "react-icons/vsc";
 import {VscHeartFilled} from "react-icons/vsc";
 
 
-const LunchCard = ({lunch, reviews }) => {  
-    const {isFavorited, addFavorite, removeFavorite} = useContext(UserContext)
+const LunchCard = ({lunch, reviews}) => {  
+    const {addFavorite, removeFavorite, userFavoriteIds, setUserFavoriteIds} = useContext(UserContext)
     const [lunchReviews, setLunchReviews] = useState([]);
-    const initialState = isFavorited(lunch.id);
-    const [favorited, setFavorited] = useState(initialState);
-
-    // console.log("isFavorited: ", isFavorited);
+    const [heartFilled, setHeartFilled] = useState(userFavoriteIds.has(lunch.id))
+    
 
     useEffect(() => {
         function getLunchReviews(reviews) {
@@ -22,25 +20,20 @@ const LunchCard = ({lunch, reviews }) => {
     }, [reviews]);
 
     async function handleAddFavorite(evt) {
-        if (favorited) return;
         addFavorite(lunch.id)
-        setFavorited(true);
+        setUserFavoriteIds(new Set([...userFavoriteIds, lunch.id]));
+        setHeartFilled(true)
     } 
-
+    
     async function handleRemoveFavorite(evt){
-        if(!favorited) return;
         removeFavorite(lunch.id);
-        setFavorited(false);
+        userFavoriteIds.delete(lunch.id)
+        setUserFavoriteIds(new Set([...userFavoriteIds]));
+        setHeartFilled(false);
     }
 
+    // console.log("userFavoriteIds: ", userFavoriteIds)
     
-    // console.log(lunch.title, ':' ,favorited)
-    // console.log("isFavorited: ", isFavorited(lunch.id))
-    // console.log("reviews: ", reviews)
-    // console.log("lunch.id: ", lunch.id);
-    // console.log("lunchReviews: ", lunchReviews)
-    // console.log("userFavorites: ", userFavorites)
-    // const userFavorites = currentUser.favorites;
  
     
     return (
@@ -50,11 +43,10 @@ const LunchCard = ({lunch, reviews }) => {
                     <br></br>
                     <div>
                         <b>{`${lunch.title}`} </b>
-                        {favorited ? (<VscHeartFilled onClick={handleRemoveFavorite} />) : (<VscHeart onClick={handleAddFavorite} />)  }   
+                        {heartFilled ? <VscHeartFilled onClick={handleRemoveFavorite} /> : <VscHeart onClick={handleAddFavorite} /> }   
                     </div>
                     <br></br>
-                    <br></br>
-                    <span>{`${lunch.description}`}</span>
+                    <span>Description: {`${lunch.description}`}</span>
                     <br></br>
                     <button className='LunchCard-linkToDetailsButton'><Link to={`/lunches/${lunch.id}/details`}>See Lunch Details</Link></button>
                     <button className='LunchCard-linkToReviewForm'><Link to={`/lunches/${lunch.id}/addreview`}>Add comments for this Lunch</Link></button>

@@ -77,36 +77,7 @@ class MklApi {
     // }
 
 
-    // Gets list of all foods
-    static async getAllFoods(foodTitle) {
-        let res = await this.request(`foods/`, {foodTitle}, "get");
-        return res.foods;
-    }
-
-    // Gets details on a food by id
-    static async getFood(title) {
-        let res = await this.request(`foods/${title}`, {}, "get");
-        return res.food;
-    }
-
-    // Creates a new food instance
-    static async createFood(data) {
-        let res = await this.request(`foods`, data, "post");
-        return res.food;
-    }
-
-    // Updates details on a food by id
-    static async updateFood(id, data) {
-        let res = await this.request(`foods/${id}`, data, "patch");
-        return res.food;
-    }
-
-    // Deletes a food
-    static async removeFood(id) {
-        let res = await this.request(`foods/${id}`, "delete");
-        return res.food;
-    }
-
+   
     // Registers for site
     static async registerUser(data) {
         let res = await this.request(`auth/register`, data, "post");
@@ -199,3 +170,5 @@ class MklApi {
 }
 
 export default MklApi;
+
+

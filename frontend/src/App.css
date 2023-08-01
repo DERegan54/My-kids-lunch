@@ -136,9 +136,36 @@ body {
 
 img {
     height: 100px;
- }
- 
+}
 
+.LoginForm-container {
+    color: sienna;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 2em;
+    padding-bottom: 1em;
+    margin: auto;
+    width: 20em;
+}
+
+.LunchCard {
+    color: sienna;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: 8em;
+    margin-bottom: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-bottom: 1.2em;
+    width: 50em;
+}
+
+.LunchList-header {
+    color: sienna;
+    margin-left: 2em;
+}
 .LunchDetails-header {
     color: sienna;
     margin-top: 2em;
@@ -183,6 +210,21 @@ p {
     color: sienna;
 }
 
+.LunchReviewCard {
+    color: sienna;
+    text-align: center;
+    background-color: tan;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 1em;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 1em;
+    margin-left: 3em;
+    margin-bottom: 1em;
+    width: 40em;
+}
+
 .Navbar,
     span {
         text-align: center;
@@ -219,8 +261,7 @@ p {
     margin-left: 2em;
 }
 
-
-.ReviewCard {
+.ReviewCard-container {
     color: sienna;
     text-align: center;
     background-color: darkseagreen;
@@ -251,42 +292,23 @@ p {
     width: 10em;
 }
 
-.ReviewUpdateForm-submitButton {
-    text-align: center;
-    margin-left: 1em;
-}
-
-.LunchCard {
-    color: sienna;
-    background-color: darkseagreen;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: auto;
-    margin-bottom: 2em;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-bottom: 1.2em;
-    width: 50em;
-}
-
-.LunchList-header {
+.ReviewUpdateForm-h1 {
     color: sienna;
     margin-left: 2em;
 }
 
-.SearchForm {
-    text-align: center;
+.ReviewUpdateForm-container {
+    margin-left: 8em;
 }
 
-.LoginForm-container {
-    color: sienna;
-    background-color: darkseagreen;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding-left: 2em;
-    padding-bottom: 1em;
-    margin: auto;
-    width: 20em;
+.ReviewUpdateForm-textarea {
+    width: 500px;
+    height: 300px;
+}
+
+.ReviewUpdateForm-submitButton {
+    text-align: center;
+    margin-left: 1em;
 }
 
 .RegistrationForm-container {
@@ -298,25 +320,6 @@ p {
     padding-bottom: 1em;
     margin: auto;
     width: 20em;
-}
-
-
-
-
-
-.LunchReviewCard {
-    color: sienna;
-    text-align: center;
-    background-color: tan;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding-top: 1em;
-    padding-right: 2em;
-    padding-left: 2em;
-    padding-bottom: 1em;
-    margin-left: 3em;
-    margin-bottom: 1em;
-    width: 40em;
 }
 
 .ReviewForm-container {
@@ -338,6 +341,10 @@ p {
 .ReviewForm-reviewTextArea {
     width: 30em;
     height: 20em;
+}
+
+.SearchForm {
+    text-align: center;
 }
 
 .UserFavoriteCardList {

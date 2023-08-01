@@ -1,14 +1,15 @@
-import React from 'react';
-import LunchReviewCard from './LunchReviewCard';
+import React, {useContext} from 'react';
+import ReviewCard from './LunchReviewCard';
 
-const LunchReviews = ({lunchReviews}) => {    
+const LunchReviews = ({lunchReviews, username, showReview}) => {    
+  
     return (
         <div className="LunchReviews">
             {lunchReviews.length
                 ? (
                     <div className='LunchReviews-reviews'>
                         {lunchReviews.map((lunchReview) => (
-                            <LunchReviewCard key={lunchReview.id} lunchReview={lunchReview} />
+                            <ReviewCard key={lunchReview.id} lunchReview={lunchReview} username={username} showReview={showReview} />
                         ))}      
                     </div>
                 ) : (

@@ -14,12 +14,11 @@ function App() {
   const [userLoaded, setUserLoaded] = useState(false);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [currentUser, setCurrentUser] = useState(null);
-  const [reviews, setReviews] = useState(new Set([]));
-  const [reviewIds, setReviewIds] = useState(new Set([]));
+  const [reviews, setReviews] = useState([]);
+  const [reviewIds, setReviewIds] = useState([]);
+  const [reviewed, setReviewed] = useState(false);
   const [lunches, setLunches] = useState([]);
-  const [foods, setFoods] = useState([]);
   const [userFavoriteIds, setUserFavoriteIds] = useState(new Set([]));
-  
   
   useEffect(() => {
     async function getCurrentUser() {
@@ -27,7 +26,7 @@ function App() {
         try {
           let {username} = jwt_decode(token);
           MklApi.token = token;
-          console.log(token)
+          // console.log(token)
           const currentUserRes = await MklApi.getUser(username);
           setCurrentUser(currentUserRes);
           setUserFavoriteIds(new Set(currentUserRes.favorites));
@@ -42,7 +41,6 @@ function App() {
     getCurrentUser()
   }, [token]);
 
-
   useEffect(function getAllLunches () {
     async function search(title) {
         let lunches = await MklApi.getAllLunches(title);
@@ -51,6 +49,7 @@ function App() {
     search()
   }, []);
 
+
   useEffect(() => {
     async function getAllReviews() {
         let reviewsRes = await MklApi.getAllReviews();
@@ -58,15 +57,7 @@ function App() {
     }
     getAllReviews()
   }, []);
-
-  useEffect(() => {
-    async function getAllFoods(){
-      let foodsRes = await MklApi.getAllFoods();
-      setFoods(foodsRes);
-    }
-    getAllFoods();
-  }, []);
-    
+  
   // Handles user logout
   function logout() {
     setCurrentUser(null);
@@ -96,18 +87,6 @@ function App() {
     }
   }
 
-  // Handles adding a food to db
-  async function addFood(data) {
-    try {
-      let foodRes = await MklApi.createFood(data);
-      console.log("foodRes: ", foodRes);
-      return {success: true}
-    } catch (errors) {
-      console.error("food add failed", errors);
-      return {success: false, errors}
-    }
-  }
-
   // Handles adding a lunch to db
   async function addLunch(data) {
     try{
@@ -120,38 +99,27 @@ function App() {
     }
   }
   
-  function hasReviewedLunch(id) {
-    return reviewIds && reviewIds.has(id);
-  }
-  
   async function reviewLunch (data) {
-    if (hasReviewedLunch(true)) return;
-    try {
-      let reviewData = await MklApi.createReview(data);
-      setReviewIds(new Set([...reviewIds, reviewData.id]));
-      return {success: true};
-    } catch (errors) {
-      console.error("review failed", errors);
-      return {success: false, errors};
-    }
+    if (reviewIds.includes(data.id)) return;
+    await MklApi.createReview(data);
   }
 
-  function isFavorited(id) {
-    return userFavoriteIds && userFavoriteIds.has(id);
+  async function removeReview(id) {
+    if (!reviewIds.includes(id)) return;
+    await MklApi.removeReview(id);
   }
 
   function addFavorite(id) {
-    if (isFavorited(id)) return;
-    setUserFavoriteIds(new Set([...userFavoriteIds, id]));
+    if (userFavoriteIds.has(id)) return;
     MklApi.addFavorite(currentUser.username, id);
   }
 
   function removeFavorite(id) {
-    if (!isFavorited(id)) return;
-    setUserFavoriteIds(new Set([...userFavoriteIds]));
-    MklApi.removeFavorite(currentUser.username, id); 
-  } 
-   
+    if (!userFavoriteIds.has(id)) return
+    MklApi.removeFavorite(currentUser.username, id);
+  }
+
+  // console.log("reviewIds: ", reviewIds)
   // console.log("currentUser: ", currentUser);
   // console.log("userFavoriteIds: ", userFavoriteIds);
   // console.log("lunches: ", lunches);
@@ -163,18 +131,26 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <UserContext.Provider
-            value={{currentUser, setCurrentUser, userFavoriteIds, isFavorited, addFavorite, removeFavorite}}>
+            value={{currentUser, 
+                    setCurrentUser, 
+                    userFavoriteIds, 
+                    setUserFavoriteIds, 
+                    addFavorite,
+                    reviewIds, 
+                    reviewed,
+                    setReviewed,
+                    setReviewIds,
+                    removeFavorite, 
+                    reviewLunch,
+                    removeReview}}>
           <div className="App-container">
             <Navbar logout={logout} />
             <Routes 
               login={loginUser} 
               signup={registerUser} 
-              review={reviewLunch} 
               addLunch={addLunch} 
-              addFood={addFood} 
               reviews={reviews}
               lunches={lunches}
-              foods={foods}
             />
           </div>
         </UserContext.Provider>
@@ -184,3 +160,23 @@ function App() {
 }
 
 export default App;
+
+// useEffect(() => {
+  //   async function getAllFoods(){
+  //     let foodsRes = await MklApi.getAllFoods();
+  //     setFoods(foodsRes);
+  //   }
+  //   getAllFoods();
+  // }, []);
+    
+  // // Handles adding a food to db
+  // async function addFood(data) {
+  //   try {
+  //     let foodRes = await MklApi.createFood(data);
+  //     console.log("foodRes: ", foodRes);
+  //     return {success: true}
+  //   } catch (errors) {
+  //     console.error("food add failed", errors);
+  //     return {success: false, errors}
+  //   }
+  // }

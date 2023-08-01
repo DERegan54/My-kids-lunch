@@ -1,29 +1,30 @@
 import React from 'react';
-import { MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
-import UserContext from '../users/UserContext';
+import { BrowserRouter } from 'react-router-dom';
 import LunchCard from '../lunches/LunchCard';
+
+const reviews = {
+                id: 1,
+                reviewText: 'delicous',
+                lunchId: 1,
+                username: "testuser1"
+              }
 
 // Smoke test
 it('should render without crashing', function() {
   render(
-    <MemoryRouter>
-      <UserContext>
-        <LunchCard lunch={{}} reviews={{}} isFavoried={false} />
-      </UserContext>
-    </MemoryRouter>
+    <BrowserRouter>
+      <LunchCard lunch={{}} reviews={{reviews}} setLunchReviews={jest.fn()} initialState={true} isfavorited={jest.fn()} addFavorite={jest.fn()} removeFavorite={jest.fn()} />
+    </BrowserRouter>
   );  
 });
-
 
 // Snapshot test
 it('should match snapshot', () => {
   const {asFragment} = render(
-    <MemoryRouter>
-      <UserContext>
-        <LunchCard lunch-={{}} reviews={{}} isFavorited={false} />
-      </UserContext>
-    </MemoryRouter>
+    <BrowserRouter>
+      <LunchCard lunch={{}} reviews={{reviews}} setLunchReviews={jest.fn()} isFavorited={jest.fn()} addFavorite={jest.fn()} removeFavorite={jest.fn()} />
+    </BrowserRouter>
   );
   expect(asFragment()).toMatchSnapshot()
 });

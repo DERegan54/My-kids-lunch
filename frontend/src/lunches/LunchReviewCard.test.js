@@ -5,11 +5,11 @@ import LunchReviewCard from '../lunches/LunchReviewCard';
 // Smoke test
 
 it('shouldrender without crashing', function() {
-  render(<LunchReviewCard />);
+  render(<LunchReviewCard lunchReview={{}} />);
 });
 
 // Snapshot test
 it('should match snapshot', () => {
-  const {asFragment} = render(<LunchReviewCard />);
+  const {asFragment} = render(<LunchReviewCard lunchReview={{}} />);
   expect(asFragment).toMatchSnapshot()
 });
