@@ -13,9 +13,9 @@ async function commonBeforeAll() {
     await db.query("DELETE FROM users");
     
     await db.query(`
-            INSERT INTO users (username, password, first_name, last_name, email, diet, allergies, preferences, aversions)
-            VALUES ('testuser1', $1, 'First1', 'Last1', 'testuser1@email.com', 'standard', 'none', 'chocolate', 'salad'),
-                   ('testuser2', $2, 'First2', 'Last2', 'testuser2@email.com', 'vegetarian', 'shellfish', 'pasta', 'meat')
+            INSERT INTO users (id, username, password, first_name, last_name, email, diet, allergies, preferences, aversions)
+            VALUES (1, 'testuser1', $1, 'First1', 'Last1', 'testuser1@email.com', 'standard', 'none', 'chocolate', 'salad'),
+                   (2, 'testuser2', $2, 'First2', 'Last2', 'testuser2@email.com', 'vegetarian', 'shellfish', 'pasta', 'meat')
             RETURNING username`,
         [
             await bcrypt.hash("password", BCRYPT_WORK_FACTOR),
@@ -23,15 +23,15 @@ async function commonBeforeAll() {
         ]);    
 
     await db.query(`
-        INSERT INTO lunches (title, description, protein, carb, fruit, vegetable, fat, sweet, beverage)
-        VALUES ('Ham Sandwich', 'ham and cheese', 'ham', 'wheat bread', 'apple', 'baby carrots', 'american cheese', 'oreos', 'gatorade'),               
-               ('PBJ', 'peanut butter and jelly', 'peanut butter', 'sourdough bread', 'clementine', 'celery', 'string cheese', 'fruit leather', 'whole milk')
+        INSERT INTO lunches (id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage)
+        VALUES (1, 'Ham Sandwich', 'ham and cheese', 'ham', 'wheat bread', 'apple', 'baby carrots', 'american cheese', 'oreos', 'gatorade'),               
+               (2, 'PBJ', 'peanut butter and jelly', 'peanut butter', 'sourdough bread', 'clementine', 'celery', 'string cheese', 'fruit leather', 'whole milk')
         RETURNING id`       
     );
     
     await db.query(`
-            INSERT INTO reviews (review_text, username, lunch_id)
-            VALUES ('delicious', 'testuser1', 1)`,);
+            INSERT INTO reviews (id, review_text, username, lunch_id)
+            VALUES (1, 'delicious', 'testuser1', 1)`,);
 }
 
 async function commonBeforeEach() {

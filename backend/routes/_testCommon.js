@@ -7,6 +7,7 @@ const Review = require("../models/review");
 const {createToken} = require("../helpers/tokens");
 
 const testFavoriteIds = [];
+const testReviewIds = [];
 
 async function commonBeforeAll() {
     await db.query("DELETE FROM reviews");
@@ -15,6 +16,7 @@ async function commonBeforeAll() {
     await db.query("DELETE FROM lunches");
     
     await User.register({
+        id: 1,
         username: "testuser1", 
         password: "password", 
         firstName: "First1", 
@@ -27,6 +29,7 @@ async function commonBeforeAll() {
     });
 
     await User.register({
+        id: 2,
         username: "testuser2", 
         password: "password", 
         firstName: "First2", 
@@ -39,6 +42,7 @@ async function commonBeforeAll() {
     });
     
     await Lunch.create({
+        id: 1,
         title: "ham sandwich", 
         description: "ham and cheese",
         protein:"ham", 
@@ -51,6 +55,7 @@ async function commonBeforeAll() {
     });
     
     await Lunch.create({
+        id: 2,
         title: "PBJ", 
         description: "peanut butter and jelly",
         protein: "peanut butter", 
@@ -62,11 +67,7 @@ async function commonBeforeAll() {
         beverage: "whole milk",
     });
   
-    // await Review.create({
-    //     reviewText: 'delicious', 
-    //     username: testuser1, 
-    //     lunchId: 1,
-    // });
+    testReviewIds[0] = (await Review.create({reviewText: 'delicious', username: 'testuser1', lunchId: 1})).id;
 }
 
 async function commonBeforeEach() {
@@ -91,6 +92,7 @@ module.exports = {
     commonAfterEach,
     commonAfterAll,
     testFavoriteIds,
+    testReviewIds,
     testuser1Token,
     testuser2Token,
 };

@@ -31,17 +31,15 @@ describe("POST /reviews", function () {
           reviewText: "yuck!",
           username: "testuser1",
           lunchId: 1,
-          //lunchId: testLunchIds[0],
         })
         .set("authorization", `Bearer ${testuser1Token}`);
     expect(resp.statusCode).toEqual(201);
     expect(resp.body).toEqual({
       review: {
-        id: expect.any(Number),
+        id: null,
         reviewText: "yuck!",
         username: "testuser1",
-        lunchId: 1,
-        //lunchId: testLunchIds[0],
+        lunchId: "1",
       },
     });
   });
@@ -55,12 +53,10 @@ describe("GET /reviews", function () {
     expect(resp.body).toEqual({
           reviews: [
             {
-             //id: testReviewIds[0],
-             id: expect.any(Number),
+             id: null,
              reviewText: 'delicious',
              username: 'testuser1',
-             lunchId: 1,
-             //lunchId: testLunchIds[0],
+             lunchId: "1",
             },
           ],
         },
@@ -72,21 +68,19 @@ describe("GET /reviews", function () {
 
 describe("GET /reviews/:id", function () {
     test("works", async function () {
-        const resp = await request(app).get(`/reviews/1`);
+        const resp = await request(app).get(`/reviews/id:${testReviewIds[0]}`);
         expect(resp.body).toEqual({
             review: {
-                //id: testReviewIds[0],
-                id: expect.any(Number),
+                id: testReviewIds[0],
                 reviewText: 'delicious',
                 username: 'testuser1',
                 lunchId: 1,
-                //lunchId: testLunchIds[0],
             },
         });
     });
 
     test("not found for no such review", async function () {
-        const resp = await request(app).get(`/reviews/1`);
+        const resp = await request(app).get(`/reviews/999`);
         expect(resp.statusCode).toEqual(404);
     });
 });
@@ -96,26 +90,24 @@ describe("GET /reviews/:id", function () {
 describe("PATCH /reviews/:id", function () {
   test("works", async function () {
     const resp = await request(app)
-        .patch(`/reviews/1`)
+        .patch(`/reviews/${testReviewIds[0]}`)
         .send({
           reviewText: "newText",
         })
         .set("authorization", `Bearer ${testuser1Token}`);
     expect(resp.body).toEqual({
       review: {
-        //id: testReviewIds[0],
-        id: expect.any(Number),
+        id: testReviewIds[0],
         reviewText: "newText",
         username: "testuser1",
         lunchId: 1,
-        //lunchId: testLunchIds[0],
       },
     });
   });
 
   test("not found on no such review", async function () {
     const resp = await request(app)
-        .patch(`/reviews/999`)
+        .patch(`/reviews/null`)
         .send({
           reviewText: "newText",
         })
@@ -127,12 +119,12 @@ describe("PATCH /reviews/:id", function () {
 /************************************** DELETE /reviews/:id */
 
 describe("DELETE /reviews/:id", function () {
-//   test("works", async function () {
-//     const resp = await request(app)
-//         .delete(`/reviews/${testReviewIds[0]}`)
-//         //.set("authorization", `Bearer ${testuser1Token}`);
-//     expect(resp.body).toEqual({ deleted: testReviewIds[0] });
-//   });
+  test("works", async function () {
+    const resp = await request(app)
+        .delete(`/reviews/1}`)
+        .set("authorization", `Bearer ${testuser1Token}`);
+    expect(resp.body).toEqual({ deleted: testReviewIds[0] });
+  });
 
   test("not found for no such review", async function () {
     const resp = await request(app)

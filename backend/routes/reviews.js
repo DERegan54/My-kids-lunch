@@ -53,7 +53,7 @@ router.get("/", async function (req, res, next) {
  *  Gets specific review by its id
  *  Returns {id, reviewText, username, lunchId}
  */
-router .get("/:id", async function (req, res, next) {
+router.get("/:id", async function (req, res, next) {
     try {
         const review = await Review.get(req.params.id);
         return res.json({review});

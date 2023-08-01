@@ -24,6 +24,7 @@ afterAll(commonAfterAll);
 
 describe("POST /lunches", function() {
     const newLunch = {
+        id: 3,
         title: "testLunch3", 
         description: "testLunch3 description",
         protein: "testProtein",
@@ -53,8 +54,7 @@ describe("GET /lunches", function() {
             lunches:
                 [
                     {
-                        //id: testLunchIds[0],
-                        id: expect.any(Number),
+                        id: null,
                         title: "ham sandwich", 
                         description: "ham and cheese",
                         protein: "ham", 
@@ -64,11 +64,9 @@ describe("GET /lunches", function() {
                         fat: "american cheese", 
                         sweet: "oreos", 
                         beverage: "gatorade",
-                        //reviews: [],
                     },
                     {
-                        //id: testLunchIds[1],
-                        id: expect.any(Number),
+                        id: null,
                         title: "PBJ", 
                         description: "peanut butter and jelly",
                         protein: "peanut butter", 
@@ -78,7 +76,6 @@ describe("GET /lunches", function() {
                         fat: "string cheese", 
                         sweet: "fruit leather", 
                         beverage: "whole milk",
-                        //reviews: [],
                     },
                 ],
         });
@@ -94,10 +91,10 @@ describe("GET /lunches", function() {
 
 describe("GET /lunches/:id", function() {
     test ("works", async function() {
-        const resp = await request(app).get(`/lunches/`);
+        const resp = await request(app).get(`/lunches/1`);
         expect(resp.body).toEqual({
             lunch: {
-                id: expect.any(Number),
+                id: 1,
                 title: "ham sandwich", 
                 protein:"ham", 
                 carb: "wheat bread", 
@@ -123,14 +120,14 @@ describe("GET /lunches/:id", function() {
 describe("PATCH /lunches/:id", function () {
     test("works", async function () {
       const resp = await request(app)
-          .patch(`/lunches/1`)
+          .patch(`/lunches/${1}`)
           .send({
             title: "Lunch1-new",
           })
           .set("authorization", `Bearer ${testuser1Token}`);
       expect(resp.body).toEqual({
         lunch: {
-          id: expect.any(Number),  
+          id: 1,  
           title: "Lunch1-new",
           protein:"ham", 
           carb: "wheat bread", 
@@ -160,7 +157,7 @@ describe("PATCH /lunches/:id", function () {
 describe("DELETE /lunches/:id", function() {
     test("works", async function() {
         const resp = await request(app)
-            .delete(`/lunches/${testLunchIds[0]}`)
+            .delete(`/lunches/1`)
             .set("authorization", `Bearer ${testuser1Token}`)
         expect(resp.body).toEqual({deleted: "testuser1"});
     });

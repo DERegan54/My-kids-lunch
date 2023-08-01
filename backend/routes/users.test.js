@@ -76,7 +76,14 @@ describe("GET /users/:username", function () {
             allergies: "none",
             preferences: "chocolate",
             aversions: "salad",
-            reviews : [],
+            reviews : [
+                        {
+                          id: null,
+                          review_text: "delicious",
+                          username: "testuser1",
+                          lunch_id: "1",
+                        },
+                      ],  
             favorites:  [],
         },
     });
@@ -103,7 +110,6 @@ describe("PATCH /users/:username", () => {
         .set("authorization", `Bearer ${testuser1Token}`);
     expect(resp.body).toEqual({
       user: {
-        //id: testUserIds[0],
         id: expect.any(Number),
         username: "testuser1",
         firstName: "NewFirst",

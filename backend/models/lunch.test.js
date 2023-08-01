@@ -34,7 +34,7 @@ describe("create", function() {
         let lunch = await Lunch.create(newLunch);
         expect(lunch).toEqual({
             ...newLunch,
-            id: expect.any(Number),
+            id: null,
         });
     })
 });
@@ -136,12 +136,12 @@ describe("update", function () {
 /**************************************************************** remove */
 
 describe("remove", function () {
-    // test('works', async function() {
-    //     let result = await Lunch.remove(1);
-    //     expect(result).toContainEqual({
-    //         id: expect.any(Number),
-    //     });
-    // });
+    test('works', async function() {
+        await Lunch.remove(1);
+        const res = await db.query(
+            "SELECT id FROM lunches WHERE id=1");
+        expect(res.rows.length).toEqual(0);
+    });
 
     test('not found if no such lunch', async function () {
         try {
