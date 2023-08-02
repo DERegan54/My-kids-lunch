@@ -14,7 +14,6 @@ Visit the live site here:
 - Contribute to the community: Users can also contribute lunches to the database that their families have enjoyed, as well as review different lunches that they have tried and share how they were received by their children.
 
 ## User Flow
----  
 - Users can search and view meals added by other users 
 - Users can save meals that look interesting to their profile
 - Users can manage their profile, including information on dietary restrictions that family members must abide by
