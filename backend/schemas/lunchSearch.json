@@ -10,6 +10,9 @@
         },
         "description": {
           "type": "string"
+        },
+        "specialDietaryFeatures": {
+          "type": "string"
         }
       },
       "additionalProperties": false,

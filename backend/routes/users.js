@@ -108,18 +108,18 @@ router.delete("/:username/lunches/:id", async function (req, res, next) {
  *  Data can include: {reviewText}
  *  Returns (id, reviewText, userId, lunchId)
  */
-router.patch("/reviews/:id", async function (req, res, next) {
-    try{
-        const validator = jsonschema.validate(req.body, reviewUpdateSchema);
-        if (!validator.valid) {
-            const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(errs);
-        }
-        const review = await Review.update(req.params.id, req.body);
-        return res.json({review});
-    } catch (err) {
-        return next(err);
-    }
-});
+// router.patch("/reviews/:id", async function (req, res, next) {
+//     try{
+//         const validator = jsonschema.validate(req.body, reviewUpdateSchema);
+//         if (!validator.valid) {
+//             const errs = validator.errors.map(e => e.stack);
+//             throw new BadRequestError(errs);
+//         }
+//         const review = await Review.update(req.params.id, req.body);
+//         return res.json({review});
+//     } catch (err) {
+//         return next(err);
+//     }
+// });
 
 module.exports = router; 

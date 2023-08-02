@@ -11,6 +11,9 @@
       "description": {
         "type": "string"
       },
+      "specialDietaryFeatures": {
+        "type": "string"
+      },
       "protein": {
         "type": "string"
       },

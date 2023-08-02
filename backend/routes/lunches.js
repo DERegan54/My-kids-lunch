@@ -14,8 +14,8 @@ const router = express.Router({mergeParams: true});
 
 /** POST / {lunch} => {lunch} 
  *  Adds a lunch to database
- *  Lunch should be {title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}
- *  Returns {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, userId}
+ *  Lunch should be {title, description, specialDietaryFeatures, protein, carb, fruit, vegetable, fat, sweet, beverage}
+ *  Returns {id, title, description, special_dietary_features AS "specialDietaryFeatures", protein, carb, fruit, vegetable, fat, sweet, beverage}
  */
 router.post("/", async function(req, res, next) {
     try {
@@ -31,12 +31,14 @@ router.post("/", async function(req, res, next) {
     }
 });
 
-/** GET / => {lunches: [{id, title, protein, carb, fruit, vegetable, fat, sweet, bevereage, userId}, ...]} 
+/** GET / => {lunches: [{id, title, description, specialDietaryFeatures, protein, carb, fruit, vegetable, fat, sweet, bevereage, userId}, ...]} 
  *  Gets all lunches or search results
- *  Can provide search filter in query: title, protein, carb, fruit, vegetable, fat, sweet, beverage
-*/
+ *  Can provide search filter in query: title, description, specialDietaryFeatures
+ */ 
+ 
 router.get("/", async function (req, res, next) {
     const q = req.query;  
+    
     try {
         const validator = jsonschema.validate(q, lunchSearchSchema);
         if (!validator.valid) {

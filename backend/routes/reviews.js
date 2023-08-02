@@ -62,6 +62,25 @@ router.get("/:id", async function (req, res, next) {
     }
 });
 
+/** PATCH /reviews/[reviewId] {fld} => {review}
+ *  Updates a review given its id and new data
+ *  Data can include: {reviewText}
+ *  Returns (id, reviewText, userId, lunchId)
+ */
+router.patch("/:id", async function (req, res, next) {
+    try{
+        const validator = jsonschema.validate(req.body, reviewUpdateSchema);
+        if (!validator.valid) {
+            const errs = validator.errors.map(e => e.stack);
+            throw new BadRequestError(errs);
+        }
+        const review = await Review.update(req.params.id, req.body);
+        return res.json({review});
+    } catch (err) {
+        return next(err);
+    }
+});
+
 /** DELETE /[reviewId] => {deleted: id}
  *  Deletes a review from database given its id
  *  Returns undefined

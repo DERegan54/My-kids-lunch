@@ -11,6 +11,9 @@
       "description": {
         "type": "string"
       },
+      "specialDietaryFeatures": {
+        "type": "string"
+      },
       "protein": {
         "type": "string",
         "minimum": 0
@@ -37,6 +40,7 @@
     "additionalProperties": true,
     "required": [
       "title",
-      "description"
+      "description",
+      "specialDietaryFeatures"
     ]
   }

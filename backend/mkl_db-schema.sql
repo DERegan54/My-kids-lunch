@@ -22,9 +22,26 @@ CREATE TABLE lunches (
     vegetable TEXT,
     fat TEXT,
     sweet TEXT,
-    beverage TEXT
+    beverage TEXT,
+    special_dietary_features TEXT
 );
 
+CREATE TABLE reviews (
+    id SERIAL PRIMARY KEY,  
+    review_text TEXT NOT NULL,
+    username VARCHAR (25)
+        REFERENCES users ON DELETE CASCADE,
+    lunch_id INTEGER 
+        REFERENCES lunches ON DELETE CASCADE
+);
+
+CREATE TABLE favorites (
+    username VARCHAR (25)
+        REFERENCES users ON DELETE CASCADE,
+    lunch_id INTEGER
+        REFERENCES lunches ON DELETE CASCADE,
+    PRIMARY KEY (username, lunch_id)
+);
 
 -- CREATE TABLE foods (
 --     id SERIAL PRIMARY KEY,
@@ -48,19 +65,3 @@ CREATE TABLE lunches (
 -- );
 
 
-CREATE TABLE reviews (
-    id SERIAL PRIMARY KEY,  
-    review_text TEXT NOT NULL,
-    username VARCHAR (25)
-        REFERENCES users ON DELETE CASCADE,
-    lunch_id INTEGER 
-        REFERENCES lunches ON DELETE CASCADE
-);
-
-CREATE TABLE favorites (
-    username VARCHAR (25)
-        REFERENCES users ON DELETE CASCADE,
-    lunch_id INTEGER
-        REFERENCES lunches ON DELETE CASCADE,
-    PRIMARY KEY (username, lunch_id)
-);
