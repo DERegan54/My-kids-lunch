@@ -5,12 +5,9 @@ import UserContext from '../users/UserContext';
 import ReviewUpdateForm from './ReviewUpdateForm';
 
 const ReviewCard = ({userReview, lunches}) => {
-    const {reviewIds, setReviewIds, removeReview, reviewed, setReviewed} = useContext(UserContext);
+    const {reviewIds, setReviewIds, removeReview, reviewed, setReviewed, currentUser} = useContext(UserContext);
     const [showReview, setShowReview] = useState(true)
   
-
-   
-
     let lunch = (lunches.filter(lunch => lunch.id === userReview.lunch_id))
 
     console.log("reviewIds: ", reviewIds)
@@ -36,8 +33,11 @@ const ReviewCard = ({userReview, lunches}) => {
                         <p><b>Lunch: </b>{lunch[0].title}</p>
                         <p><b>Review comments: </b>{userReview.review_text} </p>
                     </div>
-                    {/* <button className='ReviewCard-updateButton'><Link to={`/users/reviews/${userReview.id}`}>Update this Review</Link></button>    */}
-                    <button className='ReviewCard-deleteButton' onClick={handleDelete}>Delete {lunch.title} Review</button>
+                    <div className='ReviewCard-updateForm'>
+                        <ReviewUpdateForm lunch={lunch} id={userReview.id} currentUser={currentUser}  />
+                        {/* <button className='ReviewCard-updateButton'><Link to={`/reviews/${userReview.id}`}>Update this Review</Link></button>    */}
+                    </div>
+                    <button className='ReviewCard-deleteButton' onClick={handleDelete}>Delete this Review</button>
                 </div>
             : null}
         </div>

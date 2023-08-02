@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import Header from '../common/Header';
 import UserContext from './UserContext';
 import ProfileForm from './ProfileForm';
-import ReviewList from '../reviews/ReviewList';
 
 const ProfileCard = () => {
     const {currentUser, reviews} = useContext(UserContext);
@@ -19,7 +18,7 @@ const ProfileCard = () => {
                 <p><b>First Name: </b>{currentUser.firstName}</p>
                 <p><b>Last Name: </b>{currentUser.lastName}</p>
                 <p><b>Email: </b>{currentUser.email}</p>
-                <p><b>Diet Type: </b>{currentUser.diet}</p>
+                <p><b>Special Diet: </b>{currentUser.diet}</p>
                 <p><b>Allergies/Sensitivities: </b>{currentUser.allergies}</p>
                 <p><b>Food Preferences: </b>{currentUser.preferences}</p>
                 <p><b>Food Aversions: </b>{currentUser.aversions}</p>

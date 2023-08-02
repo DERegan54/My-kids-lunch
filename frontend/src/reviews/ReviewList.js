@@ -42,7 +42,7 @@ const ReviewList = ({lunches, reviews}) => {
                         ))} 
                     </div>
                 ) : (
-                    <h4>No reviews yet.</h4>
+                    <p className='ReviewList-emptyMessage'>No reviews yet.</p>
             )}
             
         </div>

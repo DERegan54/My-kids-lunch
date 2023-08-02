@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import Alert from '../common/Alert';
 import UserContext from './UserContext';
 import MklApi from '../api';
@@ -27,6 +27,7 @@ const ProfileForm = () => {
     async function handleSubmit(evt) {
         evt.preventDefault();
         let data = {
+            username: formData.username,
             password: formData.password,
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -39,12 +40,11 @@ const ProfileForm = () => {
         let id = formData.id;
         let updatedUserProfile;
         try {
-            updatedUserProfile = await MklApi.updateUser(id, data);
+            updatedUserProfile = await MklApi.updateUser(currentUser.username, data);
         } catch (errors) {
             setFormErrors(errors);
             return;
         }   
-
         setFormData(data => ({...data, password: ""}));
         setFormErrors([]);
         setUpdateConfirmed(true);
@@ -109,7 +109,7 @@ const ProfileForm = () => {
                         onChange={handleChange}>
                     </input>
                     <br></br>
-                    <label htmlFor="diet">Diet Type: </label>
+                    <label htmlFor="diet">Special Diet: </label>
                     <input 
                         className='ProfileForm-dietInput'
                         type="text"

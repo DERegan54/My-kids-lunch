@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Header from '../common/Header';
 
 const SearchForm = ({searchTerm}) => {
     const initialState = "";
@@ -17,10 +16,9 @@ const SearchForm = ({searchTerm}) => {
 
     return (
         <div className='SearchForm'>
-            <br></br>
             <div className='SearchForm-container'>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor='SearchInput'>Search the Fridge: </label>
+                    <label htmlFor='SearchInput'>Search Lunches: </label>
                     <input 
                         type="text"
                         name="SearchInput"

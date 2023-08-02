@@ -1,24 +1,21 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Link, useParams, useHistory} from 'react-router-dom';
+import {Redirect, Link, useParams, useHistory} from 'react-router-dom';
 import Header from '../common/Header';
 import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
 import MklApi from '../api';
 
-const ReviewUpdateForm = () => {
-    const {id} = useParams();
-    const {currentUser, setReviewed} = useContext(UserContext);
+const ReviewUpdateForm = ({lunch, id}) => {
+    // const {id} = useParams();
+    const history = useHistory();
+    const {setReviewed, currentUser, reviewUpdated, setReviewUpdated} = useContext(UserContext);
     const initialState = {reviewText: "", userId: currentUser.id, lunchId: Number(id)}
     const [formData, setFormData] = useState(initialState)
     const [formErrors, setFormErrors] = useState([]);
     const [review, setReview] = useState([])
-    const [reviewAdded, setReviewAdded] = useState(false);
-    const [lunch, setLunch] = useState([]);
+    // const [lunch, setLunch] = useState([]);
 
-    console.log("id: ", id);
-    console.log("review: ", review);
-
-
+    console.log(lunch)
     useEffect(() => {
         async function getReview() {
             let reviewRes = await MklApi.getReview(id);
@@ -27,34 +24,33 @@ const ReviewUpdateForm = () => {
         getReview();
     }, [id]);
 
-    let lunchId = review.lunchId;
+    console.log("review: ", review);
+    console.log("review.lunchId: ", review.lunchId)
     
-    useEffect(() => {
-        async function getLunch(lunchId) {
-           let lunchRes = await MklApi.getLunch(lunchId);
-           setLunch(lunchRes);
-        }
-        getLunch(lunchId)
-    }, []);
+    // useEffect(() => {
+    //     async function getLunch(review) {
+    //        let lunchRes = await MklApi.getLunch(review.lunchId);
+    //        setLunch(lunchRes);
+    //     }
+    //     getLunch(review)
+    // }, []);
+
+    console.log("lunch: ", lunch);
+    console.log("review id: ", id);
+    console.log("currentUser: ", currentUser);
 
     // Handles form submit  
     async function handleSubmit(evt) {
-        evt.preventDefault();
         let data = {
             reviewText: formData.reviewText,
             username: currentUser.username,
-            lunchId: review.lunchId,
+            lunchId: lunch.id,
         }; 
-        try {
-            await MklApi.updateReview(review.id, data);
-        } catch (errors) {
-            setFormErrors(errors);
-            return;
-        } 
-        setReviewed(true);
+        await MklApi.updateReview(review.id, data);
         setFormData(initialState);
         setFormErrors([]);
-        setReviewAdded(true);
+        setReviewUpdated(true);
+        history.pushState('/users/reviews')
     }
        
     // Updates form data fields on change
@@ -65,12 +61,10 @@ const ReviewUpdateForm = () => {
 
     return (
         <div className='ReviewUpdateForm'>
-            <Header />
-            <h1 className='ReviewUpdateForm-h1'>Update Review for {lunch.title}: </h1>
+            <h4 className='ReviewUpdateForm-h1'>Update Review </h4>
             <div className='ReviewUpdateForm-container'>
                 <form onSubmit={handleSubmit}>
-                    <br></br>
-                    <br></br>
+                   
                     <textarea
                         className='ReviewUpdateForm-textarea'
                         name="reviewText"
@@ -81,9 +75,8 @@ const ReviewUpdateForm = () => {
                         required>
                     </textarea>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
-                    <br></br>
                     <button className='ReviewUpdateForm-submitButton'type="submit" onSubmit={handleSubmit}>Save changes!</button>
-                    {reviewAdded ? <Alert messages={["Review added successfully"]} /> : null}
+                    {reviewUpdated ? <Alert messages={["Review updated successfully"]} /> : null}
                 </form>
             </div>
         </div>

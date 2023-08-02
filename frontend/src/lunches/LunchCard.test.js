@@ -1,7 +1,19 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import UserContext from '../users/UserContext';
 import LunchCard from '../lunches/LunchCard';
+
+const user = {
+  username: "testuser",
+  firstName: "Test",
+  lastName: "User",
+  email: "testuser@email.com",
+  diet: "standard",
+  allergies: "none",
+  preferences: "everything",
+  aversions: "nothing",
+}
 
 const reviews = {
                 id: 1,
@@ -14,7 +26,9 @@ const reviews = {
 it('should render without crashing', function() {
   render(
     <BrowserRouter>
-      <LunchCard lunch={{}} reviews={{reviews}} setLunchReviews={jest.fn()} initialState={true} isfavorited={jest.fn()} addFavorite={jest.fn()} removeFavorite={jest.fn()} />
+      <UserContext.Provider value={{currentUser:user, addFavorite:jest.fn(), removeFavorite:jest.fn(), userFavoriteIds:[] }}>
+        <LunchCard lunch={{}} reviews={{reviews}} />
+      </UserContext.Provider>
     </BrowserRouter>
   );  
 });
@@ -23,7 +37,7 @@ it('should render without crashing', function() {
 it('should match snapshot', () => {
   const {asFragment} = render(
     <BrowserRouter>
-      <LunchCard lunch={{}} reviews={{reviews}} setLunchReviews={jest.fn()} isFavorited={jest.fn()} addFavorite={jest.fn()} removeFavorite={jest.fn()} />
+        <LunchCard lunch={{}} reviews={{reviews}} setLunchReviews={jest.fn()} isFavorited={jest.fn()} addFavorite={jest.fn()} removeFavorite={jest.fn()} />
     </BrowserRouter>
   );
   expect(asFragment()).toMatchSnapshot()

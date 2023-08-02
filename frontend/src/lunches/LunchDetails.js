@@ -41,6 +41,7 @@ const LunchDetails = () => {
             <h1 className='LunchDetails-header'> {lunch.title}</h1>
             <div className='LunchDetails-container'>
                 <p><b>Description:</b> {lunch.description}</p>
+                <p><b>Diet Type: </b>{lunch.specialDietaryFeatures}</p>
                 <p><b>Protein: </b> {lunch.protein}</p>
                 <p><b>Carb: </b> {lunch.carb}</p>
                 <p><b>Fruit: </b> {lunch.fruit}</p>

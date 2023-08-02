@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from 'react';
 import {Redirect} from 'react-router-dom';
 import MklApi from '../api';
 import SearchForm from '../common/SearchForm';
-import UserContext from '../users/UserContext';
 import LunchCard from './LunchCard';
 import Header from '../common/Header';
 
@@ -23,6 +22,7 @@ const LunchList = ({reviews}) => {
     // console.log("reviews: ", reviews);
     // console.log("favorites: ", favorites);
     // console.log("userFavorites: ", userFavorites);
+
     
     if (!lunches) <Redirect to="/"></Redirect>
 
@@ -32,18 +32,25 @@ const LunchList = ({reviews}) => {
             <br></br>
             <br></br>
             <h1 className='LunchList-header'>Lunches:</h1>
+   
+            <SearchForm searchTerm={search} />
+            <br></br>
+            <br></br>
             {lunches.length
                 ? (
                     <div className='LunchList-lunches'>
                         {lunches.map((lunch) => (
                             <LunchCard  key={lunch.id} 
-                                        lunch={lunch} 
+                                        lunch={lunch}
+                                        title={lunch.title} 
+                                        description={lunch.description}
+                                        specialDietaryFeatures={lunch.specialDietaryFeatures}
                                         reviews={reviews} 
                             />
                         ))}
                     </div> 
                 ) : (
-                    <h4>Sorry, no lunches with that search term found.</h4>
+                    <p className='LunchList-emptySearchResults'>Sorry, no lunches with that search term found.</p>
             )}         
         </div>
     );

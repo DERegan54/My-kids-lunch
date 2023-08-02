@@ -42,11 +42,14 @@ const LunchCard = ({lunch, reviews}) => {
                 <div className='LunchCard-lunchInfo'>
                     <br></br>
                     <div>
-                        <b>{`${lunch.title}`} </b>
-                        {heartFilled ? <VscHeartFilled onClick={handleRemoveFavorite} /> : <VscHeart onClick={handleAddFavorite} /> }   
+                        <h2>{`${lunch.title}`}  {heartFilled ? <VscHeartFilled onClick={handleRemoveFavorite} /> : <VscHeart onClick={handleAddFavorite} /> }</h2>
+                          
                     </div>
                     <br></br>
-                    <span>Description: {`${lunch.description}`}</span>
+                    <span>Description: <i>{`${lunch.description}`}</i> </span>
+                    <br></br>
+                    <br></br>
+                    <span>Diet Type: <i>{`${lunch.specialDietaryFeatures}`}</i> </span>
                     <br></br>
                     <button className='LunchCard-linkToDetailsButton'><Link to={`/lunches/${lunch.id}/details`}>See Lunch Details</Link></button>
                     <button className='LunchCard-linkToReviewForm'><Link to={`/lunches/${lunch.id}/addreview`}>Add comments for this Lunch</Link></button>

@@ -28,7 +28,7 @@ const UserFavoritesList = () => {
                                             isFavorited={isFavorited} 
                                             setUserFavoriteIds={setUserFavoriteIds}
                         /> 
-                    : <p>Your Favorites List is Empty</p>          
+                    : <p className="UserFavoritesList-emptyMessage">Your Favorites List is Empty</p>          
                 } 
             </div>
         </div>

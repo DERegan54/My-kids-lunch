@@ -38,7 +38,7 @@ const Routes = ({
                 <PrivateRoute exact path="/users/profile/"><ProfileCard /></PrivateRoute> 
                 <PrivateRoute exact path="/users/favorites/"><UserFavoritesList /></PrivateRoute>
                 <PrivateRoute exact path="/users/reviews"><ReviewList reviews={reviews} lunches={lunches} /></PrivateRoute>
-                <PrivateRoute exact path="/users/reviews/:id/"><ReviewUpdateForm /></PrivateRoute>
+                <PrivateRoute exact path="/reviews/:id/"><ReviewUpdateForm /></PrivateRoute>
                 <PrivateRoute exact path="/lunches"><LunchList allUsers={allUsers} lunches={lunches} reviews={reviews} /></PrivateRoute>
                 <PrivateRoute exact path="/lunches/:id/details"><LunchDetails /></PrivateRoute> 
                 <PrivateRoute exact path="/lunches/:id/addreview"><ReviewForm reviewLunch={reviewLunch} reviews={reviews}  /></PrivateRoute>

@@ -64,20 +64,6 @@ class MklApi {
         return res.lunch;
     }
 
-    // // Gets foods associated with a lunch by lunchId
-    // static async getLunchFoods(lunchId) {
-    //     let res = await this.request(`lunchfoods/lunches/${lunchId}`, {}, "get");
-    //     return res.lunchFood;
-    // }
-
-    // // Gets lunches associated with a food by foodId
-    // static async getFoodLunches(foodId) {
-    //     let res = await this.request(`lunchfoods/foods/${foodId}`, {}, "get");
-    //     return res.foodLunches;
-    // }
-
-
-   
     // Registers for site
     static async registerUser(data) {
         let res = await this.request(`auth/register`, data, "post");
@@ -96,12 +82,6 @@ class MklApi {
         return res.user;
     }
 
-    // //Gets username by id
-    // static async getUsername(id) {
-    //     let res = await this.request(`users/username/${id}`, {}, "get");
-    //     return res.username;
-    // }
-
     // Gets token for login from username and password
     static async loginUser(data) {
         let res = await this.request(`auth/token`, data, "post");
@@ -109,8 +89,8 @@ class MklApi {
     }
 
     // Updates a user profile 
-    static async updateUser(id, data) {
-        let res = await this.request(`users/${id}`, data, "patch");
+    static async updateUser(username, data) {
+        let res = await this.request(`users/${username}`, data, "patch");
         return res.user;
     }
 
@@ -140,7 +120,7 @@ class MklApi {
 
     // Updates a review
     static async updateReview(id, data) {
-        let res = await this.request(`users/reviews/${id}`, data, "patch");
+        let res = await this.request(`reviews/${id}`, data, "patch");
         return res.review;
     }
 
@@ -171,4 +151,25 @@ class MklApi {
 
 export default MklApi;
 
+
+
+
+// // Gets foods associated with a lunch by lunchId
+    // static async getLunchFoods(lunchId) {
+    //     let res = await this.request(`lunchfoods/lunches/${lunchId}`, {}, "get");
+    //     return res.lunchFood;
+    // }
+
+    // // Gets lunches associated with a food by foodId
+    // static async getFoodLunches(foodId) {
+    //     let res = await this.request(`lunchfoods/foods/${foodId}`, {}, "get");
+    //     return res.foodLunches;
+    // }
+
+
+    // //Gets username by id
+    // static async getUsername(id) {
+    //     let res = await this.request(`users/username/${id}`, {}, "get");
+    //     return res.username;
+    // }
 

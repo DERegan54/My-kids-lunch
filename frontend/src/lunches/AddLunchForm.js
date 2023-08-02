@@ -4,12 +4,12 @@ import Alert from '../common/Alert';
 import Header from '../common/Header';
 import MklApi from '../api';
 
-const AddLunchForm = ({addLunch, setFoodData}) => {
+const AddLunchForm = ({addLunch}) => {
     const history = useHistory();
-
     const initialState = {
         title: "",
-        description: "", 
+        description: "",
+        specialDietaryFeatures: "", 
         protein: "",
         carb: "",
         fruit: "",
@@ -70,7 +70,7 @@ const AddLunchForm = ({addLunch, setFoodData}) => {
                         onChange={handleChange}>
                     </input>
                     <br></br>
-                    <label htmlFor='title'>Description: </label>
+                    <label htmlFor='description'>Description: </label>
                     <textarea 
                         className='AddLunchForm-description'
                         name='description'
@@ -79,6 +79,17 @@ const AddLunchForm = ({addLunch, setFoodData}) => {
                         value={formData.description}
                         onChange={handleChange}>
                     </textarea>
+                    <br></br>
+                    <label htmlFor='specialDietaryFeatures'>Special Dietary Features: </label>
+                    <input 
+                        className='AddLunchForm-specialDietaryFeatures'
+                        type='text'
+                        name='specialDietaryFeatures'
+                        id='specialDietaryFeatures'
+                        placeholder='Add a diet type'
+                        value={formData.specialDietaryFeatures}
+                        onChange={handleChange}>
+                    </input>
                     <br></br>
                     <label htmlFor='title'>Protein: </label>
                     <input 

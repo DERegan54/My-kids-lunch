@@ -36,7 +36,7 @@ const RegistrationForm = ({signup, lunches}) => {
         setFormData(data => ({...data, [name]: value}));
     }
 
-    console.log("lunches: ", lunches)
+    // console.log("lunches: ", lunches)
     return (
         <div className='RegistrationForm'>
             <Header />

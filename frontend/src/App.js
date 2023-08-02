@@ -19,6 +19,7 @@ function App() {
   const [reviewed, setReviewed] = useState(false);
   const [lunches, setLunches] = useState([]);
   const [userFavoriteIds, setUserFavoriteIds] = useState(new Set([]));
+  const [reviewUpdated, setReviewUpdated] = useState(false);
   
   useEffect(() => {
     async function getCurrentUser() {
@@ -142,7 +143,9 @@ function App() {
                     setReviewIds,
                     removeFavorite, 
                     reviewLunch,
-                    removeReview}}>
+                    removeReview, 
+                    reviewUpdated,
+                    setReviewUpdated}}>
           <div className="App-container">
             <Navbar logout={logout} />
             <Routes 

@@ -31,7 +31,7 @@ exports[`should match snapshot 1`] = `
       <span>
         <button>
           <a
-            href="/foods"
+            href="/createlunch"
           >
             My Kitchen
           </a>
