@@ -2,8 +2,7 @@
 ### ...pack a lunch they'll actually eat!
 
 ## Description
-* My Kids' Lunchbox is a dynamic web application created to help families manage what foods they put into children's lunchboxes. Many families find it challenging to continuously pack lunches that their child will eat at school.  Many parents feel frustrated when they open their child's lunchbox in the evening only to discover that only a few bites were taken out of a couple of items. With lunch periods being the main time of day for children to socialize, many are distracted and either forget to eat or are not excited enough about the items in their lunchbox to stop talking long enough to eat. **My Kids' Lunchbox** is meant to be a place where families can share ideas for meals that are nutritious, convenient, and that kids want to eat.  
-* 
+  My Kids' Lunchbox is a dynamic web application created to help families manage what foods they put into children's lunchboxes. Many families find it challenging to continuously pack lunches that their child will eat at school.  Many parents feel frustrated when they open their child's lunchbox in the evening only to discover that only a few bites were taken out of a couple of items. With lunch periods being the main time of day for children to socialize, many are distracted and either forget to eat or are not excited enough about the items in their lunchbox to stop talking long enough to eat. **My Kids' Lunchbox** is meant to be a place where families can share ideas for meals that are nutritious, convenient, and that kids want to eat.  
 
 Visit the live site here:  
 
