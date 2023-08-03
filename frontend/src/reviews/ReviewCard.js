@@ -5,7 +5,7 @@ import UserContext from '../users/UserContext';
 import ReviewUpdateForm from './ReviewUpdateForm';
 
 const ReviewCard = ({userReview, lunches}) => {
-    const {reviewIds, setReviewIds, removeReview, reviewed, setReviewed, currentUser} = useContext(UserContext);
+    const {reviewIds, setReviewIds, removeReview, setReviewed, currentUser} = useContext(UserContext);
     const [showReview, setShowReview] = useState(true)
   
     let lunch = (lunches.filter(lunch => lunch.id === userReview.lunch_id))
@@ -35,7 +35,6 @@ const ReviewCard = ({userReview, lunches}) => {
                     </div>
                     <div className='ReviewCard-updateForm'>
                         <ReviewUpdateForm lunch={lunch} id={userReview.id} currentUser={currentUser}  />
-                        {/* <button className='ReviewCard-updateButton'><Link to={`/reviews/${userReview.id}`}>Update this Review</Link></button>    */}
                     </div>
                     <button className='ReviewCard-deleteButton' onClick={handleDelete}>Delete this Review</button>
                 </div>

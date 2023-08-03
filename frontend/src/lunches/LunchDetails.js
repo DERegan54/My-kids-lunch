@@ -29,7 +29,7 @@ const LunchDetails = () => {
         getLunchFoods(lunch);
     }, [lunch])
 
-    console.log("lunchFoods: ", lunchFoods && Object.keys(lunchFoods).length );
+   
     // console.log("foods: ", foods);
     // console.log("lunch: ", lunch);
 

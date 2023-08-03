@@ -15,12 +15,46 @@ const user = {
                 aversions: 'nothing',
               }
 
+const lunches = {
+                  id: 1,
+                  title: 'title',
+                  description: 'description',
+                  specialDietaryFeatures: 'none',
+                  protein: 'protein',
+                  carb: 'carb',
+                  fruit: 'fruit',
+                  vegetable: 'vegetable',
+                  fat: 'fat',
+                  sweet: 'sweet',
+                  beverage: 'beverage',
+                }
+
+const reviews =  [{
+                    id: 1, 
+                    reviewText: 'text',
+                    username: 'testuser',
+                    lunchId: 1,
+                 },
+                {
+                    id: 2,
+                    reviewText: 'text',
+                    username: 'testuser2',
+                    lunchId: 1,
+                }]
+
+const userReviews = [{
+                      id: 1, 
+                      reviewText: 'text',
+                      username: 'testuser',
+                      lunchId: 1,
+                    }]
+
 // Smoke test 
 it('should render without crashing', function() {
   render(
      <BrowserRouter>
-      <UserContext.Provider value={{currentUser: user, reviews:{}, reviews:{}}} >
-        <ReviewList reviews={{}} />
+      <UserContext.Provider value={{currentUser: user, setReviewIds:{}}} >
+        <ReviewList reviews={reviews} lunches={lunches}  />
       </UserContext.Provider>
     </BrowserRouter>
   );
@@ -31,7 +65,7 @@ it('should match snapshot', () => {
   const {asFragment} = render(
     <BrowserRouter>
       <UserContext.Provider value={{currentUser: user, reviews:{}, reviews:{}}}>
-        <ReviewList reviews={{}} />
+        <ReviewList reviews={reviews} lunches={lunches} />
       </UserContext.Provider>  
     </BrowserRouter>
   );  

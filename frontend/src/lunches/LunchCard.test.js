@@ -15,19 +15,35 @@ const user = {
   aversions: "nothing",
 }
 
+const lunch = {
+                id: 1,
+                title: "title",
+                description: "description",
+                specialDietaryFeatures: "none",
+                protein: "protein",
+                carb: "carb",
+                fruit: "fruit",
+                vegetable: "vegetable",
+                fat: "fat",
+                sweet: "sweet",
+                beverage: "beverage"
+              }
+
 const reviews = {
                 id: 1,
                 reviewText: 'delicous',
                 lunchId: 1,
                 username: "testuser1"
               }
+              
+const userFavoriteIds = new Set([1,2])
 
 // Smoke test
 it('should render without crashing', function() {
   render(
     <BrowserRouter>
-      <UserContext.Provider value={{currentUser:user, addFavorite:jest.fn(), removeFavorite:jest.fn(), userFavoriteIds:[] }}>
-        <LunchCard lunch={{}} reviews={{reviews}} />
+      <UserContext.Provider value={{currentUser:user, userFavoriteIds:userFavoriteIds, setUserFavoriteIds:jest.fn(), addFavorite:jest.fn(), removeFavorite:jest.fn() }}>
+        <LunchCard lunch={lunch} reviews={reviews} userFavoriteIds={userFavoriteIds} />
       </UserContext.Provider>
     </BrowserRouter>
   );  
@@ -37,7 +53,9 @@ it('should render without crashing', function() {
 it('should match snapshot', () => {
   const {asFragment} = render(
     <BrowserRouter>
-        <LunchCard lunch={{}} reviews={{reviews}} setLunchReviews={jest.fn()} isFavorited={jest.fn()} addFavorite={jest.fn()} removeFavorite={jest.fn()} />
+      <UserContext.Provider value={{currentUser:user, userFavoriteIds:userFavoriteIds, setUserFavoriteIds:jest.fn(), addFavorite:jest.fn(), removeFavorite:jest.fn() }}>
+        <LunchCard lunch={lunch} reviews={reviews} userFavoriteIds={userFavoriteIds} />
+      </UserContext.Provider>
     </BrowserRouter>
   );
   expect(asFragment()).toMatchSnapshot()
