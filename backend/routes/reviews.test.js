@@ -62,6 +62,11 @@ describe("GET /reviews", function () {
         },
     );
   });
+
+  test("not found if no reviews", async function() {
+    const resp = await request(app).get(`/reviews/7`);
+    expect(resp.statusCode).toEqual(404);
+  });
 });
 
 /************************************** GET /reviews/:id */
@@ -107,7 +112,7 @@ describe("PATCH /reviews/:id", function () {
 
   test("not found on no such review", async function () {
     const resp = await request(app)
-        .patch(`/reviews/null`)
+        .patch(`/reviews/999`)
         .send({
           reviewText: "newText",
         })
@@ -121,14 +126,14 @@ describe("PATCH /reviews/:id", function () {
 describe("DELETE /reviews/:id", function () {
   test("works", async function () {
     const resp = await request(app)
-        .delete(`/reviews/1}`)
+        .delete(`/reviews/1`)
         .set("authorization", `Bearer ${testuser1Token}`);
     expect(resp.body).toEqual({ deleted: testReviewIds[0] });
   });
 
   test("not found for no such review", async function () {
     const resp = await request(app)
-        .delete(`/reviews/0`)
+        .delete(`/reviews/999`)
         .set("authorization", `Bearer ${testuser1Token}`);
     expect(resp.statusCode).toEqual(404);
   });

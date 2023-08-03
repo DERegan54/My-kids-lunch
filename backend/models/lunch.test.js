@@ -19,8 +19,10 @@ afterAll(commonAfterAll);
 
 describe("create", function() {
     let newLunch = {
+        id: 3, 
         title: "New",
         description: "new description",
+        specialDietaryFeatures: "none",
         protein: "newProtein",
         carb: "newCarb",
         fruit: "newFruit",
@@ -32,10 +34,7 @@ describe("create", function() {
 
     test("works", async function () {
         let lunch = await Lunch.create(newLunch);
-        expect(lunch).toEqual({
-            ...newLunch,
-            id: null,
-        });
+        expect(lunch).toEqual(newLunch)
     })
 });
 
@@ -49,6 +48,7 @@ describe("findAll", function () {
             id: expect.any(Number),
             title: 'Ham Sandwich',
             description: 'ham and cheese', 
+            specialDietaryFeatures: "none",
             protein: 'ham',
             carb: 'wheat bread',
             fruit: 'apple', 
@@ -61,6 +61,7 @@ describe("findAll", function () {
             id: expect.any(Number),
             title: 'PBJ',
             description: 'peanut butter and jelly', 
+            specialDietaryFeatures: "none",
             protein: 'peanut butter',
             carb: 'sourdough bread',
             fruit: 'clementine', 

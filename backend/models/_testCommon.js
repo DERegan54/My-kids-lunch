@@ -3,9 +3,6 @@ const bcrypt = require("bcrypt");
 const db = require("../db.js");
 const {BCRYPT_WORK_FACTOR} = require("../config.js");
 
-const testFavoriteIds = [];
-
-
 async function commonBeforeAll() {
     await db.query("DELETE FROM favorites");
     await db.query("DELETE FROM reviews");
@@ -23,9 +20,9 @@ async function commonBeforeAll() {
         ]);    
 
     await db.query(`
-        INSERT INTO lunches (id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage)
-        VALUES (1, 'Ham Sandwich', 'ham and cheese', 'ham', 'wheat bread', 'apple', 'baby carrots', 'american cheese', 'oreos', 'gatorade'),               
-               (2, 'PBJ', 'peanut butter and jelly', 'peanut butter', 'sourdough bread', 'clementine', 'celery', 'string cheese', 'fruit leather', 'whole milk')
+        INSERT INTO lunches (id, title, description, special_dietary_features, protein, carb, fruit, vegetable, fat, sweet, beverage)
+        VALUES (1, 'Ham Sandwich', 'ham and cheese', 'none', 'ham', 'wheat bread', 'apple', 'baby carrots', 'american cheese', 'oreos', 'gatorade'),               
+               (2, 'PBJ', 'peanut butter and jelly', 'none', 'peanut butter', 'sourdough bread', 'clementine', 'celery', 'string cheese', 'fruit leather', 'whole milk')
         RETURNING id`       
     );
     
@@ -51,7 +48,6 @@ module.exports = {
     commonBeforeEach,
     commonAfterEach,
     commonAfterAll,
-    testFavoriteIds,
 };
 
 

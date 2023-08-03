@@ -8,7 +8,6 @@ const {
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
-  // testReviewIds,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -20,17 +19,28 @@ afterAll(commonAfterAll);
 
 describe("create", function () {
   let newReview = {
+    id: 2,
     reviewText: "eeeeW!",
     username: "testuser1",
-    lunchId: "1",
+    lunchId: '1',
   };
 
   test("works", async function () {
     let review = await Review.create(newReview);
-    expect(review).toEqual({
-      ...newReview,
-      id: expect.any(Number),
-    });
+    expect(review).toEqual(newReview);
+
+    const result = await db.query(
+            `SELECT id, review_text, username, lunch_id
+             FROM reviews
+             WHERE id=2`);
+    expect (result.rows).toEqual([
+            {
+              id: 2, 
+              review_text: 'eeeW!',
+              username: 'testuser1',
+              lunch_id: 1,
+            },
+    ]);
   });
 });
 
@@ -44,7 +54,7 @@ describe("findAll", function () {
         id: 1,
         reviewText: "delicious",
         username: "testuser1",
-        lunchId: "1",
+        lunchId: 1,
       },
     ]);
   });
@@ -59,7 +69,7 @@ describe("get", function () {
       id: 1,
       reviewText: "delicious",
       username: "testuser1",
-      lunchId: "1",
+      lunchId: 1,
     });
   });
 
@@ -87,7 +97,7 @@ describe("update", function () {
         id: 1,
         reviewText: "Delicious!",
         username: "testuser1",
-        lunchId: "1",
+        lunchId: 1,
     });
   });
 })

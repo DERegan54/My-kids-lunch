@@ -58,6 +58,8 @@ class Review {
         
         const review = reviewRes.rows[0];
 
+        if (!review) throw new NotFoundError(`No review found: ${id}`);
+
         // const lunchRes = await db.query(
         //         `SELECT id,
         //                 title,
