@@ -173,3 +173,9 @@ export default MklApi;
     //     return res.username;
     // }
 
+
+    // Gets lunches of a certain diet type
+    // static async getByDiet(diet) {
+    //     let res = await this.request(`lunches/${diet}`, {}, "get");
+    //     return res.lunches;
+    // }

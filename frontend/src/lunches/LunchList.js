@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
 import MklApi from '../api';
 import SearchForm from '../common/SearchForm';
@@ -32,7 +32,6 @@ const LunchList = ({reviews}) => {
             <br></br>
             <br></br>
             <h1 className='LunchList-header'>Lunches:</h1>
-   
             <SearchForm searchTerm={search} />
             <br></br>
             <br></br>
@@ -57,3 +56,13 @@ const LunchList = ({reviews}) => {
 }
 
 export default LunchList;
+
+
+    // useEffect (function getByDiet() {
+    //     searchDiet()
+    // }, []);
+
+// async function searchDiet(diet) {
+    //     let res = await MklApi.getByDiet(diet);
+    //     setLunches(res)    
+    // }

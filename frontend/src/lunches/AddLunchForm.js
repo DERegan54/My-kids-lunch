@@ -22,16 +22,6 @@ const AddLunchForm = ({addLunch}) => {
     const [formData, setFormData] = useState(initialState);
     const [formErrors, setFormErrors] = useState([]);
     const [lunchAdded, setLunchAdded] = useState(false);
-    // const [foods, setFoods] = useState([]);
-
-    // useEffect(function getAllFoods() {
-    //     search();
-    // }, []);
-
-    // async function search(title) {
-    //     let foods = await MklApi.getAllFoods(title);
-    //     setFoods(foods)
-    // }
 
     // Handles form submit
     async function handleSubmit(evt) {
@@ -180,3 +170,14 @@ const AddLunchForm = ({addLunch}) => {
 }
 
 export default AddLunchForm;
+
+    // const [foods, setFoods] = useState([]);
+
+    // useEffect(function getAllFoods() {
+    //     search();
+    // }, []);
+
+    // async function search(title) {
+    //     let foods = await MklApi.getAllFoods(title);
+    //     setFoods(foods)
+    // }
