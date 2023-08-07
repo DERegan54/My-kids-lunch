@@ -66,12 +66,11 @@ async function commonBeforeAll() {
         beverage: "whole milk",
     });
   
-    await Review.create({
-        id: 1,
-        reviewText: 'delicious', 
-        username: 'testuser1', 
-        lunchId: '1',
-    });
+    // await Review.create({
+    //     reviewText: 'delicious', 
+    //     username: 'testuser1', 
+    //     lunchId: '1',
+    // });
 }
 
 async function commonBeforeEach() {

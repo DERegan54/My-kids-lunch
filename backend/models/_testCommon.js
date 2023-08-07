@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
-
 const db = require("../db.js");
 const {BCRYPT_WORK_FACTOR} = require("../config.js");
 
 async function commonBeforeAll() {
+    // before starting the test, clear all tables
     await db.query("DELETE FROM favorites");
     await db.query("DELETE FROM reviews");
     await db.query("DELETE FROM lunches");
@@ -12,8 +12,7 @@ async function commonBeforeAll() {
     await db.query(`
             INSERT INTO users (id, username, password, first_name, last_name, email, diet, allergies, preferences, aversions)
             VALUES (1, 'testuser1', $1, 'First1', 'Last1', 'testuser1@email.com', 'standard', 'none', 'chocolate', 'salad'),
-                   (2, 'testuser2', $2, 'First2', 'Last2', 'testuser2@email.com', 'vegetarian', 'shellfish', 'pasta', 'meat')
-            RETURNING username`,
+                   (2, 'testuser2', $2, 'First2', 'Last2', 'testuser2@email.com', 'vegetarian', 'shellfish', 'pasta', 'meat')`,
         [
             await bcrypt.hash("password", BCRYPT_WORK_FACTOR),
             await bcrypt.hash("password", BCRYPT_WORK_FACTOR),
@@ -22,13 +21,12 @@ async function commonBeforeAll() {
     await db.query(`
         INSERT INTO lunches (id, title, description, special_dietary_features, protein, carb, fruit, vegetable, fat, sweet, beverage)
         VALUES (1, 'Ham Sandwich', 'ham and cheese', 'none', 'ham', 'wheat bread', 'apple', 'baby carrots', 'american cheese', 'oreos', 'gatorade'),               
-               (2, 'PBJ', 'peanut butter and jelly', 'none', 'peanut butter', 'sourdough bread', 'clementine', 'celery', 'string cheese', 'fruit leather', 'whole milk')
-        RETURNING id`       
+               (2, 'PBJ', 'peanut butter and jelly', 'none', 'peanut butter', 'sourdough bread', 'clementine', 'celery', 'string cheese', 'fruit leather', 'whole milk')`,       
     );
     
     await db.query(`
             INSERT INTO reviews (id, review_text, username, lunch_id)
-            VALUES (1, 'delicious', 'testuser1', 1)`,);
+            VALUES ('1', 'delicious', 'testuser1', 1)`,);
 }
 
 async function commonBeforeEach() {

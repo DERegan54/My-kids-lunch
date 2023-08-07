@@ -1,6 +1,6 @@
 CREATE TABLE users(
     username VARCHAR(25) UNIQUE NOT NULL PRIMARY KEY,
-    id INTEGER, 
+    id INT, 
     password TEXT, 
     first_name TEXT,
     last_name TEXT,
@@ -13,7 +13,7 @@ CREATE TABLE users(
 );
 
 CREATE TABLE lunches (
-    id INTEGER PRIMARY KEY, 
+    id INT PRIMARY KEY, 
     title TEXT,  
     description TEXT,   
     protein TEXT,
@@ -27,7 +27,7 @@ CREATE TABLE lunches (
 );
 
 CREATE TABLE reviews (
-    id INTEGER PRIMARY KEY,  
+    id INT PRIMARY KEY,  
     review_text TEXT,
     username VARCHAR (25)
         REFERENCES users ON DELETE CASCADE,
@@ -39,7 +39,7 @@ CREATE TABLE reviews (
 CREATE TABLE favorites (
     username VARCHAR (25)
         REFERENCES users ON DELETE CASCADE,
-    lunch_id INTEGER
+    lunch_id INT
         REFERENCES lunches ON DELETE CASCADE,
     PRIMARY KEY (username, lunch_id)
 );

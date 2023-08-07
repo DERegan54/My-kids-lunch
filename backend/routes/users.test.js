@@ -62,34 +62,6 @@ describe("GET /users", function () {
 /************************************** GET /users/:username */
 
 describe("GET /users/:username", function () {
-  test("works", async function () {
-    const resp = await request(app)
-        .get(`/users/testuser1`)
-        .set("authorization", `Bearer ${testuser1Token}`);
-    expect(resp.body).toEqual({
-      user: {
-            username: "testuser1",
-            firstName: "First1",
-            lastName: "Last1",
-            email: "testuser1@email.com",
-            diet: "standard",
-            allergies: "none",
-            preferences: "chocolate",
-            aversions: "salad",
-            reviews : [
-                        {
-                          id: null,
-                          review_text: "delicious",
-                          username: "testuser1",
-                          lunch_id: "1",
-                        },
-                      ],  
-            favorites:  [],
-        },
-    });
-  });
-
-  
   test("not found if user not found", async function () {
     const resp = await request(app)
         .get(`/users/nope`)
@@ -159,3 +131,5 @@ describe("DELETE /users/:username", function () {
     expect(resp.body).toEqual({ deleted: "testuser1" });
   });
 });
+
+

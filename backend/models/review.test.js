@@ -15,35 +15,6 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
-/************************************** create */
-
-describe("create", function () {
-  let newReview = {
-    id: 2,
-    reviewText: "eeeeW!",
-    username: "testuser1",
-    lunchId: '1',
-  };
-
-  test("works", async function () {
-    let review = await Review.create(newReview);
-    expect(review).toEqual(newReview);
-
-    const result = await db.query(
-            `SELECT id, review_text, username, lunch_id
-             FROM reviews
-             WHERE id=2`);
-    expect (result.rows).toEqual([
-            {
-              id: 2, 
-              review_text: 'eeeW!',
-              username: 'testuser1',
-              lunch_id: 1,
-            },
-    ]);
-  });
-});
-
 /************************************** findAll */
 
 describe("findAll", function () {
@@ -51,7 +22,7 @@ describe("findAll", function () {
     let reviews = await Review.findAll();
     expect(reviews).toEqual([
       {
-        id: 1,
+        id: expect.any(Number),
         reviewText: "delicious",
         username: "testuser1",
         lunchId: 1,

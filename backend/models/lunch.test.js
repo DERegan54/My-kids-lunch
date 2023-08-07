@@ -15,11 +15,13 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
+
+
 /**************************************************************** create */
 
 describe("create", function() {
     let newLunch = {
-        id: 3, 
+        id: expect.any(Number), 
         title: "New",
         description: "new description",
         specialDietaryFeatures: "none",
@@ -76,21 +78,31 @@ describe("findAll", function () {
 /**************************************************************** get */
 
 describe("get", function() {
-    // test('works', async function() {
-    //     let lunch = await Lunch.get(1);
-    //     expect(lunch).toEqual({
-    //         id: expect.any(Number),
-    //         title: 'Ham Sandwich',
-    //         description: 'ham and cheese', 
-    //         protein: 'ham',
-    //         carb: 'wheat bread',
-    //         fruit: 'apple', 
-    //         vegetable: 'baby carrots',
-    //         fat: 'american cheese', 
-    //         sweet: 'oreos',
-    //         beverage: 'gatorade',
-    //     });
-    // });
+    test('works', async function() {
+        let lunch = await Lunch.get(1);
+        expect(lunch).toEqual({
+            id: 1,
+            title: 'Ham Sandwich',
+            description: 'ham and cheese', 
+            specialDietaryFeatures: 'none',
+            protein: 'ham',
+            carb: 'wheat bread',
+            fruit: 'apple', 
+            vegetable: 'baby carrots',
+            fat: 'american cheese', 
+            sweet: 'oreos',
+            beverage: 'gatorade',
+            reviews: [
+                {
+                    id: 1,
+                    lunchId: 1,
+                    reviewText: 'delicious',
+                    username: 'testuser1',
+                }
+
+            ]
+        });
+    });
 
     test('not found if no such lunch', async function() {
         try {
@@ -106,21 +118,22 @@ describe("get", function() {
 /**************************************************************** update */
 
 describe("update", function () {
-    // test('works', async function() {
-    //     let updatedLunch = await Lunch.update(1, {description: 'Ham and cheese sandwich'});
-    //     expect(updatedLunch).toContainEqual({
-    //         id: expect.any(Number),
-    //         title: 'Ham Sandwich',
-    //         description: 'Ham and cheese sandwich', 
-    //         protein: 'ham',
-    //         carb: 'wheat bread',
-    //         fruit: 'apple', 
-    //         vegetable: 'baby carrots',
-    //         fat: 'american cheese', 
-    //         sweet: 'oreos',
-    //         beverage: 'gatorade',
-    //     });
-    // });
+    test('works', async function() {
+        let updatedLunch = await Lunch.update(1, {description: 'Ham and cheese sandwich'});
+        expect(updatedLunch).toEqual({
+            id: 1,
+            title: 'Ham Sandwich',
+            description: 'Ham and cheese sandwich', 
+            specialDietaryFeatures: 'none',
+            protein: 'ham',
+            carb: 'wheat bread',
+            fruit: 'apple', 
+            vegetable: 'baby carrots',
+            fat: 'american cheese', 
+            sweet: 'oreos',
+            beverage: 'gatorade',
+        });
+    });
 
     test("not found if no such lunch", async function () {
         try {

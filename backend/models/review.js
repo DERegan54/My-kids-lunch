@@ -60,23 +60,6 @@ class Review {
 
         if (!review) throw new NotFoundError(`No review found: ${id}`);
 
-        // const lunchRes = await db.query(
-        //         `SELECT id,
-        //                 title,
-        //                 description, 
-        //                 protein,
-        //                 fruit,
-        //                 vegetable,
-        //                 fat,
-        //                 sweet, 
-        //                 beverage
-        //          FROM lunches
-        //          WHERE lunch_id = $1`,
-        //     [lunch_id]
-        // );
-
-        // review.lunch = lunchRes.rows;
-
         return review;
     }
 

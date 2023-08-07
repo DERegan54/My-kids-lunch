@@ -54,13 +54,25 @@ router.get("/", async function (req, res, next) {
 
 /** GET /[lunchId] => {lunch}
  *  Gets specific lunch by its id
- *  Returns {id, title, protein, carb, fruit, vegetable, fat, sweet, beverage}
+ *  Returns {id, title, description, specialDietaryFeatures, protein, carb, fruit, vegetable, fat, sweet, beverage}
  */
 router.get("/:id", async function (req, res, next) {
     try {
-        console.log(typeof req.params.id)
         const lunch = await Lunch.get(req.params.id);
         return res.json({lunch});
+    } catch (err) {
+        return next(err);
+    }
+});
+
+/** GET /[diet] => {lunch}
+ *  Gets lunches by diet type
+ *  Returns {id, title, description, specialDietaryFeatures, protein, carb, fruit, vegetable, fat, sweet, beverage}
+ */
+router.get("/:diet", async function (req, res, next) {
+    try {
+        const lunches = await Lunch.get(req.params.diet);
+        return res.json({lunches});
     } catch (err) {
         return next(err);
     }

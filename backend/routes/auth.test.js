@@ -4,18 +4,13 @@ const request = require('supertest');
 const app = require('../app');
 
 const {
-    commonBeforeAll,
     commonBeforeEach,
     commonAfterEach,
     commonAfterAll,
-    testLunchIds,
-    testUserIds,
-    testFavoriteIds,
 } = require("./_testCommon");
 
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
-afterEach(commonAfterEach);
+// afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
 

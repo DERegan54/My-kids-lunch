@@ -9,18 +9,18 @@ const {sqlForPartialUpdate} = require("../helpers/sql");
 class Lunch {
 
     /** Creates a lunch (from data), update db, return new lunch data
-     *  Data should include {id, title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, specialDietaryFeatures}
+     *  Data should include {id, title, description, specialDietaryFeatures, protein, carb, fruit, vegetable, fat, sweet, beverage}
      *  Throws BadRequestError if lunch already in database
      */
     static async create ({title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, specialDietaryFeatures}) {
-        // const duplicateCheck = await db.query(
-        //         `SELECT title
-        //          FROM lunches
-        //          WHERE title = $1`,
-        //     {title});
+        const duplicateCheck = await db.query(
+                `SELECT title
+                 FROM lunches
+                 WHERE title = $1`,
+            [title]);
 
-        // if (duplicateCheck.rows[0])
-        //     throw new BadRequestError(`Duplicate lunch: ${title}`);
+        if (duplicateCheck.rows[0])
+            throw new BadRequestError(`Duplicate lunch: ${title}`);
         
         const result = await db.query(
                 `INSERT INTO lunches 
@@ -45,9 +45,9 @@ class Lunch {
         return lunch;
     }
 
-    /** Finds all lunches (optinoal filter on searchFilters) 
-     *  searchFilters (all optional): title, description, protein, carb, fruit, vegetable, fat, sweet, beverage, userId (will find case-insensitive, partial matches)
-     *  Returns [{id, title, protein, carb, fruit, vegetable, fat, sweet, beverage, favorite}, ...]
+    /** Finds all lunches (optional filter on searchFilters) 
+     *  searchFilters (all optional): title)
+     *  Returns [{id, title, description, specialDietaryFeatures, protein, carb, fruit, vegetable, fat, sweet, beverage, favorite}, ...]
     */
     static async findAll(searchFilters = {}) {
         let query = `SELECT id,
@@ -65,7 +65,7 @@ class Lunch {
         let whereExpressions = [];
         let queryValues = [];
 
-        const {title, description, specialDietaryFeatures} = searchFilters;
+        const {title, description} = searchFilters;
 
         // For each possible search term, add to whereExpressions and queryValues so
         // we can generate the right SQL
@@ -80,11 +80,6 @@ class Lunch {
             whereExpressions.push(`description ILIKE $${queryValues.length}`);
         }
 
-        if (specialDietaryFeatures) {
-            queryValues.push(`%${specialDietaryFeatures}%`);
-            whereExpressions.push(`specialDietaryFeatures ILIKE $${queryValues.length}`);
-        }
-
         if (whereExpressions.length > 0) {
             query += " WHERE " + whereExpressions.join(" AND ");
         }
@@ -95,6 +90,7 @@ class Lunch {
         const lunchesRes = await db.query(query, queryValues);
         return lunchesRes.rows;
     }
+
 
     /** Given a lunch id, return data about lunch.
    *
@@ -122,17 +118,6 @@ class Lunch {
 
         if (!lunch) throw new NotFoundError(`No lunch found: ${id}`);
         
-        // lunch_food is abbreviated with j because it is a junction table
-
-        // const foodsRes = await db.query(
-        //        `SELECT f.*
-        //          FROM lunch_foods AS j
-        //          JOIN foods AS f ON j.food_id = f.id
-        //          WHERE j.lunch_id=$1`,
-        //     [id]); 
-
-        // lunch.foods = foodsRes.rows;
-
         const reviewsRes = await db.query (
                 `SELECT id, review_text AS "reviewText", username, lunch_id AS "lunchId"
                 FROM reviews
@@ -199,3 +184,42 @@ class Lunch {
 }
 
 module.exports = Lunch;
+
+
+
+
+/** Given a diet type, return lunches that match */
+    // static async getByDiet(diet) {
+    //     const lunchRes = await db.query( 
+    //                     `SELECT id,
+    //                         title, 
+    //                         description,
+    //                         special_dietary_features AS "specialDietaryFeatures",
+    //                         protein,
+    //                         carb,
+    //                         fruit,
+    //                         vegetable,
+    //                         fat, 
+    //                         sweet,
+    //                         beverage
+    //                  FROM lunches
+    //             WHERE special_dietary_features = $1`,
+    //         [diet]);
+        
+    //     const lunch = lunchRes.rows[0];
+
+    //     if (!lunch) throw new NotFoundError(`No lunch found: ${specialDietaryFeatures}`);
+
+    //     return lunch;
+    // }
+
+    // lunch_food is abbreviated with j because it is a junction table
+
+        // const foodsRes = await db.query(
+        //        `SELECT f.*
+        //          FROM lunch_foods AS j
+        //          JOIN foods AS f ON j.food_id = f.id
+        //          WHERE j.lunch_id=$1`,
+        //     [id]); 
+
+        // lunch.foods = foodsRes.rows;
