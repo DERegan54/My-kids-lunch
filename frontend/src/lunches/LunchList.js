@@ -4,6 +4,7 @@ import MklApi from '../api';
 import SearchForm from '../common/SearchForm';
 import LunchCard from './LunchCard';
 import Header from '../common/Header';
+import './Lunches.css';
 
 const LunchList = ({reviews}) => {
     const [lunches, setLunches] = useState([]);
@@ -16,13 +17,6 @@ const LunchList = ({reviews}) => {
     useEffect (function getAllLunches() {
         search();
     }, []);
-
-    // console.log("id: ", id);
-    // console.log("lunches: ", lunches);
-    // console.log("reviews: ", reviews);
-    // console.log("favorites: ", favorites);
-    // console.log("userFavorites: ", userFavorites);
-
     
     if (!lunches) <Redirect to="/"></Redirect>
 

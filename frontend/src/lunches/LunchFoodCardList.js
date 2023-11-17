@@ -1,5 +1,6 @@
 import React from 'react';
 import LunchFoodCard from "../lunches/LunchFoodCard";
+import './Lunches.css';
 
 
 const LunchFoodCardList = ({foods}) => {

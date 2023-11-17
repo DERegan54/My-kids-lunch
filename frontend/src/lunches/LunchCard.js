@@ -4,6 +4,7 @@ import UserContext from '../users/UserContext';
 import LunchReviews from './LunchReviews';
 import {VscHeart} from "react-icons/vsc";
 import {VscHeartFilled} from "react-icons/vsc";
+import './Lunches.css';
 
 
 const LunchCard = ({lunch, reviews}) => {  
@@ -42,8 +43,7 @@ const LunchCard = ({lunch, reviews}) => {
                 <div className='LunchCard-lunchInfo'>
                     <br></br>
                     <div>
-                        <h2>{`${lunch.title}`}  {heartFilled ? <VscHeartFilled onClick={handleRemoveFavorite} /> : <VscHeart onClick={handleAddFavorite} /> }</h2>
-                          
+                        <h2>{`${lunch.title}`}  {heartFilled ? <VscHeartFilled onClick={handleRemoveFavorite} /> : <VscHeart onClick={handleAddFavorite} /> }</h2>  
                     </div>
                     <br></br>
                     <span>Description: <i>{`${lunch.description}`}</i> </span>
@@ -51,8 +51,8 @@ const LunchCard = ({lunch, reviews}) => {
                     <br></br>
                     <span>Diet Type: <i>{`${lunch.specialDietaryFeatures}`}</i> </span>
                     <br></br>
-                    <button className='LunchCard-linkToDetailsButton'><Link to={`/lunches/${lunch.id}/details`}>See Lunch Details</Link></button>
-                    <button className='LunchCard-linkToReviewForm'><Link to={`/lunches/${lunch.id}/addreview`}>Add comments for this Lunch</Link></button>
+                    <span className='navBtnContainer'><button className='navBtnLunchcard'><Link className='navBtnLink' to={`/lunches/${lunch.id}/details`}>See Lunch Details</Link></button></span>
+                    <button className='navBtnLunchcard'><Link className='navBtnLink' to={`/lunches/${lunch.id}/addreview`}>Add comments</Link></button>
                 </div>
                 <br></br>
                 <hr></hr>

@@ -3,6 +3,7 @@ import {useParams, Redirect} from 'react-router-dom';
 import MklApi from '../api';
 import Header from '../common/Header';
 import LunchFoodCardList from "./LunchFoodCardList";
+import './Lunches.css';
 
 
 const LunchNutrition = () => {

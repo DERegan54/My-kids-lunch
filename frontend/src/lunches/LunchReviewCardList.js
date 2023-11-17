@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import MklApi from '../api';
 import LunchReviewCard from "./LunchReviewCard";
+import './Lunches.css';
 
 const LunchReviewCardList = ({id, reviews}) => {
     

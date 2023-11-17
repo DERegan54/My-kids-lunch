@@ -3,6 +3,7 @@ import {useParams, Redirect} from 'react-router-dom';
 import MklApi from '../api';
 import Header from '../common/Header';
 import LunchReviewCardList from '../lunches/LunchReviewCardList';
+import './Lunches.css';
 
 const LunchReview = () => {
     const {id} = useParams();

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Lunches.css';
 
 const LunchFoodCard = ({food_title, serving_size, calories, fat_content, protein_content, carbohydrates, sugar, lunchId}) => {
    

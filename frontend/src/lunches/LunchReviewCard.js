@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import UserContext from '../users/UserContext';
 import MklApi from '../api';
+import './Lunches.css';
 
 const LunchReviewCard = ({lunchReview}) => {
     // console.log("lunchReview: ", lunchReview)

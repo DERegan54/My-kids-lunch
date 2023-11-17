@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import ReviewCard from './LunchReviewCard';
+import './Lunches.css';
 
 const LunchReviews = ({lunchReviews, username, showReview}) => {    
   

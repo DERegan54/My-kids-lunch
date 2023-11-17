@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom';
 import Alert from '../common/Alert';
 import Header from '../common/Header';
 import MklApi from '../api';
+import './Lunches.css';
 
 const AddLunchForm = ({addLunch}) => {
     const history = useHistory();
@@ -55,7 +56,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='title'
                         id='title'
-                        placeholder='Add a title'
                         value={formData.title}
                         onChange={handleChange}>
                     </input>
@@ -65,7 +65,6 @@ const AddLunchForm = ({addLunch}) => {
                         className='AddLunchForm-description'
                         name='description'
                         id='description'
-                        placeholder='Describe this lunch'
                         value={formData.description}
                         onChange={handleChange}>
                     </textarea>
@@ -76,7 +75,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='specialDietaryFeatures'
                         id='specialDietaryFeatures'
-                        placeholder='Add a diet type'
                         value={formData.specialDietaryFeatures}
                         onChange={handleChange}>
                     </input>
@@ -87,7 +85,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='protein'
                         id='protein'
-                        placeholder='Add a protein'
                         value={formData.protein}
                         onChange={handleChange}>
                     </input>
@@ -98,7 +95,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='carb'
                         id='carb'
-                        placeholder='Add a carb'
                         value={formData.carb}
                         onChange={handleChange}>
                     </input>
@@ -109,7 +105,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='fruit'
                         id='fruit'
-                        placeholder='Add a fruit'
                         value={formData.fruit}
                         onChange={handleChange}>
                     </input>
@@ -120,7 +115,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='vegetable'
                         id='vegetable'
-                        placeholder='Add a vegetable'
                         value={formData.vegetable}
                         onChange={handleChange}>
                     </input>
@@ -131,7 +125,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='fat'
                         id='fat'
-                        placeholder='Add a fat'
                         value={formData.fat}
                         onChange={handleChange}>
                     </input>
@@ -142,7 +135,6 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='sweet'
                         id='sweet'
-                        placeholder='Add a sweet'
                         value={formData.sweet}
                         onChange={handleChange}>
                     </input>
@@ -153,12 +145,11 @@ const AddLunchForm = ({addLunch}) => {
                         type='text'
                         name='beverage'
                         id='beverage'
-                        placeholder='Add a beverage'
                         value={formData.beverage}
                         onChange={handleChange}>
                     </input>
                     <br></br>
-                    <button className='AddLunchForm-button' type="submit" onSubmit={handleSubmit}>Create Lunch!</button>
+                    <span><button className='navBtn' type="submit" onSubmit={handleSubmit}>Create Lunch!</button></span>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                         {lunchAdded ? <Alert messages={["Lunch added successfully"]} /> : null}
                 </form>
