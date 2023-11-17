@@ -1,0 +1,15 @@
+
+.Alert {
+    color: white;
+    background-color: orange;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 1em;
+    margin-left: 8em;
+    padding-top: -4em;
+    padding-right: 2em;
+    padding-bottom: 1.2em;
+    padding-left: 2em;
+    width: 40em;
+    font-size: larger;
+}

@@ -1,12 +1,15 @@
 import React from "react";
+import './Alert.css';
 
 function Alert({messages = [] }) {
 
   return (
-      <div className="Alert">
+      <div>
         {messages.map(error => (
             <p key={error}>
-              {error}
+              <div className="Alert">
+                {error}
+                </div>
             </p>
         ))}
       </div>

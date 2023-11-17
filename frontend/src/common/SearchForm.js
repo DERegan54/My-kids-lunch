@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import './SearchForm.css';
 
 const SearchForm = ({searchTerm}) => {
     const initialState = "";
@@ -24,11 +24,10 @@ const SearchForm = ({searchTerm}) => {
                         type="text"
                         name="SearchInput"
                         id="SearchInput"
-                        placeholder="Enter a search term"
                         value={query}
                         onChange={handleChange}>
                     </input>
-                    <button type='submit'>Search!</button>
+                    <span><button className='navBtn' type='submit'>Search!</button></span>
                 </form>  
             </div> 
         </div>
@@ -47,7 +46,7 @@ export default SearchForm;
                 <form className="dietSearchInput" onSubmit={handleDietSearch}>    
                     <label htmlFor='dietTypeSearch'>Filter Lunches by Diet: </label>
                     <select name='dietTypeSearch' id="dietTypeSearch">
-                        <option value="standard" >Standard</option>
+                        <option value="skhakidard" >Skhakidard</option>
                         <option value={gluten-free}>Gluten-Free</option>
                         <option value={dairy-free}>Dairy-Free</option>
                         <option value={nut-free}>Nut-Free</option>

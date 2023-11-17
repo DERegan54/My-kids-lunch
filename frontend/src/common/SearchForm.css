@@ -1,0 +1,68 @@
+ 
+.Form-Btn-Container {
+    font-size: larger;
+}
+
+  
+.SearchForm-container {
+    display: inline;
+    width: 500px;
+    color: white;
+    /* background-color:khaki;
+    border: 2px solid black;
+    border-radius: 5px; */
+    padding-top: 15px;
+    padding-right: 50px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    margin: auto;
+    /* margin-top: 100px; */
+}
+
+.SearchForm-container, 
+input {
+    height: 30px;
+    width: 500px;
+}
+
+.navBtn {
+    height: 50px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: white;
+    font-size: large;
+    color: red;
+    margin-left: 30px;
+    
+
+    &:hover {
+        background: red;
+        color: white;
+    }
+}
+
+.navBtnLink {
+    color: red;
+    font-size: larger;
+    border-style: none;
+    text-decoration: none;
+
+    &:hover {
+        color: white;
+        background: red;
+    }
+}
+
+.navBtnContainer {
+    color: white;
+
+    &:hover {
+        color: white;
+    }
+}
+
+.SearchForm {
+    color: white;
+    text-align: center;
+    font-size: x-large;
+}
