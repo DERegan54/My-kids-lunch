@@ -4,6 +4,7 @@ import MklApi from '../api';
 import UserContext from '../users/UserContext';
 import {VscHeart} from "react-icons/vsc";
 import {VscHeartFilled} from "react-icons/vsc";
+import './Users.css';
 
 
 const FavoriteCard = ({id, title, description, protein, carb, fruit, vegetable, fat, sweet, favorite}) => {
@@ -23,15 +24,15 @@ const FavoriteCard = ({id, title, description, protein, carb, fruit, vegetable, 
     return (
         <div className='FavoriteCard'>
             <div className='FavoriteCard-lunches'>
-                <p>
+                <span className='FavoriteCard-title'>
                     <b>{`${title}`} </b>
                     {isFavorited ? (
                         <VscHeartFilled onClick={handleFavoritedChange} />
                     ) : (
                         <VscHeart onClick={handleFavoritedChange} />  
                     )}  
-                </p>
-                <p>{`${description}`}</p>    
+                </span>
+                <p className='FavoriteCard-description'>{`${description}`}</p>    
             </div>
             <hr></hr>            
         </div>

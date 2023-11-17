@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import Header from '../common/Header';
 import UserContext from './UserContext';
 import ProfileForm from './ProfileForm';
+import './Users.css';
 
 const ProfileCard = () => {
     const {currentUser, reviews} = useContext(UserContext);
@@ -22,8 +23,7 @@ const ProfileCard = () => {
                 <p><b>Allergies/Sensitivities: </b>{currentUser.allergies}</p>
                 <p><b>Food Preferences: </b>{currentUser.preferences}</p>
                 <p><b>Food Aversions: </b>{currentUser.aversions}</p>
-                <br></br>
-                <br></br>
+                <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
                 <ProfileForm />
             </div>
         </div>

@@ -24,9 +24,9 @@ const LoginForm = ({login}) => {
     }
 
     return  (
-        <div className='LoginForm'>
+        <div className='Form'>
             <Header />
-            <div className='LoginForm-container'>
+            <div className='Form-container'>
                 <h3 className='LoginForm-h3'>Log in here:</h3>
                 <form onSubmit={handleSubmit}>
                     <br></br>
@@ -36,7 +36,6 @@ const LoginForm = ({login}) => {
                         type='text'
                         name='username'
                         id='username'
-                        placeholder='Enter a username'
                         value={formData.username}
                         onChange={handleChange}
                         required>
@@ -48,7 +47,6 @@ const LoginForm = ({login}) => {
                         type='text'
                         name='password'
                         id='password'
-                        placeholder='Enter your password'
                         value={formData.password}
                         onChange={handleChange}
                         required>
@@ -56,7 +54,7 @@ const LoginForm = ({login}) => {
                     <br></br>
                     <br></br>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
-                    <button onSubmit={handleSubmit}>Login!</button>
+                    <span className='Form-Btn-Container'><button className='navBtn' onSubmit={handleSubmit}>Log In</button></span>
                 </form>
             </div>
         </div>

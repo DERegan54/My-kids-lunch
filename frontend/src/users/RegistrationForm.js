@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import Header from '../common/Header';
 import Alert from "../common/Alert";
+import './Users.css';
 
 const RegistrationForm = ({signup, lunches}) => {
     const history = useHistory();
@@ -38,9 +39,9 @@ const RegistrationForm = ({signup, lunches}) => {
 
     // console.log("lunches: ", lunches)
     return (
-        <div className='RegistrationForm'>
+        <div className='Form'>
             <Header />
-            <div className='RegistrationForm-container'>
+            <div className='Form-container'>
                 <h3 className='RegistrationForm-h3'>Sign up here:</h3>
                 <br></br>
                 <form onSubmit={handleSubmit}>
@@ -50,7 +51,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="username"
                         id="username" 
-                        placeholder="Enter a username"
                         value={formData.username}
                         onChange={handleChange}>
                     </input>
@@ -61,7 +61,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="password"
                         id="password"
-                        placeholder="Enter a password"
                         value={formData.password}
                         onChange={handleChange}>
                     </input>
@@ -72,7 +71,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="firstName"
                         id="firstName" 
-                        placeholder="Enter your first name"
                         value={formData.firstName}
                         onChange={handleChange}>
                     </input>
@@ -83,7 +81,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="lastName"
                         id="lastName"
-                        placeholder="Enter your last name"
                         value={formData.lastName}
                         onChange={handleChange}>
                     </input>
@@ -94,7 +91,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="email"
                         id="email"
-                        placeholder="Enter your E-mail"
                         value={formData.email}
                         onChange={handleChange}>
                     </input>
@@ -105,7 +101,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="diet"
                         id="diet"
-                        placeholder="Enter your diet type"
                         value={formData.diet}
                         onChange={handleChange}>
                     </input>
@@ -116,7 +111,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="allergies"
                         id="allergies"
-                        placeholder="Enter food allergies"
                         value={formData.allergies}
                         onChange={handleChange}>
                     </input>
@@ -127,7 +121,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="preferences"
                         id="preferences"
-                        placeholder="Enter your food preferences"
                         value={formData.preferences}
                         onChange={handleChange}>
                     </input>
@@ -138,7 +131,6 @@ const RegistrationForm = ({signup, lunches}) => {
                         type="text"
                         name="aversions"
                         id="aversions"
-                        placeholder="Enter your food aversions"
                         value={formData.aversions}
                         onChange={handleChange}>
                     </input>
@@ -146,7 +138,7 @@ const RegistrationForm = ({signup, lunches}) => {
                     <br></br>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                     {registrationConfirmed ? <Alert messages={["Registration successful!"]} /> : null}
-                    <button type="submit" onSubmit={handleSubmit}>Sign Up!</button>
+                    <span className='Form-Btn-Container'><button className='navBtn' type="submit" onSubmit={handleSubmit}>Sign Up!</button></span>
                 </form>
             </div>
         </div>

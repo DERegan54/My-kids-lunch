@@ -1,0 +1,97 @@
+.FavoriteCard {
+    color: red;
+    background-color: orange;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 2em;
+    margin-right: 2em;
+    padding-bottom: 1em;
+    margin-bottom: 2em;
+    width: 40em;
+} 
+
+.FavoriteCard,
+span {
+    color: white;
+    font-size: larger;
+}
+
+.FavoriteCard-description {
+    color: white;
+}
+
+.FavoriteCard-title {
+    color: red;
+}
+
+
+.Form-Btn-Container {
+    font-size: larger;
+}
+ 
+/* .Form-container {
+    color: red;
+    background-color:khaki;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-left: 2em;
+    padding-bottom: 1em;
+    margin: auto;
+    margin-top: 100px;
+} */
+
+.Profile-container {
+    color: white;
+    margin-left: 20em;
+    margin-right: 4em;
+    margin-top: 1em;
+    column-count: 2;
+    column-gap: 50px;
+    padding-left: -1em;
+    width: 40em;
+}
+
+.Profile-form {
+    display: inline-block;
+    color:red;
+    background-color: khaki;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-top: -1em;
+    margin-bottom: 1em;
+    padding-top: 1em;
+    padding-right: 3em;
+    padding-bottom: 1em;
+    padding-left: 3em;
+}
+
+.RegistrationForm-container {
+    color: white;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 2em;
+    padding-bottom: 1em;
+    margin: auto;
+    width: 20em;
+}
+
+.UserFavoriteCardList {
+    margin-left: 8em;
+}
+.UserFavoritesList-header {
+    color: white;
+    margin-left: 2em;
+    font-size: xx-large;
+}
+
+.UserFavoritesList-lunches {
+    margin-left: 6em; 
+    font-size: large;  
+}
+
+.UserFavoritesList-emptyMessage{
+    color: white;
+    text-align: center;
+    margin-top: 100px;
+}

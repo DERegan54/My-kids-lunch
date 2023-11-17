@@ -17,7 +17,7 @@ const user = {
                 firstName: "Test",
                 lastName: "User",
                 email: "testuser@email.com",
-                diet: "standard",
+                diet: "skhakidard",
                 allergies: "none",
                 preferences: "everything",
                 aversions: "nothing",

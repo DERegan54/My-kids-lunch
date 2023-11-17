@@ -3,6 +3,7 @@ import {useParams, useHistory} from 'react-router-dom';
 import Alert from '../common/Alert';
 import UserContext from './UserContext';
 import MklApi from '../api';
+import './Users.css';
 
 const ProfileForm = () => {
     const {id} = useParams()
@@ -59,12 +60,12 @@ const ProfileForm = () => {
     }
 
     return (
-        <div className="ProfileForm">
+        <div className='Profile-form'>
             <h4>Update {currentUser.firstName || currentUser.username}'s Profile Here:</h4>
             <form onSubmit={handleSubmit}>
                     <label htmlFor="username">Username: </label>
                     <span className='ProfileForm-username'>{formData.username}</span>
-                    <br></br>
+                    <br></br><br></br>
                     <label htmlFor="password">Password: </label>
                     <input 
                         className="ProfileForm-passwordInput"
@@ -156,7 +157,7 @@ const ProfileForm = () => {
                     <br></br>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                     {updateConfirmed ? <Alert messages={["Profile successfully updated"]} /> : null}
-                <button type="submit" onSubmit={handleSubmit}>Save changes</button>
+                <button className='navBtn' type="submit" onSubmit={handleSubmit}>Save changes</button>
             </form>
         </div>
     );

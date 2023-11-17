@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import Header from '../common/Header';
 import UserContext from './UserContext';
 import ProfileForm from './ProfileForm';
+import './Users.css';
 
 const Profile = () => {
     const {currentUser} = useContext(UserContext);
