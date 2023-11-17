@@ -1,0 +1,87 @@
+
+.Form-Btn-Container {
+    font-size: larger;
+}
+
+  
+.Form-container {
+    width: 300px;
+    color: red;
+    background-color:khaki;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-left: 4em;
+    padding-bottom: 1em;
+    margin: auto;
+    margin-top: 100px;
+}
+
+
+.Home-container {
+    color: white;   
+}
+
+.Home-loggedOut,
+h2 {
+    color: white;
+    margin-left: 30px;
+}
+
+.Home-loggedIn,
+h1 {
+    color: white;
+    margin-top: 100px;
+}
+
+.Home-loggedIn,
+h2 {
+    color: white;
+    margin-top: 80px;
+    margin-left: -5px;
+}
+
+.Home-loggedIn, .Home-loggedOut {
+    text-align: center;
+    color: white;
+    font-size: larger;
+}
+
+.navBtn {
+    height: 50px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: white;
+    font-size: large;
+    color: red;
+    margin-left: 30px;
+    
+
+    &:hover {
+        background: red;
+        color: white;
+    }
+}
+
+.navBtn home {
+    margin-left: 30px;
+}
+
+.navBtnLink {
+    color: red;
+    font-size: larger;
+    border-style: none;
+    text-decoration: none;
+
+    &:hover {
+        color: white;
+        background: red;
+    }
+}
+
+.navBtnContainer {
+    color: white;
+
+    &:hover {
+        color: white;
+    }
+}
