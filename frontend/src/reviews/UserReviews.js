@@ -4,6 +4,7 @@ import Header from '../common/Header';
 import MklApi from '../api';
 import UserContext from '../users/UserContext';
 import UserReviewCardList from './UserReviewCardList';
+import './Reviews.css';
 
 const UserReviews = () => {
     const {currentUser} = useContext(UserContext);

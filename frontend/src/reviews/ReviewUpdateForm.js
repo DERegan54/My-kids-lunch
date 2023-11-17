@@ -4,6 +4,7 @@ import Header from '../common/Header';
 import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
 import MklApi from '../api';
+import './Reviews.css';
 
 const ReviewUpdateForm = ({lunch, id}) => {
     // const {id} = useParams();
@@ -75,7 +76,7 @@ const ReviewUpdateForm = ({lunch, id}) => {
                         required>
                     </textarea>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
-                    <button className='ReviewUpdateForm-submitButton'type="submit" onSubmit={handleSubmit}>Save changes!</button>
+                    <button className='navBtn' type="submit" onSubmit={handleSubmit}>Save</button>
                     {reviewUpdated ? <Alert messages={["Review updated successfully"]} /> : null}
                 </form>
             </div>

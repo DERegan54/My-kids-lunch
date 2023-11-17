@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import MklApi from '../api';
 import UserContext from '../users/UserContext';
 import ReviewUpdateForm from './ReviewUpdateForm';
+import './Reviews.css';
 
 const ReviewCard = ({userReview, lunches}) => {
     const {reviewIds, setReviewIds, removeReview, setReviewed, currentUser} = useContext(UserContext);
@@ -36,7 +37,7 @@ const ReviewCard = ({userReview, lunches}) => {
                     <div className='ReviewCard-updateForm'>
                         <ReviewUpdateForm lunch={lunch} id={userReview.id} currentUser={currentUser}  />
                     </div>
-                    <button className='ReviewCard-deleteButton' onClick={handleDelete}>Delete this Review</button>
+                    <span className='btn-container'><button className='navBtn' onClick={handleDelete}>Delete</button></span>
                 </div>
             : null}
         </div>

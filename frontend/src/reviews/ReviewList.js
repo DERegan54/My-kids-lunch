@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import ReviewCard from "../reviews/ReviewCard";
 import UserContext from "../users/UserContext";
 import Header from "../common/Header";
+import './Reviews.css';
 
 
 const ReviewList = ({lunches, reviews}) => {

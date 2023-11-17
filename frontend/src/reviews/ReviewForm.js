@@ -4,6 +4,7 @@ import Header from '../common/Header';
 import Alert from '../common/Alert';
 import UserContext from '../users/UserContext';
 import MklApi from '../api';
+import './Reviews.css';
 
 const ReviewForm = () => {
     const {id} = useParams();
@@ -49,7 +50,7 @@ const ReviewForm = () => {
     return (
         <div className='ReviewForm'>
             <Header />
-            <div className='ReviewForm-container'>
+            <div className='Form-container'>
                 <h3>Review {lunch.title} here:</h3>
                 <form onSubmit={handleSubmit}>
                     <textarea
@@ -63,7 +64,7 @@ const ReviewForm = () => {
                     </textarea>
                     {formErrors.length ? <Alert messages={formErrors} /> : null}
                     <br></br>
-                    <button type="submit" onSubmit={handleSubmit}>Submit review!</button>
+                    <span><button className='navBtn' type="submit" onSubmit={handleSubmit}>Submit review!</button></span>
                     {reviewed ? <Alert messages={["Review added successfully"]} /> : null}
                 </form>
                 <br></br>

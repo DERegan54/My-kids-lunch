@@ -1,0 +1,126 @@
+.btn-container {
+    margin-right: 1em;
+}
+
+.Form-container {
+    width: 500px;
+    color: red;
+    background-color:khaki;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-left: 4em;
+    padding-bottom: 1em;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.navBtn {
+    height: 50px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: white;
+    font-size: large;
+    color: red;
+    margin-left: 1em;
+    
+
+    &:hover {
+        background: red;
+        color: white;
+    }
+}
+
+.ReviewCard {
+    font-size: x-large;
+}
+
+.ReviewList-container {
+    color: white;
+}
+
+.ReviewList-header {
+    color: white;
+    margin-left: 2em;
+    font-size: xx-large;
+}
+
+.ReviewList-emptyMessage {
+    color: white;
+    text-align: center;
+    margin-top: 100px;
+    font-size: x-large;
+}
+
+.ReviewCard-container {
+    color: white;
+    text-align: center;
+    background-color: orange;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-top: 1em;
+    padding-right: 2em;
+    padding-bottom: 2em;
+    padding-left: 2em;
+    margin-left: 8em;
+    margin-bottom: 1em;
+    width: 30em;
+}
+
+.ReviewCard-updateForm {
+    color: red;
+    text-align: center;
+    background-color: khaki;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-right: 3em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin: auto;
+    width: 15em;
+    font-size: x-large;
+}
+
+.ReviewUpdateForm-textarea {
+    width: 200px;
+    height: 75px;
+    margin-left: 10px;
+}
+
+.ReviewUpdateForm-submitButton {
+    text-align: center;
+    margin-left: 1em;
+}
+
+.RegistrationForm-container {
+    color: white;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 2em;
+    padding-bottom: 1em;
+    margin: auto;
+    width: 20em;
+}
+
+.ReviewForm-container {
+    color: white;
+    text-align: center;
+    background-color: darkseagreen;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 2em;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 2em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin: auto;
+    width: 30em;
+}
+
+.ReviewForm-reviewTextArea {
+    width: 30em;
+    height: 20em;
+}
