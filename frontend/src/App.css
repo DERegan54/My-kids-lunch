@@ -1,10 +1,10 @@
-.AddFoodForm {
-    color: sienna;
+/* .AddFoodForm {
+    color: white;
     margin-top: 1em;
 }
 
 .AddFoodForm-container {
-    color: sienna;
+    color: white;
     background-color: darkseagreen;
     border: 1px solid black;
     border-radius: 5px;
@@ -25,12 +25,12 @@ button {
 }
 
 .AddLunchForm {
-    color: sienna;
+    color: white;
     margin-top: 2em;
 }
 
 .AddLunchForm-container {
-    color: sienna;
+    color: white;
     background-color: darkseagreen;
     border: 1px solid black;
     border-radius: 5px;
@@ -54,14 +54,15 @@ button {
 
 .AddLunchForm-h1 {
     margin-left: 2em;
-}
+}*/
 
 body {
     font-family: Trebuchet MS;
+    background-color: rgba(34, 128, 144, 0.718);
 }
-
+/*
 .FavoriteCard{
-    color: sienna;
+    color: white;
     background-color: darkseagreen;
     border: 1px solid black;
     border-radius: 5px;
@@ -71,55 +72,95 @@ body {
     margin-bottom: 2em;
     width: 40em;
 }
-    
+ 
+.Form-Btn-Container {
+    font-size: larger;
+}
+
+  
+.Form-container {
+    width: 300px;
+    color: red;
+    background-color:khaki;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-left: 4em;
+    padding-bottom: 1em;
+    margin: auto;
+    margin-top: 100px;
+}
+
 .Header {
-    display: inline;
+    position: relative;
     background-color: white;
     text-align: left;
     font-size: large;
-    color: olivedrab;
-    /* margin-left: 2em; */
+    padding-top: 30px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
 }
 
 .Header-h1 {
+        color: red;
         background-color: white;
         height: 200px;
-        font-size: xx-large;
+        font-size: 50px;
         margin-left: 1em;
     }
 
 
 .Header-h4 {
+    color: red;
     background-color: white;
+    margin-top: -90px;
     margin-left: 5em;
     font-size: x-large;
 }
 
+.Header-lunchbox {
+    display: inline;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: 500px;
+}
+
 .Home-container {
-    color: sienna;
+    color: white;   
+}
+
+.Home-loggedOut,
+h2 {
+    color: white;
+    margin-left: 30px;
+}
+
+.Home-loggedIn,
+h1 {
+    color: white;
+    margin-top: 100px;
+}
+
+.Home-loggedIn,
+h2 {
+    color: white;
+    margin-top: 80px;
+    margin-left: -5px;
 }
 
 .Home-loggedIn, .Home-loggedOut {
     text-align: center;
+    color: white;
+    font-size: larger;
 }
 
 img {
     height: 100px;
 }
 
-.LoginForm-container {
-    color: sienna;
-    background-color: darkseagreen;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding-left: 2em;
-    padding-bottom: 1em;
-    margin: auto;
-    width: 20em;
-}
+
 
 .LunchCard {
-    color: sienna;
+    color: white;
     background-color: darkseagreen;
     border: 1px solid black;
     border-radius: 5px;
@@ -132,29 +173,29 @@ img {
 }
 
 .LunchList-header {
-    color: sienna;
+    color: white;
     margin-left: 2em;
 }
 
 .LunchList-emptySearchResults {
-    color: sienna;
+    color: white;
     text-align: center;
     margin-top: 50px;
 }
 
 .LunchDetails-header {
-    color: sienna;
+    color: white;
     margin-top: 2em;
     margin-left: 2em;
 }
 
 .LunchDetails-container {
-    color: sienna;
+    color: white;
     margin-left: 6em;
 }
 
 .LunchDetails-foodList {
-    color: sienna;
+    color: white;
     margin-left: 3em;
 }
 
@@ -165,9 +206,9 @@ img {
 }
 
 .LunchReviewCard {
-    color: sienna;
+    color: white;
     text-align: center;
-    background-color: tan;
+    background-color: khaki;
     border: 1px solid black;
     border-radius: 5px;
     padding-top: 1em;
@@ -179,15 +220,57 @@ img {
     width: 40em;
 }
 
-.Navbar,
-    span {
-        text-align: center;
-        margin-bottom: 1em;
-        margin-left: 1em;
+.Navbar {
+    padding-top: 5px;
+    padding-bottom: 25px;
+    margin-left: 50px;
+    text-align: center;
+    text-decoration: none;
+} 
+
+.navBtn {
+    height: 50px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: white;
+    font-size: large;
+    color: red;
+    margin-left: 30px;
+    
+
+    &:hover {
+        background: red;
+        color: white;
     }
+}
+
+.navBtn home {
+    margin-left: 30px;
+}
+
+.navBtnLink {
+    color: red;
+    font-size: larger;
+    border-style: none;
+    text-decoration: none;
+
+    &:hover {
+        color: white;
+        background: red;
+    }
+}
+
+.navBtnContainer {
+    color: white;
+
+    &:hover {
+        color: white;
+    }
+}
+
 
 .Profile-container {
-    color: sienna;
+    color: white;
     margin-left: 10em;
     margin-right: 4em;
     margin-top: 1em;
@@ -196,7 +279,7 @@ img {
 }
 
 .ProfileForm {
-    color: sienna;
+    color: white;
     background-color: darkseagreen;
     border: 1px solid black;
     border-radius: 5px;
@@ -207,22 +290,22 @@ img {
 }
 
 .ReviewList-container {
-    color: sienna;
+    color: white;
 }
 
 .ReviewList-header {
-    color: sienna;
+    color: white;
     margin-left: 2em;
 }
 
 .ReviewList-emptyMessage {
-    color: sienna;
+    color: white;
     text-align: center;
     margin-top: 100px;
 }
 
 .ReviewCard-container {
-    color: sienna;
+    color: white;
     text-align: center;
     background-color: darkseagreen;
     border: 1px solid black;
@@ -237,9 +320,9 @@ img {
 }
 
 .ReviewCard-updateForm {
-    color: sienna;
+    color: white;
     text-align: center;
-    background-color: tan;
+    background-color: khaki;
     border: 1px solid black;
     border-radius: 5px;
     padding-right: 3em;
@@ -263,7 +346,7 @@ img {
 }
 
 .RegistrationForm-container {
-    color: sienna;
+    color: white;
     background-color: darkseagreen;
     border: 1px solid black;
     border-radius: 5px;
@@ -274,7 +357,7 @@ img {
 }
 
 .ReviewForm-container {
-    color: sienna;
+    color: white;
     text-align: center;
     background-color: darkseagreen;
     border: 1px solid black;
@@ -295,7 +378,7 @@ img {
 }
 
 .SearchForm {
-    color: sienna;
+    color: white;
     text-align: center;
 }
 
@@ -303,7 +386,7 @@ img {
     margin-left: 8em;
 }
 .UserFavoritesList-header {
-    color: sienna;
+    color: white;
     margin-left: 2em;
 }
 
@@ -312,13 +395,13 @@ img {
 }
 
 .UserFavoritesList-emptyMessage{
-    color: sienna;
+    color: white;
     text-align: center;
-    margin-top: 100px;
-}
+    margin-top: 100px; 
+}*/
 
 /* .LunchFoodCard {
-    color: sienna;
+    color: white;
     display: inline-block;
     background-color: darkseagreen;
     border: 1px solid black;
@@ -336,12 +419,12 @@ img {
 }
 .LunchFoodCard,
 p {
-    color: sienna;
+    color: white;
 } */
 
 
 /* .FoodList-container {
-    color: sienna;
+    color: white;
     margin-left: 4em;
 }
 
@@ -361,7 +444,7 @@ p {
     margin-left: 6em;
 }
 .FoodCard {
-    color: sienna;
+    color: white;
     display: inline-block;
     background-color: darkseagreen;
     border: 1px solid black;
