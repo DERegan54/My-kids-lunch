@@ -10,13 +10,13 @@ const Navbar = ({logout}) => {
     const navIfLoggedIn = () => {
         return (
             <div className="Navbar-loggedIn">
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink' to="/">Home</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink' to="/lunches">Lunches</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink' to="/createlunch">My Kitchen</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink'  to="/users/reviews">My Reviews</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink' to="/users/favorites">My Favorites</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink' to="/users/profile/">My Profile</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><Link className='navBtnLink' to="/" onClick={logout}>Log Out</Link></button></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink' to="/"><button className='navBtn'>Home</button></NavLink></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink' to="/lunches"><button className='navBtn'>Lunches</button></NavLink></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink' to="/createlunch"><button className='navBtn'>My Kitchen</button></NavLink></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink'  to="/users/reviews"><button className='navBtn'>My Reviews</button></NavLink></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink' to="/users/favorites"><button className='navBtn'>My Favorites</button></NavLink></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink' to="/users/profile/"><button className='navBtn'>My Profile</button></NavLink></span>
+                <span className='navBtnContainer'><Link className='navBtnLink' to="/" onClick={logout}><button className='navBtn'>Log Out</button></Link></span>
             </div> 
         );
     }
@@ -24,9 +24,9 @@ const Navbar = ({logout}) => {
     const navIfLoggedOut = () => {
         return (
             <div className='Navbar-loggedOut'>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink'to="/">Home</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink' to="/login">Log In</NavLink></button></span>
-                <span className='navBtnContainer'><button className='navBtn'><NavLink className='navBtnLink'to="/register">Sign Up</NavLink></button></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink'to="/"><button className='navBtn'>Home</button></NavLink></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink' to="/login"><button className='navBtn'>Log In</button></NavLink></span>
+                <span className='navBtnContainer'><NavLink className='navBtnLink'to="/register"><button className='navBtn'>Sign Up</button></NavLink></span>
             </div>
         );
     }
